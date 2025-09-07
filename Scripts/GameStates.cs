@@ -1,0 +1,47 @@
+using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.InputSystem;
+using System.Collections;
+
+public class GameStates : MonoBehaviour
+{
+    private PlayerMovement player;
+
+    [HideInInspector] 
+    public bool deathState = false;
+
+    private float deathRestartTimer = 2f;
+    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    void Start()
+    {
+        player = FindAnyObjectByType<PlayerMovement>();
+    }
+
+    public void StartDeath()
+    {
+        Debug.Log("Player failed. Restart after 2 seconds");
+        deathState = true;
+        //using a coroutine to have a delay for the fall animation
+        StartCoroutine(Death());
+    }
+
+    public void RestartScene()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    public void MultVerticalGravity(int gravityMod)
+    {
+        Physics.gravity = new Vector3(0, Physics.gravity.y * gravityMod, 0);
+    }
+
+    private IEnumerator Death()
+    {
+        //Later we can set proper timers for restart
+
+        yield return new WaitForSeconds(deathRestartTimer);
+        //after animation restart the level
+        RestartScene();
+        deathState = false;
+    }
+}
