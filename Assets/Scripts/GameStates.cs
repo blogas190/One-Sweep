@@ -7,6 +7,7 @@ public class GameStates : MonoBehaviour
 {
     private PlayerMovement player;
 
+    public CleaningProgressManager cleaningProgressManager;
     [HideInInspector] 
     public bool deathState = false;
 
@@ -27,6 +28,11 @@ public class GameStates : MonoBehaviour
 
     public void RestartScene()
     {
+        if (CleaningProgressManager.Instance != null)
+        {
+            CleaningProgressManager.Instance.Reset();
+        }
+
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 

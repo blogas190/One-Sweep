@@ -1,22 +1,34 @@
 ﻿using UnityEngine;
+using System.Collections;
 
 public class DirtSpot : MonoBehaviour
 {
-
     public RenderTexture dirtMask;
     public Texture2D brushTexture;
     public Material dirtMaterial;
     public float cleanThreshold = 0.95f;
     public Shader brushBlendShader;
-    Material brushBlendMaterial;
-    RenderTexture tempRT;
+
     [Header("Brush Settings")]
     public float setBrushWidth = 64f;
     public float setBrushHeight = 64f;
 
+    [Header("Performance Settings")]
+    public float checkInterval = 0.5f;
+    public int pixelSampleRate = 4;
+
+    private Material brushBlendMaterial;
+    private RenderTexture tempRT;
     private float brushWidth;
     private float brushHeight;
 
+    // Performance optimization variables
+    private Texture2D persistentTexture;
+    private float lastCheckTime;
+    private bool isDestroyed = false;
+
+    // Progress tracking
+    private float currentCleanPercentage = 0f;
 
     void Start()
     {
@@ -28,20 +40,27 @@ public class DirtSpot : MonoBehaviour
         matInstance.SetTexture("_MaskTex", dirtMask);
 
         brushBlendMaterial = new Material(brushBlendShader);
-        //wouldn't this need to be later changed to a scalable variable? (the dimensions)
         tempRT = new RenderTexture(512, 512, 0, RenderTextureFormat.ARGB32);
 
         brushHeight = setBrushHeight / transform.localScale.y;
         brushWidth = setBrushWidth / transform.localScale.x;
+
+        persistentTexture = new Texture2D(dirtMask.width, dirtMask.height, TextureFormat.RGB24, false);
+
+        // Register with the cleaning progress manager
+        if (CleaningProgressManager.Instance != null)
+        {
+            CleaningProgressManager.Instance.RegisterDirtSpot(this);
+        }
     }
 
     void OnTriggerStay(Collider other)
     {
         if (other.CompareTag("Player"))
-    {
-        Vector3 contactPoint = other.ClosestPointOnBounds(transform.position);
-        CleanAtWorldPos(contactPoint);
-    }
+        {
+            Vector3 contactPoint = other.ClosestPointOnBounds(transform.position);
+            CleanAtWorldPos(contactPoint);
+        }
     }
 
     public void CleanAtWorldPos(Vector3 worldPos)
@@ -70,40 +89,106 @@ public class DirtSpot : MonoBehaviour
 
         Graphics.Blit(dirtMask, tempRT, brushBlendMaterial);
         Graphics.Blit(tempRT, dirtMask);
+
+        // Check immediately after cleaning
+        StartCoroutine(CheckIfCleanedAsync());
     }
 
     void Update()
     {
-        CheckIfCleaned();
+        // Periodically check cleanliness to update progress
+        if (Time.time - lastCheckTime > checkInterval)
+        {
+            StartCoroutine(CheckIfCleanedAsync());
+        }
     }
 
-    public void CheckIfCleaned()
+    // Asynchronous version to spread the work across multiple frames
+    IEnumerator CheckIfCleanedAsync()
     {
-        Texture2D temp = new Texture2D(dirtMask.width, dirtMask.height, TextureFormat.RGB24, false);
+        if (isDestroyed) yield break;
+
+        lastCheckTime = Time.time;
+
         RenderTexture.active = dirtMask;
-        temp.ReadPixels(new Rect(0, 0, dirtMask.width, dirtMask.height), 0, 0);
-        temp.Apply();
+        persistentTexture.ReadPixels(new Rect(0, 0, dirtMask.width, dirtMask.height), 0, 0);
+        persistentTexture.Apply();
         RenderTexture.active = null;
 
-        Color[] pixels = temp.GetPixels();
-        int cleanCount = 0;
+        yield return null;
 
-        for (int i = 0; i < pixels.Length; i++)
+        Color[] pixels = persistentTexture.GetPixels();
+        int cleanCount = 0;
+        int totalSamples = 0;
+
+        for (int i = 0; i < pixels.Length; i += pixelSampleRate)
         {
             if (pixels[i].r > 0.9f)
             {
                 cleanCount++;
             }
+            totalSamples++;
+
+            if (totalSamples % 1000 == 0)
+            {
+                yield return null;
+            }
         }
 
-        float cleanPercent = (float)cleanCount / pixels.Length;
+        float cleanPercent = (float)cleanCount / totalSamples;
+        currentCleanPercentage = cleanPercent;
 
-        if (cleanPercent >= cleanThreshold)
+        // Update the global progress manager
+        if (CleaningProgressManager.Instance != null)
         {
+            CleaningProgressManager.Instance.UpdateDirtSpotProgress(this, cleanPercent);
+        }
+
+        // Destroy if fully cleaned
+        if (cleanPercent >= cleanThreshold && !isDestroyed)
+        {
+            isDestroyed = true;
+
+            // Unregister from progress manager before destroying
+            if (CleaningProgressManager.Instance != null)
+            {
+                CleaningProgressManager.Instance.UnregisterDirtSpot(this);
+            }
+
             Destroy(gameObject);
         }
+    }
 
-        Destroy(temp);
+    // Public method to get current cleaning percentage for this dirt spot
+    public float GetCleanPercentage()
+    {
+        return currentCleanPercentage;
+    }
+
+    void OnDestroy()
+    {
+        // Unregister from progress manager
+        if (CleaningProgressManager.Instance != null)
+        {
+            CleaningProgressManager.Instance.UnregisterDirtSpot(this);
+        }
+
+        // Clean up resources
+        if (persistentTexture != null)
+        {
+            Destroy(persistentTexture);
+        }
+
+        if (tempRT != null)
+        {
+            tempRT.Release();
+            Destroy(tempRT);
+        }
+
+        if (dirtMask != null)
+        {
+            dirtMask.Release();
+            Destroy(dirtMask);
+        }
     }
 }
-

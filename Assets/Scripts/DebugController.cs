@@ -1,5 +1,6 @@
 using UnityEngine;
 using TMPro;
+using UnityEngine.InputSystem;
 
 public class DebugController : MonoBehaviour
 {
@@ -7,12 +8,11 @@ public class DebugController : MonoBehaviour
     public GameObject player;
 
     public bool showDebug = true;
-    public float updateRate;
+    public float updateRate = 0.1f; // Update more frequently to show real-time progress
 
     private float lastUpdateTime;
     private Rigidbody playerRb;
     private PlayerMovement playerMovement;
-    private int dirtCount;
 
     void Start()
     {
@@ -37,7 +37,6 @@ public class DebugController : MonoBehaviour
         {
             debugText = GameObject.Find("Debug Text")?.GetComponent<TextMeshProUGUI>();
         }
-
     }
 
     void Update()
@@ -45,13 +44,18 @@ public class DebugController : MonoBehaviour
         if (!showDebug || debugText == null || player == null)
             return;
 
-        dirtCount = GameObject.FindGameObjectsWithTag("Dirt").Length;
         // Update at specified rate to avoid performance issues
         if (Time.time - lastUpdateTime >= updateRate)
         {
             UpdateDebugDisplay();
             lastUpdateTime = Time.time;
         }
+    }
+
+    public void ShowDebug(InputAction.CallbackContext context)
+    {
+        showDebug = !showDebug;
+        if (!showDebug) debugText.text = null;
     }
 
     void UpdateDebugDisplay()
@@ -67,8 +71,30 @@ public class DebugController : MonoBehaviour
             debugInfo += $"Actual Velocity: {playerMovement.GetMagnitude()}\n";
             debugInfo += $"Dashes Remaining: {playerMovement.dashNumber}\n";
         }
-        
-        debugInfo += $"Number of dirt objects: {dirtCount}\n";
+
+        // Use the new cleaning progress system
+        if (CleaningProgressManager.Instance != null)
+        {
+            float totalProgress = CleaningProgressManager.Instance.GetTotalCleaningPercentage();
+            int totalSpots = CleaningProgressManager.Instance.GetTotalDirtSpots();
+            int remainingSpots = CleaningProgressManager.Instance.GetRemainingDirtSpots();
+            int cleanedSpots = CleaningProgressManager.Instance.GetFullyCleanedDirtSpots();
+
+            debugInfo += $"Total Dirt Spots: {totalSpots}\n";
+            debugInfo += $"Fully Cleaned: {cleanedSpots}\n";
+            debugInfo += $"Remaining: {remainingSpots}\n";
+            debugInfo += $"Cleaning Progress: {totalProgress:F1}%\n";
+
+            // Uncomment this line for debugging the calculation:
+            // debugInfo += $"Debug: {CleaningProgressManager.Instance.GetDetailedProgress()}\n";
+        }
+        else
+        {
+            // Fallback to old system if CleaningProgressManager is not available
+            int dirtCount = GameObject.FindGameObjectsWithTag("Dirt").Length;
+            debugInfo += $"Number of dirt objects: {dirtCount}\n";
+        }
+
         debugInfo += $"FPS: {(1f / Time.deltaTime):F0}\n";
 
         debugText.text = debugInfo;
