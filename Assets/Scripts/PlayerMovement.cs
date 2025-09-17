@@ -3,6 +3,7 @@ using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
+    public bool isTesting = false;
     [Header("Player Reference")]
     public GameStates gameStates;
     public GameObject player;
@@ -15,6 +16,7 @@ public class PlayerMovement : MonoBehaviour
     public float startSpeed = 5f;
     public float maxSpeed = 15f;
     public float accelerationRate = 1f;
+    public float accelerationMax = 2f;
 
     [Header("Jump Settings")]
     public float jumpForce = 10f;
@@ -111,7 +113,12 @@ public class PlayerMovement : MonoBehaviour
         //acceleration
         if (Grounded() && (moveLeft || moveRight) && speed < maxSpeed)
         {
-            speed += accelerationRate * Time.fixedDeltaTime;
+            if (speed < startSpeed)
+            {
+                speed = startSpeed;
+            }
+            else
+            { speed += accelerationRate * Time.fixedDeltaTime; }
         }
 
         // Updated movement that uses Unity physics and fixes wall collisions
@@ -185,30 +192,85 @@ public class PlayerMovement : MonoBehaviour
         //Checking for player input using unity's input system
         if (context.performed)
         {
-            if (Grounded())
+            if (isTesting)
             {
-                Vector2 input = context.ReadValue<Vector2>();
-                direction = input.x;
-                speed = startSpeed; //for debugging, resets the speed on changing directions
-
-                //direction flags so we can limit the player's options later
-                if (direction < 0 && lastDirection != direction)
+                if (Grounded())
                 {
-                    moveLeft = true;
-                    moveRight = false;
-                }
+                    Vector2 input = context.ReadValue<Vector2>();
+                    direction = input.x;
+                    speed = startSpeed; //for debugging, resets the speed on changing directions
 
-                else if (direction > 0 && lastDirection != direction)
-                {
-                    moveLeft = false;
-                    moveRight = true;
-                }
+                    //direction flags so we can limit the player's options later
+                    if (direction < 0 && lastDirection != direction)
+                    {
+                        moveLeft = true;
+                        moveRight = false;
+                    }
 
-                if (direction != 0)
-                {
-                    lastDirection = direction;
+                    else if (direction > 0 && lastDirection != direction)
+                    {
+                        moveLeft = false;
+                        moveRight = true;
+                    }
+
+                    if (direction != 0)
+                    {
+                        lastDirection = direction;
+                    }
                 }
             }
+            else
+            {
+                if (!moveRight && !moveLeft)
+                {
+                    Vector2 input = context.ReadValue<Vector2>();
+                    direction = input.x;
+                    speed = startSpeed;
+
+                    if (direction < 0 && lastDirection != direction)
+                    {
+                        moveLeft = true;
+                        moveRight = false;
+                    }
+
+                    else if (direction > 0 && lastDirection != direction)
+                    {
+                        moveLeft = false;
+                        moveRight = true;
+                    }
+
+                    if (direction != 0)
+                    {
+                        lastDirection = direction;
+                    }
+                }
+                else // making the player go faster or slower
+                {
+                    if (Grounded())
+                    {
+                        Vector2 input = context.ReadValue<Vector2>();
+                        float dir = input.x;
+
+                        if (dir < 0)
+                        {
+                            if (moveLeft) { accelerationRate = accelerationMax; }
+                            if (moveRight) { accelerationRate = -accelerationRate; }
+                        }
+                        else if (dir >0)
+                        {
+                            if (moveLeft) { accelerationRate = -accelerationRate; }
+                            if (moveRight) { accelerationRate = accelerationMax; }
+                        }
+                    }
+                }
+            }
+        }
+        else if (context.canceled)
+        {
+            if (!isTesting && (moveLeft || moveRight))
+            {
+                accelerationRate = prevAccelerationRate;
+            }    
         }
     }
 
@@ -458,7 +520,8 @@ public class PlayerMovement : MonoBehaviour
 
     public void SetSpeed(float newSpeed)
     {
-        speed = newSpeed;
+        if (newSpeed < maxSpeed) speed = newSpeed;
+        else speed = maxSpeed;
         Vector3 velocity = p_rb.linearVelocity;
         velocity.x = direction * speed;
         p_rb.linearVelocity = velocity;

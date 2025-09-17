@@ -13,6 +13,10 @@ public class Booster : MonoBehaviour
     [Tooltip("Whether to use this transform's forward vector as the boost direction.")]
     public bool useTransformForward = true;
 
+    public bool resetYVelocity = true;
+    public bool resetXVelocity = false;
+    public float speedOffset = 2f;
+
     private void Reset()
     {
         // Make sure collider is set to trigger
@@ -30,7 +34,25 @@ public class Booster : MonoBehaviour
             {
                 Vector3 dir = useTransformForward ? transform.forward : boostDirection.normalized;
                 rb.AddForce(dir * boostForce, ForceMode.VelocityChange);
+                if (resetYVelocity)
+                {
+                    Vector3 vel = rb.linearVelocity;
+                    vel.y = 0f;
+                    rb.linearVelocity = vel;
+                }
+                if (resetXVelocity)
+                {
+                    Vector3 vel = rb.linearVelocity;
+                    vel.x = 0f;
+                    rb.linearVelocity = vel;
+                }
             }
+
+            GameObject player = other.gameObject;
+            PlayerMovement pm = player.GetComponent<PlayerMovement>();
+            float curspeed = pm.GetCurrentSpeed();
+            curspeed = curspeed + speedOffset;
+            pm.SetSpeed(curspeed);
         }
     }
 

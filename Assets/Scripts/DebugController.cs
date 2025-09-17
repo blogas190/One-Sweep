@@ -70,6 +70,7 @@ public class DebugController : MonoBehaviour
             debugInfo += $"Grounded: {playerMovement.Grounded()}\n";
             debugInfo += $"Actual Velocity: {playerMovement.GetMagnitude()}\n";
             debugInfo += $"Dashes Remaining: {playerMovement.dashNumber}\n";
+            debugInfo += $"Acceleratiion rate: {playerMovement.accelerationRate}\n";
         }
 
         // Use the new cleaning progress system
