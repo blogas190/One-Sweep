@@ -27,6 +27,7 @@ public class PlayerMovement : MonoBehaviour
     public float groundDashForce = 200f;
     public float airDashForce = 200f;
     public float dashTime = 1f;
+    public float airDashTime = 1f;
     public int dashNumber = 3;
     public float speedBuff = 5f;
 
@@ -51,6 +52,7 @@ public class PlayerMovement : MonoBehaviour
     private bool moveRight = false; // by default
     private bool jump = false;
     private bool dash = false;
+    private bool verticalDash = false;
     private float speed;
     private bool onRail = false;
     private bool onWall = false;
@@ -171,11 +173,25 @@ public class PlayerMovement : MonoBehaviour
         if (dash)
         {
             currentDashTime -= Time.fixedDeltaTime;
+            p_rb.constraints = RigidbodyConstraints.FreezePositionY;
+            p_rb.constraints = RigidbodyConstraints.FreezeRotation;
 
             if (currentDashTime <= 0f)
             {
                 dash = false;
+                p_rb.constraints = RigidbodyConstraints.None;
+                p_rb.constraints = RigidbodyConstraints.FreezeRotation;
                 Debug.Log("Dash ended");
+            }
+        }
+        if (verticalDash)
+        {
+            currentDashTime -= Time.fixedDeltaTime;
+
+            if (currentDashTime <= 0f)
+            {
+                verticalDash = false;
+                Debug.Log("Vertical Dash ended");
             }
         }
 
@@ -317,18 +333,34 @@ public class PlayerMovement : MonoBehaviour
             if (Grounded())
             {
                 dashVector = new Vector3(dashDirection, 0f, 0f) * groundDashForce;
+                currentDashTime = dashTime;
             }
             else
             {
                 dashVector = new Vector3(dashDirection, 0f, 0f) * airDashForce;
+                currentDashTime = airDashTime;
             }
             p_rb.AddForce(dashVector, ForceMode.Impulse);
 
-            currentDashTime = dashTime;
             dash = true;
             dashNumber--;
             if (speed < maxSpeed) { speed += speedBuff; }
             Debug.Log("Dash started");
+        }
+    }
+
+    public void VerticalDash(bool isUp, float verticalDashForce, float verticalDashTime)
+    {
+        if (dashNumber >= 1)
+        {
+            if (isUp)   { dashVector = Vector3.up * verticalDashForce; }
+            else { dashVector = Vector3.down * verticalDashForce; }
+            currentDashTime = verticalDashTime;
+            p_rb.AddForce(dashVector, ForceMode.Impulse);
+
+            verticalDash = true;
+            dashNumber--;
+            Debug.Log("Vertical Dash started");
         }
     }
 

@@ -7,8 +7,8 @@ public class CleaningProgressManager : MonoBehaviour
 {
     public static CleaningProgressManager Instance { get; private set; }
 
-    // Track both active and destroyed dirt spots
-    private Dictionary<DirtSpot, float> activeDirtSpotProgress = new Dictionary<DirtSpot, float>();
+    // Track both active and destroyed dirt spots (accept both DirtSpot and VerticalDirtSpot)
+    private Dictionary<UnityEngine.Object, float> activeDirtSpotProgress = new Dictionary<UnityEngine.Object, float>();
     public float destroyedDirtSpotsProgress = 0f; // Count of fully cleaned dirt spots
     public int totalDirtSpots = 0;
 
@@ -34,11 +34,17 @@ public class CleaningProgressManager : MonoBehaviour
 
     void Start()
     {
-        // Register all existing dirt spots
+        // Register all existing dirt spots (both horizontal and vertical)
         DirtSpot[] allDirtSpots = FindObjectsOfType<DirtSpot>();
         foreach (DirtSpot dirtSpot in allDirtSpots)
         {
             RegisterDirtSpot(dirtSpot);
+        }
+
+        VerticalDirtSpot[] allVerticalDirtSpots = FindObjectsOfType<VerticalDirtSpot>();
+        foreach (VerticalDirtSpot vSpot in allVerticalDirtSpots)
+        {
+            RegisterDirtSpot(vSpot);
         }
 
         // Initial progress calculation
@@ -57,6 +63,17 @@ public class CleaningProgressManager : MonoBehaviour
 
     public void RegisterDirtSpot(DirtSpot dirtSpot)
     {
+        if (dirtSpot == null) return;
+        if (!activeDirtSpotProgress.ContainsKey(dirtSpot))
+        {
+            activeDirtSpotProgress.Add(dirtSpot, 0f);
+            totalDirtSpots++;
+        }
+    }
+
+    public void RegisterDirtSpot(VerticalDirtSpot dirtSpot)
+    {
+        if (dirtSpot == null) return;
         if (!activeDirtSpotProgress.ContainsKey(dirtSpot))
         {
             activeDirtSpotProgress.Add(dirtSpot, 0f);
@@ -66,16 +83,37 @@ public class CleaningProgressManager : MonoBehaviour
 
     public void UnregisterDirtSpot(DirtSpot dirtSpot)
     {
+        if (dirtSpot == null) return;
         if (activeDirtSpotProgress.ContainsKey(dirtSpot))
         {
-            // When a dirt spot is destroyed, add its progress to the destroyed count
+            // When a dirt spot is destroyed/fully cleaned, add its progress to the destroyed count
             destroyedDirtSpotsProgress += 1f; // Each destroyed dirt spot counts as 1.0 (100%)
+            activeDirtSpotProgress.Remove(dirtSpot);
+        }
+    }
+
+    public void UnregisterDirtSpot(VerticalDirtSpot dirtSpot)
+    {
+        if (dirtSpot == null) return;
+        if (activeDirtSpotProgress.ContainsKey(dirtSpot))
+        {
+            destroyedDirtSpotsProgress += 1f;
             activeDirtSpotProgress.Remove(dirtSpot);
         }
     }
 
     public void UpdateDirtSpotProgress(DirtSpot dirtSpot, float cleanPercentage)
     {
+        if (dirtSpot == null) return;
+        if (activeDirtSpotProgress.ContainsKey(dirtSpot))
+        {
+            activeDirtSpotProgress[dirtSpot] = Mathf.Clamp01(cleanPercentage);
+        }
+    }
+
+    public void UpdateDirtSpotProgress(VerticalDirtSpot dirtSpot, float cleanPercentage)
+    {
+        if (dirtSpot == null) return;
         if (activeDirtSpotProgress.ContainsKey(dirtSpot))
         {
             activeDirtSpotProgress[dirtSpot] = Mathf.Clamp01(cleanPercentage);
@@ -147,5 +185,23 @@ public class CleaningProgressManager : MonoBehaviour
 
         // Re-initialize with current dirt spots
         Invoke("InitializeForCurrentScene", 0.1f);
+    }
+
+    // Helper used by Reset to re-register current scene dirt spots
+    private void InitializeForCurrentScene()
+    {
+        DirtSpot[] allDirtSpots = FindObjectsOfType<DirtSpot>();
+        foreach (DirtSpot dirtSpot in allDirtSpots)
+        {
+            RegisterDirtSpot(dirtSpot);
+        }
+
+        VerticalDirtSpot[] allVerticalDirtSpots = FindObjectsOfType<VerticalDirtSpot>();
+        foreach (VerticalDirtSpot vSpot in allVerticalDirtSpots)
+        {
+            RegisterDirtSpot(vSpot);
+        }
+
+        UpdateTotalProgress();
     }
 }

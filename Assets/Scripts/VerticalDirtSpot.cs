@@ -1,7 +1,7 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
-public class DirtSpot : MonoBehaviour
+public class VerticalDirtSpot : MonoBehaviour
 {
     public RenderTexture dirtMask;
     public Texture2D brushTexture;
@@ -10,8 +10,8 @@ public class DirtSpot : MonoBehaviour
     public Shader brushBlendShader;
 
     [Header("Brush Settings")]
-    public float setBrushWidth = 64f;
-    public float setBrushHeight = 64f;
+    public float setBrushWidth = 2000f;
+    public float setBrushHeight = 2000f;
 
     [Header("Performance Settings")]
     public float checkInterval = 0.5f;
@@ -50,11 +50,11 @@ public class DirtSpot : MonoBehaviour
         // Register with the cleaning progress manager
         if (CleaningProgressManager.Instance != null)
         {
-            CleaningProgressManager.Instance.RegisterDirtSpot(this);
+            //CleaningProgressManager.Instance.RegisterDirtSpot(this);
         }
     }
 
-    void OnTriggerStay(Collider other) // gotta fix, its the railcheck blocking the raycasting thing
+    void OnTriggerStay(Collider other)
     {
         if (other.CompareTag("Player"))
         {
@@ -79,8 +79,8 @@ public class DirtSpot : MonoBehaviour
         // Determine surface orientation by checking transform's up vector
         Vector3 surfaceNormal = transform.up.normalized;
 
-        localPos += new Vector3(0.5f, 0, 0.5f);
-        uv = new Vector2(localPos.x, localPos.z);
+        localPos += new Vector3(0.5f, 0.5f, 0);
+        uv = new Vector2(localPos.x, localPos.y);
 
         return (uv.x >= 0 && uv.x <= 1 && uv.y >= 0 && uv.y <= 1);
     }

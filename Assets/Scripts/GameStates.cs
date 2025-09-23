@@ -10,12 +10,14 @@ public class GameStates : MonoBehaviour
     public CleaningProgressManager cleaningProgressManager;
     [HideInInspector] 
     public bool deathState = false;
+    private float prevGravity;
 
     private float deathRestartTimer = 2f;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         player = FindAnyObjectByType<PlayerMovement>();
+        prevGravity = Physics.gravity.y;
     }
 
     public void StartDeath()
@@ -32,11 +34,11 @@ public class GameStates : MonoBehaviour
         {
             CleaningProgressManager.Instance.Reset();
         }
-
+        Physics.gravity = new Vector3(0, prevGravity, 0);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
-    public void MultVerticalGravity(int gravityMod)
+    public void MultVerticalGravity(float gravityMod)
     {
         Physics.gravity = new Vector3(0, Physics.gravity.y * gravityMod, 0);
     }
