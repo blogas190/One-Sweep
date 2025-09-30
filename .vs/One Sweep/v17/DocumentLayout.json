@@ -1,0 +1,45 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Uni stuff\\Baigiamasis\\One Sweep\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{28C429E1-0EC5-726B-BC95-F353D2A5FEF8}|Assembly-CSharp.csproj|c:\\uni stuff\\baigiamasis\\one sweep\\assets\\scripts\\airtricks.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{28C429E1-0EC5-726B-BC95-F353D2A5FEF8}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\airtricks.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 2,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{d1a7b6a2-1b2b-4b6a-9b2a-1a2b3c4d5e6f}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "AirTricks.cs",
+              "DocumentMoniker": "C:\\Uni stuff\\Baigiamasis\\One Sweep\\Assets\\Scripts\\AirTricks.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\AirTricks.cs",
+              "ToolTip": "C:\\Uni stuff\\Baigiamasis\\One Sweep\\Assets\\Scripts\\AirTricks.cs",
+              "RelativeToolTip": "Assets\\Scripts\\AirTricks.cs",
+              "ViewState": "AgIAABEAAAAAAAAAAAAAwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-30T18:58:47.593Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
