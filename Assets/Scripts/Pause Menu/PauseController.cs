@@ -14,6 +14,11 @@ public class PauseController : BaseMenu
         GameManager.instance.ResumeGame();
     }
 
+    public void OnMainMenu()
+    {
+        GameManager.instance.LoadMainMenu();
+    }
+
     public void OnQuit()
     {
         Application.Quit();

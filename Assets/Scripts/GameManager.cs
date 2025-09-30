@@ -55,6 +55,7 @@ public class GameManager : MonoBehaviour
     public void LoadMainMenu()
     {
         Time.timeScale = 1;
+        currentState = GameState.mainMenu;
         SceneManager.LoadScene("Main Menu");
     }
 
