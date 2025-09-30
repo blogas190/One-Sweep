@@ -8,6 +8,7 @@ TagManager:
   - Dirt
   - Rail
   - AngledRail
+  - VerticalDirt
   layers:
   - Default
   - TransparentFX
