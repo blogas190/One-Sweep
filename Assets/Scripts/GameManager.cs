@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager instance { get; private set; }
     public GameState currentState { get; private set; } = GameState.playing; //change later to a GameStae.mainMenu
+    public SaveManager saveManager;
 
     private void Awake()
     {
@@ -56,6 +57,7 @@ public class GameManager : MonoBehaviour
     {
         Time.timeScale = 1;
         currentState = GameState.mainMenu;
+        saveManager.SaveGame();
         SceneManager.LoadScene("Main Menu");
     }
 
