@@ -41,7 +41,7 @@ public class OptionsMenu : MonoBehaviour
         fullscreenDropdown.ClearOptions();
         List<string> fullscreenOptions = new List<string> { "Windowed", "Borderless Windowed", "Fullscreen" };
         fullscreenDropdown.AddOptions(fullscreenOptions);
-        int savedFullscreenIndex = PlayerPrefs.GetInt("fullscreenMode", (int)Screen.fullScreenMode);
+        int savedFullscreenIndex = PlayerPrefs.GetInt("fullscreenMode", 2);
         fullscreenDropdown.value = savedFullscreenIndex;
         fullscreenDropdown.RefreshShownValue();
 
@@ -50,35 +50,50 @@ public class OptionsMenu : MonoBehaviour
 
         volumeSlider.value = PlayerPrefs.GetFloat("volume", 1f);
         AudioListener.volume = volumeSlider.value;
+
+        ApplyDisplaySettings();
     }
 
-    public void SetResolution(int index)
-    {
-        Resolution res = resolutions[index];
-        Screen.SetResolution(res.width, res.height, Screen.fullScreenMode);
+public void SetResolution(int index)
+{
+    PlayerPrefs.SetInt("resolutionIndex", index);
+    PlayerPrefs.Save();
 
-        PlayerPrefs.SetInt("resolutionIndex", index);
-        PlayerPrefs.Save();
-    }
+    ApplyDisplaySettings();
+}
 
     public void SetFullscreenMode(int index)
     {
-        switch (index)
-        {
-            case 0:
-                Screen.fullScreenMode = FullScreenMode.Windowed;
-                break;
-            case 1:
-                Screen.fullScreenMode = FullScreenMode.FullScreenWindow;
-                break;
-            case 2:
-                Screen.fullScreenMode = FullScreenMode.ExclusiveFullScreen;
-                break;
-        }
-
         PlayerPrefs.SetInt("fullscreenMode", index);
         PlayerPrefs.Save();
+
+        ApplyDisplaySettings();
     }
+
+private void ApplyDisplaySettings()
+{
+    int resIndex = PlayerPrefs.GetInt("resolutionIndex", 0);
+    int modeIndex = PlayerPrefs.GetInt("fullscreenMode", 2);
+
+    Resolution res = resolutions[Mathf.Clamp(resIndex, 0, resolutions.Length - 1)];
+    FullScreenMode mode = FullScreenMode.ExclusiveFullScreen;
+
+    switch (modeIndex)
+    {
+        case 0:
+            mode = FullScreenMode.Windowed;
+            break;
+        case 1:
+            mode = FullScreenMode.FullScreenWindow;
+            break;
+        case 2:
+            mode = FullScreenMode.ExclusiveFullScreen;
+            break;
+    }
+
+    Screen.SetResolution(res.width, res.height, mode);
+    Screen.fullScreenMode = mode;
+}
 
     public void SetVolume(float v)
     {

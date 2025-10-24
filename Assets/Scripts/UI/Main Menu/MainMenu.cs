@@ -30,7 +30,7 @@ public class MainMenu : MonoBehaviour
 
     public void OnPlay()
     {
-        SceneManager.LoadScene("TestScene");
+        SceneManager.LoadScene("Tutorial Level 1");
         //Later change to proper level select and load;
     }
 }
