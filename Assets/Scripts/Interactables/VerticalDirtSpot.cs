@@ -13,6 +13,10 @@ public class VerticalDirtSpot : MonoBehaviour
     public float setBrushWidth = 2000f;
     public float setBrushHeight = 2000f;
 
+    [Header("UV Mapping Settings")]
+    public bool flipUVX = false;
+    public bool flipUVY = false;
+
     [Header("Performance Settings")]
     public float checkInterval = 0.5f;
     public int pixelSampleRate = 4;
@@ -30,6 +34,10 @@ public class VerticalDirtSpot : MonoBehaviour
     // Progress tracking
     private float currentCleanPercentage = 0f;
 
+    // Mesh bounds for proper UV mapping
+    private Bounds localBounds;
+    private MeshFilter meshFilter;
+
     void Start()
     {
         dirtMask = new RenderTexture(512, 512, 0, RenderTextureFormat.ARGB32);
@@ -42,8 +50,22 @@ public class VerticalDirtSpot : MonoBehaviour
         brushBlendMaterial = new Material(brushBlendShader);
         tempRT = new RenderTexture(512, 512, 0, RenderTextureFormat.ARGB32);
 
-        brushHeight = setBrushHeight / transform.localScale.y;
-        brushWidth = setBrushWidth / transform.localScale.x;
+        // Get mesh bounds for proper UV calculation
+        meshFilter = GetComponent<MeshFilter>();
+        if (meshFilter != null && meshFilter.sharedMesh != null)
+        {
+            localBounds = meshFilter.sharedMesh.bounds;
+        }
+        else
+        {
+            // Fallback to default bounds
+            localBounds = new Bounds(Vector3.zero, new Vector3(1f, 1f, 0f));
+        }
+
+        // Calculate brush size based on world space
+        // For vertical surfaces, we use X and Y dimensions
+        brushWidth = setBrushWidth / (localBounds.size.x * transform.localScale.x);
+        brushHeight = setBrushHeight / (localBounds.size.y * transform.localScale.y);
 
         persistentTexture = new Texture2D(dirtMask.width, dirtMask.height, TextureFormat.RGB24, false);
 
@@ -74,14 +96,25 @@ public class VerticalDirtSpot : MonoBehaviour
 
     bool WorldPosToUV(Vector3 worldPos, out Vector2 uv)
     {
+        // Transform world position to local space
         Vector3 localPos = transform.InverseTransformPoint(worldPos);
 
-        // Determine surface orientation by checking transform's up vector
-        Vector3 surfaceNormal = transform.up.normalized;
+        // Get mesh bounds min and max
+        Vector3 boundsMin = localBounds.min;
+        Vector3 boundsMax = localBounds.max;
 
-        localPos += new Vector3(0.5f, 0.5f, 0);
-        uv = new Vector2(localPos.x, localPos.y);
+        // Map local position to UV space [0,1]
+        // For vertical surfaces, we use X and Y coordinates
+        float uvX = Mathf.InverseLerp(boundsMin.x, boundsMax.x, localPos.x);
+        float uvY = Mathf.InverseLerp(boundsMin.y, boundsMax.y, localPos.y);
 
+        // Apply flipping based on inspector settings
+        if (flipUVX) uvX = 1.0f - uvX;
+        if (flipUVY) uvY = 1.0f - uvY;
+
+        uv = new Vector2(uvX, uvY);
+
+        // Check if UV is within valid range
         return (uv.x >= 0 && uv.x <= 1 && uv.y >= 0 && uv.y <= 1);
     }
 
@@ -108,7 +141,6 @@ public class VerticalDirtSpot : MonoBehaviour
         }
     }
 
-    // Asynchronous version to spread the work across multiple frames
     IEnumerator CheckIfCleanedAsync()
     {
         if (isDestroyed) yield break;
@@ -164,7 +196,6 @@ public class VerticalDirtSpot : MonoBehaviour
         }
     }
 
-    // Public method to get current cleaning percentage for this dirt spot
     public float GetCleanPercentage()
     {
         return currentCleanPercentage;

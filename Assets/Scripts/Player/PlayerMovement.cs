@@ -34,6 +34,8 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Rail Settings")]
     public float railSpeed = 20f;
+    public float railCheckOffset = 1.5f;
+    public float railOffset = 1.8f;
 
     [Header("Sticky Surface Settings")]
     public float stickySurfaceSpeed = 10f;
@@ -98,8 +100,6 @@ public class PlayerMovement : MonoBehaviour
             RailMovement(railCheck.GetComponent<RailCheck>().currentRail);
         }
 
-        // Check for delayed rail attachment
-        railCheck.GetComponent<RailCheck>().CheckDelayedAttachment();
 
         if (!movementEnabled)
         {
@@ -114,11 +114,15 @@ public class PlayerMovement : MonoBehaviour
         if (moveLeft) { transform.rotation = Quaternion.Euler(0f, 180f, 0f); } // temporary decision, fix later so it only flips on input in a seperate function
         if (moveRight) { transform.rotation = Quaternion.Euler(0f, 0f, 0f); }
         //acceleration
-        if (Grounded() && (moveLeft || moveRight) && speed < maxSpeed)
+        if (Grounded() && (moveLeft || moveRight))
         {
             if (speed < startSpeed)
             {
                 speed = startSpeed;
+            }
+            else if (speed > maxSpeed)
+            {
+                speed = maxSpeed;
             }
             else
             { speed += accelerationRate * Time.fixedDeltaTime; }
@@ -194,11 +198,6 @@ public class PlayerMovement : MonoBehaviour
                 verticalDash = false;
                 Debug.Log("Vertical Dash ended");
             }
-        }
-
-        if (onRail && railCheck.GetComponent<RailCheck>().currentRail != null)
-        {
-            RailMovement(railCheck.GetComponent<RailCheck>().currentRail);
         }
     }
 
@@ -368,94 +367,29 @@ public class PlayerMovement : MonoBehaviour
 
     //--------------------Rails-----------------------------
 
-    public void RailStartMovement(GameObject rail)
+    public void RailStartMovementAngled(GameObject rail, Vector3 collisionPoint)
     {
-        float bottomY = p_renderer.bounds.min.y / 2;
-        Vector3 railTop = new Vector3(transform.position.x, rail.transform.position.y + bottomY, rail.transform.position.z);
-
-        // Only snap to rail position and stop Y velocity if player is at or above the target height
-        if (transform.position.y >= railTop.y)
+        // Match rail's Z position
+        if ((transform.position.y - railCheckOffset) < collisionPoint.y)
         {
-            transform.position = railTop;
-
-            // Cancel any upward velocity when at rail height
-            Vector3 velocity = p_rb.linearVelocity;
-            velocity.y = 0f;
-            p_rb.linearVelocity = velocity;
-
-            p_rb.constraints = RigidbodyConstraints.FreezeAll;
+            transform.position = new Vector3(transform.position.x, collisionPoint.y + railOffset, rail.transform.position.z);
         }
         else
         {
-            // Player is still below rail, let them continue moving up
-            // Just set the X and Z position for rail alignment
             transform.position = new Vector3(transform.position.x, transform.position.y, rail.transform.position.z);
-            p_rb.constraints = RigidbodyConstraints.FreezeRotation;
         }
 
-        accelerationRate += railSpeed;
-        RailMovement(rail);
-    }
-
-    public void RailStartMovementAngled(GameObject rail)
-    {
-        // Use raycasting to find the exact point below the player
-        transform.position = new Vector3(transform.position.x, transform.position.y, rail.transform.position.z);
-        RaycastHit hit;
-        if (Physics.Raycast(transform.position, -transform.up, out hit, Mathf.Infinity))
-        {
-            Vector3 railContactPoint = hit.point + hit.normal * 0.1f;
-
-            // Only snap to rail and stop Y velocity if player is at or above the target height
-            if (transform.position.y >= railContactPoint.y)
-            {
-                transform.position = railContactPoint;
-
-                // Align player with rail's angle
-                Quaternion slopeRotation = Quaternion.FromToRotation(transform.up, hit.normal);
-                transform.rotation = slopeRotation * transform.rotation;
-
-                // Cancel any upward velocity when at rail height
-                Vector3 velocity = p_rb.linearVelocity;
-                velocity.y = 0f;
-                p_rb.linearVelocity = velocity;
-
-                p_rb.constraints = RigidbodyConstraints.FreezeRotation;
-            }
-            else
-            {
-                // Player is still below rail, let them continue moving up
-                p_rb.constraints = RigidbodyConstraints.FreezeRotation;
-            }
-        }
+        p_rb.linearVelocity = Vector3.zero;
+        p_rb.angularVelocity = Vector3.zero;
+        p_rb.constraints = RigidbodyConstraints.FreezeRotation;
 
         accelerationRate += railSpeed;
         onRail = true;
-        RailMovementAngled(rail);
-    }
-
-    public void RailMovementAngled(GameObject rail)
-    {
-        // First, ensure we're still properly positioned on the rail
-        RaycastHit hit;
-        if (Physics.Raycast(transform.position, -transform.up, out hit, 2f))
-        {
-            // Maintain position slightly above rail surface
-            Vector3 targetPosition = hit.point + hit.normal * 0.1f;
-            transform.position = targetPosition;
-        }
-
-        // Calculate movement direction along the rail
-        Vector3 railDirection = Vector3.Cross(hit.normal, transform.right).normalized;
-        Vector3 movement = railDirection * direction * speed * Time.fixedDeltaTime;
-
-        // Apply movement
-        transform.position += movement;
+        RailMovement(rail);
     }
 
     public void RailMovement(GameObject rail)
     {
-        Vector3 railVector = new Vector3(direction, 0f, 0f);
         if (onRail)
         {
             p_rb.constraints = RigidbodyConstraints.None;

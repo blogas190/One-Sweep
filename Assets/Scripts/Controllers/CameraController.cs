@@ -1,21 +1,31 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class CameraController : MonoBehaviour
 {
+    [Header("References")]
     public GameObject player;
 
-    public float maxAngle = 5f; // Largest vertical angle allowed
-    public float cameraSpeed;
+    [Header("Camera Settings")]
+    public float cameraSpeed = 5f;
+    public float freeCamSensitivity = 0.1f;
     public Vector3 offset = new Vector3(0, 2, -10);
-    [SerializeField] private bool isFollowing = true;
+    public float maxVerticalOffset = 5f;
+    public float maxHorizontalOffset = 10f;
 
+    [Header("State")]
+    [SerializeField] private bool isFollowing = true;
+    [SerializeField] private bool freeCam = false;
+
+    private Vector2 mouseInput;
+    private Vector3 freeCamPosition;
 
     void Start()
     {
         if (player == null)
-        {
-            player = GameObject.FindGameObjectWithTag("Player"); // Just in case
-        }
+            player = GameObject.FindGameObjectWithTag("Player");
+
+        freeCamPosition = transform.position;
     }
 
     void Update()
@@ -23,42 +33,65 @@ public class CameraController : MonoBehaviour
         if (isFollowing)
         {
             FollowPlayer();
-        }    
+        }
+        else if (freeCam)
+        {
+            FreeCamMovement();
+        }
+    }
+
+    // Input callback from Input System (Mouse action)
+    public void OnMouse(InputAction.CallbackContext context)
+    {
+        mouseInput = context.ReadValue<Vector2>();
+    }
+
+    // Switch between Follow and FreeCam modes
+    public void SwitchCameraMode(InputAction.CallbackContext context)
+    {
+        if (!context.performed) return;
+
+        if (isFollowing)
+        {
+            isFollowing = false;
+            freeCam = true;
+            freeCamPosition = transform.position; // lock current position
+        }
+        else
+        {
+            freeCam = false;
+            isFollowing = true;
+        }
     }
 
     void FollowPlayer()
     {
         if (player == null) return;
-        
+
         Vector3 targetPosition = player.transform.position + offset;
-        
-        // Calculate the vertical angle by looking at the player
-        Vector3 directionToPlayer = (player.transform.position - transform.position).normalized;
-        float verticalAngle = Mathf.Asin(directionToPlayer.y) * Mathf.Rad2Deg;
-        
-        // Always follow horizontally
-        Vector3 cameraPosition = transform.position;
-        cameraPosition.x = player.transform.position.x + offset.x;
-        cameraPosition.z = player.transform.position.z + offset.z;
-        
-        // Check if vertical angle is within threshold
-        if (Mathf.Abs(verticalAngle) <= maxAngle)
+        transform.position = Vector3.Lerp(transform.position, targetPosition, cameraSpeed * Time.deltaTime);
+        transform.LookAt(player.transform.position);
+    }
+
+    void FreeCamMovement()
+    {
+        // Move camera position based on mouse delta
+        Vector3 move = new Vector3(mouseInput.x, mouseInput.y, 0) * freeCamSensitivity;
+        freeCamPosition += move;
+
+        // Clamp within allowed area relative to player (optional)
+        if (player != null)
         {
-            // Within range: maintain current Y position and look at player
-            transform.position = cameraPosition;
-            transform.LookAt(player.transform.position);
+            freeCamPosition.x = Mathf.Clamp(freeCamPosition.x, player.transform.position.x - maxHorizontalOffset, player.transform.position.x + maxHorizontalOffset);
+            freeCamPosition.y = Mathf.Clamp(freeCamPosition.y, player.transform.position.y - maxVerticalOffset, player.transform.position.y + maxVerticalOffset);
         }
-        else
-        {
-            // Outside range: catch up vertically
-            cameraPosition.y = Mathf.Lerp(transform.position.y, targetPosition.y, cameraSpeed * Time.deltaTime);
-            transform.position = cameraPosition;
-            transform.LookAt(player.transform.position);
-        }
+
+        transform.position = Vector3.Lerp(transform.position, freeCamPosition, cameraSpeed * Time.deltaTime);
     }
 
     public void SetFollow(bool follow)
     {
         isFollowing = follow;
+        freeCam = !follow;
     }
 }

@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Dirt
-  m_Shader: {fileID: -6465566751694194690, guid: 901569d94872e414e8a29b04f95370f9, type: 3}
+  m_Name: DirtBubbles
+  m_Shader: {fileID: 4800000, guid: d8f0468fb42f50545a994e5dfb6ca308, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -54,10 +54,22 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - _CircleDensity: 12.4
+    - _CircleSize: 0.75
+    - _DisplacementHeight: 0.0045
+    - _DomeHeight: 0.228
+    - _DomeSmoothness: 0.6
+    - _DomeSpecular: 0.34
+    - _EdgeFadeWidth: 0
+    - _EmissionStrength: 0.72
+    - _PuddleDensity: 8
+    - _PuddleScale: 5
     - _QueueControl: 0
     - _QueueOffset: 0
+    - _RandomSeed: 0
     m_Colors:
     - _BrushUV: {r: 0, g: 0, b: 1, a: 1}
+    - _EmissionColor: {r: 0.45911938, g: 0.122963145, b: 0.070744716, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
 --- !u!114 &3326830974203147219
