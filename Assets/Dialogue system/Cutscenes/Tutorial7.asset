@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d2a9460aae1c4420a415466d1db880f, type: 3}
+  m_Name: Tutorial7
+  m_EditorClassIdentifier: 
+  Title: Tutorial 7
+  Exchanges:
+  - Lines:
+    - Text: Pressing S while in the air will slam down to the ground
+      Guid:
+        Value: dbefe034-6fc1-46c0-b828-83e5e71b519c
+    Speaker: Tutorial
+    Guid:
+      Value: 454203ca-fbcd-46bb-bf5c-6b5d56a8108a
+  Guid:
+    Value: 00149434-9801-45b3-be46-208cc61037bb

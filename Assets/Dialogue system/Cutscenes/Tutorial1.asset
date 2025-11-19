@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d2a9460aae1c4420a415466d1db880f, type: 3}
+  m_Name: Tutorial1
+  m_EditorClassIdentifier: 
+  Title: Tutorial 1
+  Exchanges:
+  - Lines:
+    - Text: To start moving press A or D
+      Guid:
+        Value: 3132ffbe-e6f6-4451-bf70-349535682a44
+    - Text: Once you start to move, you cannot stop!
+      Guid:
+        Value: c6f686e9-3cb4-4288-b4e0-aac73f7992f0
+    Speaker: Tutorial
+    Guid:
+      Value: 2cf31615-0832-472c-a4cb-694b5ec596ef
+  Guid:
+    Value: cd53c06c-9d29-460a-92d2-6d616f0d0c57

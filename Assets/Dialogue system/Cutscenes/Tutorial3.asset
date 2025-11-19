@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d2a9460aae1c4420a415466d1db880f, type: 3}
+  m_Name: Tutorial3
+  m_EditorClassIdentifier: 
+  Title: Tutorial 3
+  Exchanges:
+  - Lines:
+    - Text: To jump, press SPACE
+      Guid:
+        Value: 4db20500-8d4e-4f74-9516-61e4c411dae1
+    - Text: If you land on a rail, you initiate a rail grind
+      Guid:
+        Value: b38588a4-4556-4539-9e37-d4632fbd7fcf
+    Speaker: Tutorial
+    Guid:
+      Value: d71fc181-db25-4437-b8b4-07b5ea41dae8
+  Guid:
+    Value: f0c11baa-09e5-4943-860a-70d7076168b7

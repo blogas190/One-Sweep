@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d2a9460aae1c4420a415466d1db880f, type: 3}
+  m_Name: Tutorial6
+  m_EditorClassIdentifier: 
+  Title: Tutorial 6
+  Exchanges:
+  - Lines:
+    - Text: These walls can be jumped from
+      Guid:
+        Value: 5d95ad00-27a7-4bd0-8cd2-1c1c5b895bb6
+    - Text: Also, while in the air you can perform a trick!
+      Guid:
+        Value: 083c296a-c207-42d0-9308-5f75815da0aa
+    - Text: Pressing W while in the air will give you a slight boost up
+      Guid:
+        Value: b59b62c9-c1e0-4274-b323-f917813945e1
+    Speaker: Tutorial
+    Guid:
+      Value: 19560050-d3ca-44fb-965a-feca428630d1
+  Guid:
+    Value: 5e22f263-325d-4c19-bebb-45e6e28f57b0

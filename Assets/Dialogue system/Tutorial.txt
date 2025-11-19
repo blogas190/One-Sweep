@@ -1,0 +1,98 @@
+BEGIN
+
+TITLE: Tutorial 1
+
+NAME: Tutorial
+
+To start moving press A or D
+Once you start to move, you cannot stop!
+/
+/
+
+TITLE: TUTORIAL 2
+
+NAME: Tutorial
+
+Your goal is to clean all dirt in the room
+To clean it you just have to ride over with your hoverboard
+/
+/
+
+TITLE: Tutorial 3
+
+NAME: Tutorial
+
+To jump, press SPACE
+If you land on a rail, you initiate a rail grind
+
+/
+/
+
+TITLE: Tutorial 4
+
+NAME: Tutorial
+
+To dash press SHIFT
+Using a dash you can go further in the air or pass through some obstacles
+
+/
+/
+
+TITLE: Tutorial 5
+
+NAME: Tutorial
+
+Using poles you can turn yourself around
+
+/
+/
+
+TITLE: Tutorial 6
+
+NAME: Tutorial
+
+These walls can be jumped from
+Also, while in the air you can perform a trick!
+Pressing W while in the air will give you a slight boost up
+
+/
+/
+
+TITLE: Tutorial 7
+
+NAME: Tutorial
+
+Pressing S while in the air will slam down to the ground
+
+/
+/
+
+TITLE: Tutorials 8 
+
+NAME: Tutorial
+
+Pressing A while in the air will give you back your dash charge
+
+/
+/
+
+TITLE: Tutorial 9
+
+NAME: Tutorial
+
+And pressing D while in the air will let you clean dirt above and below you
+
+/
+/
+
+TITLE: End of Tutorial
+
+NAME: Tutorial
+
+Well, now you are ready to start cleaning this messy building!
+Oh, almost forgot
+You can press R to restart the level
+That's it. Go get them!
+
+/
+/
