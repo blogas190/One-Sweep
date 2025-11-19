@@ -8,7 +8,8 @@ public enum GameState
     playing,
     paused,
     gameOver,
-    dialogue
+    dialogue,
+    levelComplete
 }
 public class GameManager : MonoBehaviour
 {
@@ -28,18 +29,6 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
-    public void TogglePause()
-    {
-        if (currentState == GameState.paused)
-        {
-            ResumeGame();
-        }
-        else if (currentState == GameState.playing)
-        {
-            PauseGame();
-        }
-    }
-
     public void ToggleDialogue()
     {
         if (currentState == GameState.dialogue)
@@ -56,19 +45,24 @@ public class GameManager : MonoBehaviour
     {
         Time.timeScale = 0;
         currentState = GameState.paused;
-        PauseController.instance.Show();
     }
 
     public void ResumeGame()
     {
         Time.timeScale = 1;
         currentState = GameState.playing;
-        PauseController.instance.Hide();
     }
 
     public void StartDialogue()
     {
         currentState = GameState.dialogue;
+    }
+
+    public void LevelComplete()
+    {
+        currentState = GameState.levelComplete;
+        Time.timeScale = 0;
+        UIManager.instance.ShowLevelComplete();
     }
 
     public void LoadMainMenu()

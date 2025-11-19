@@ -13,6 +13,9 @@ public class AirTricks : MonoBehaviour
     public float cleanBuff = 500000f;
     public float cleanGravityMod = 0.3f;
 
+    public RailCheck railCheck;
+    public Animator animator;
+
     private PlayerMovement player;
     private GameStates states;
     private PlayerController controller;
@@ -70,12 +73,12 @@ public class AirTricks : MonoBehaviour
                 AirTrickRight();
             }
 
-            if(directionY < -0.5f)
+            if(directionY < -0.5f && railCheck.blockedRail == null)
             {
                 AirTrickDown();
             }
 
-            else if(directionY > 0.5f)
+            else if (directionY > 0.5f)
             {
                 AirTrickUp();
             }
@@ -122,6 +125,7 @@ public class AirTricks : MonoBehaviour
     private void AirTrickDown()
     {
         player.VerticalDash(false, downTrickForce, downTrickTime); // going down
+        animator.SetTrigger("TrickDown");
     }
 
     private IEnumerator RevertAnimationAfterDelay(float delay)

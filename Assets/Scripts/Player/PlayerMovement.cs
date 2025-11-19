@@ -1,5 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using MoreMountains.Feedbacks;
+using MoreMountains.Tools;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -12,6 +14,20 @@ public class PlayerMovement : MonoBehaviour
     public GameObject railCheck;
     private Rigidbody p_rb;
     public GameManager gameManager;
+    public Animator animator;
+
+    [Header("Feedbacks")]
+    public MMFeedbacks DashFeedbackStart;
+    public MMFeedbacks DashFeedbackEnd;
+
+    public MMFeedbacks VerticalDashFeedbackStart;
+    public MMFeedbacks VerticalDashFeedbackEnd;
+
+    public MMFeedbacks JumpFeedback;
+    public MMFeedbacks JumpResetFeedback;
+
+    public MMFeedbacks RailFeedbackStart;
+    public MMFeedbacks RailFeedbackEnd;
 
     [Header("Speed Settings")]
     public float startSpeed = 5f;
@@ -99,6 +115,12 @@ public class PlayerMovement : MonoBehaviour
         {
             RailMovement(railCheck.GetComponent<RailCheck>().currentRail);
         }
+        else
+        {
+            Vector3 pos = transform.position;
+            pos.z = 0f;
+            transform.position = pos;
+        }
 
 
         if (!movementEnabled)
@@ -127,6 +149,7 @@ public class PlayerMovement : MonoBehaviour
             else
             { speed += accelerationRate * Time.fixedDeltaTime; }
         }
+        animator.SetFloat("Speed", speed);
 
         // Updated movement that uses Unity physics and fixes wall collisions
         Vector3 velocity = p_rb.linearVelocity;
@@ -134,7 +157,6 @@ public class PlayerMovement : MonoBehaviour
         {
             velocity.x = direction * speed;
         }
-
         p_rb.linearVelocity = velocity;
 
         //Jump logic
@@ -142,10 +164,13 @@ public class PlayerMovement : MonoBehaviour
         {
             if (Grounded())
             {
+                JumpResetFeedback.PlayFeedbacks();
                 p_rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+                JumpFeedback.PlayFeedbacks();
+                animator.SetTrigger("Jump");
                 jump = false;
             }
-            if (onWall)
+            if (onWall) // can add feedbacks here should work like jump, just smoke in a different place
             {
                 if (moveLeft)
                 {
@@ -186,6 +211,7 @@ public class PlayerMovement : MonoBehaviour
                 dash = false;
                 p_rb.constraints = RigidbodyConstraints.None;
                 p_rb.constraints = RigidbodyConstraints.FreezeRotation;
+                DashFeedbackEnd.PlayFeedbacks();
                 Debug.Log("Dash ended");
             }
         }
@@ -197,6 +223,7 @@ public class PlayerMovement : MonoBehaviour
             {
                 verticalDash = false;
                 Debug.Log("Vertical Dash ended");
+                VerticalDashFeedbackEnd.PlayFeedbacks();
             }
         }
     }
@@ -347,10 +374,12 @@ public class PlayerMovement : MonoBehaviour
             dashNumber--;
             if (speed < maxSpeed) { speed += speedBuff; }
             Debug.Log("Dash started");
+            DashFeedbackStart.PlayFeedbacks();
+            animator.SetTrigger("Dash");
         }
     }
 
-    public void VerticalDash(bool isUp, float verticalDashForce, float verticalDashTime)
+    public void VerticalDash(bool isUp, float verticalDashForce, float verticalDashTime, bool usesEnergy = true, bool callFeedback = true)
     {
         if (dashNumber >= 1)
         {
@@ -360,8 +389,15 @@ public class PlayerMovement : MonoBehaviour
             p_rb.AddForce(dashVector, ForceMode.Impulse);
 
             verticalDash = true;
-            dashNumber--;
+            if (usesEnergy)
+            {
+                dashNumber--;
+            }
             Debug.Log("Vertical Dash started");
+            if (callFeedback)
+            {
+                VerticalDashFeedbackStart.PlayFeedbacks();
+            }
         }
     }
 
@@ -386,6 +422,7 @@ public class PlayerMovement : MonoBehaviour
         accelerationRate += railSpeed;
         onRail = true;
         RailMovement(rail);
+        RailFeedbackStart.PlayFeedbacks();
     }
 
     public void RailMovement(GameObject rail)
@@ -409,6 +446,8 @@ public class PlayerMovement : MonoBehaviour
         pos.z = 0f;
         transform.position = pos;
         accelerationRate = prevAccelerationRate;
+        RailFeedbackEnd.PlayFeedbacks();
+        RailFeedbackStart.StopFeedbacks();
     }
 
     //--------------------Sticky surface-----------------------------
@@ -532,7 +571,8 @@ public class PlayerMovement : MonoBehaviour
     public bool Grounded()
     {
         bool ground = false;
-        if (Physics.CheckSphere(groundCheck.position, groundCheckRadius, groundLayer) || onRail) { ground = true; }
+        if (Physics.CheckSphere(groundCheck.position, groundCheckRadius, groundLayer) || onRail) { ground = true;
+        }
         //Debug.Log("Grounded: " + ground);
         return ground;
     }

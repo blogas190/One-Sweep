@@ -94,4 +94,9 @@ public class CameraController : MonoBehaviour
         isFollowing = follow;
         freeCam = !follow;
     }
+
+    public bool IsFollow()
+    {
+        return isFollowing;
+    }
 }

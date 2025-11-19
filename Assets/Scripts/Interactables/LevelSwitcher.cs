@@ -47,7 +47,8 @@ public class LevelSwitcher : MonoBehaviour
     {
         if (other.CompareTag("Player") && cleaningManager.GetFullyCleanedDirtSpots() == cleaningManager.GetTotalDirtSpots())
         {
-            SceneManager.LoadScene(nextLevel);
+            GameManager.instance.LevelComplete();
+            UIManager.instance.levelComplete.SetNextLevel(nextLevel);
         }
     }
 }

@@ -8,6 +8,7 @@ public class GameStates : MonoBehaviour
     private PlayerMovement player;
 
     public CleaningProgressManager cleaningProgressManager;
+    public Animator playerAnimator;
     [HideInInspector] 
     public bool deathState = false;
     private float prevGravity;
@@ -24,6 +25,7 @@ public class GameStates : MonoBehaviour
     {
         Debug.Log("Player failed. Restart after 2 seconds");
         deathState = true;
+        playerAnimator.SetTrigger("Death");
         //using a coroutine to have a delay for the fall animation
         StartCoroutine(Death());
     }

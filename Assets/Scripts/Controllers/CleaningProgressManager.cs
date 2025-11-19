@@ -59,6 +59,7 @@ public class CleaningProgressManager : MonoBehaviour
             UpdateTotalProgress();
             lastUpdateTime = Time.time;
         }
+
     }
 
     public void RegisterDirtSpot(DirtSpot dirtSpot)

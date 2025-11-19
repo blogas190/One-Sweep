@@ -1,4 +1,6 @@
 using UnityEngine;
+using MoreMountains.Feedbacks;
+using MoreMountains.Tools;
 
 [RequireComponent(typeof(Collider))]
 public class Booster : MonoBehaviour
@@ -16,6 +18,9 @@ public class Booster : MonoBehaviour
     public bool resetYVelocity = true;
     public bool resetXVelocity = false;
     public float speedOffset = 2f;
+
+    public MMFeedbacks BoosterFeedbackStart;
+    public MMFeedbacks BoosterFeedbackEnd;
 
     private void Reset()
     {
@@ -53,6 +58,15 @@ public class Booster : MonoBehaviour
             float curspeed = pm.GetCurrentSpeed();
             curspeed = curspeed + speedOffset;
             pm.SetSpeed(curspeed);
+            BoosterFeedbackStart.PlayFeedbacks();
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            BoosterFeedbackEnd.PlayFeedbacks();
         }
     }
 
