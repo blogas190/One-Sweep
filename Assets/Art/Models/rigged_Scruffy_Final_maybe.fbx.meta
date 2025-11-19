@@ -1,0 +1,337 @@
+fileFormatVersion: 2
+guid: 1f7ac35be835e2d46a6a97f2c66e2f04
+ModelImporter:
+  serializedVersion: 22200
+  internalIDToNameTable: []
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Hair
+    second: {fileID: 2100000, guid: 84fce0f86aa2e7244a31d93c1a288646, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Hat
+    second: {fileID: 2100000, guid: 678469c4951926349bbf3574ee0f3b88, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Jeans
+    second: {fileID: 2100000, guid: e3e6396244d3361478128b667e6b0fea, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: LShoe_Base
+    second: {fileID: 2100000, guid: 68cf1fe6ed9674b48bf6d25f4b7e94e8, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: L_eye
+    second: {fileID: 2100000, guid: 707bffc4e84cdfe4190ab98578116a58, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Lshoe_upper
+    second: {fileID: 2100000, guid: 1e8af8a58cddbfb42b98c353ae246cbd, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: RShoeBase
+    second: {fileID: 2100000, guid: 68cf1fe6ed9674b48bf6d25f4b7e94e8, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: RShoe_upper
+    second: {fileID: 2100000, guid: dbe7f51c42150224aba4155f7102e88e, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Shirt
+    second: {fileID: 2100000, guid: a9912d81e51b8104ea3eb8c0b36246ee, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Skin
+    second: {fileID: 2100000, guid: 16e4ce4314762904784fa9dae1f007dc, type: 2}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Pants_Height
+    second: {fileID: 2800000, guid: 5715cefdc3bc0e14f8df631711266a46, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Pants_Metallic
+    second: {fileID: 2800000, guid: eb5a0137ba2af0849bf216cd96bd993a, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Pants_Normal_OpenGL
+    second: {fileID: 2800000, guid: d769c1a35c765d64485a2f654aa12582, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Pants_Roughness
+    second: {fileID: 2800000, guid: 0dde09a37522e4247b9a8df136947560, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Scruffy_ready_to_substance_Eyes_Height
+    second: {fileID: 2800000, guid: f196364fd735cff4a95eaae748db5f3a, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Scruffy_ready_to_substance_Eyes_Metalness
+    second: {fileID: 2800000, guid: f8591575a3f29404abf80b9fb453cc24, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Scruffy_ready_to_substance_Eyes_Normal
+    second: {fileID: 2800000, guid: 2faf8ea1ecbc5dc42b1b959b025a3eb2, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Scruffy_ready_to_substance_Eyes_Roughness
+    second: {fileID: 2800000, guid: 91d1ea9db9ba0d74fb42abd71633c6d2, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Scruffy_ready_to_substance_Hair_Height
+    second: {fileID: 2800000, guid: 570fd467c100ce742b9be8d090ede108, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Scruffy_ready_to_substance_Hair_Metalness
+    second: {fileID: 2800000, guid: 4c5381e89fc89da4eba8e9d34c637652, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Scruffy_ready_to_substance_Hair_Normal
+    second: {fileID: 2800000, guid: 210583c57a64b7b4697c8bd1f566111f, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Scruffy_ready_to_substance_Hair_Roughness
+    second: {fileID: 2800000, guid: a0ee56bbbb00764488d2422e09e27020, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Scruffy_ready_to_substance_Hat_Height
+    second: {fileID: 2800000, guid: 02daaba5a2a92f84b8f71ce454ca8f13, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Scruffy_ready_to_substance_Hat_Metalness
+    second: {fileID: 2800000, guid: d49290df5d8e3e84f871283f600c8b4d, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Scruffy_ready_to_substance_Hat_Normal
+    second: {fileID: 2800000, guid: 4dbd1b5ef06b9be468dffef7eb10b2cf, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Scruffy_ready_to_substance_Hat_Roughness
+    second: {fileID: 2800000, guid: f36759c3dbd9d1643a86096bd7bdcfdc, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Scruffy_ready_to_substance_Shirt_Height
+    second: {fileID: 2800000, guid: 5c33e3c23f3c2064ca42dc65edc1c99f, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Scruffy_ready_to_substance_Shirt_Metalness
+    second: {fileID: 2800000, guid: 95c533d350650fd469107cbaa72418b3, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Scruffy_ready_to_substance_Shirt_Normal
+    second: {fileID: 2800000, guid: 02fdcc5557ac9cc42a3cc436f0045994, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Scruffy_ready_to_substance_Shirt_Roughness
+    second: {fileID: 2800000, guid: a78c5d2ce439fcf42bf16c51badc591e, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Scruffy_ready_to_substance_Skin_Height
+    second: {fileID: 2800000, guid: 2ce80275c4d2be84d89e8458982bdeb5, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Scruffy_ready_to_substance_Skin_Metalness
+    second: {fileID: 2800000, guid: f74fde262d4a3f445afd8b15f999dd51, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Scruffy_ready_to_substance_Skin_Normal
+    second: {fileID: 2800000, guid: 4a577470f753b9f42b429ff56f39d51a, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Scruffy_ready_to_substance_Skin_Roughness
+    second: {fileID: 2800000, guid: 48d1cebdf429d62499bae840ca452f13, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Shoes_Height
+    second: {fileID: 2800000, guid: 7607920abfb82d049b1cacf1624ed422, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Shoes_Metallic
+    second: {fileID: 2800000, guid: afefcb80e25d0fa4e84b0caae8826d01, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Shoes_Normal
+    second: {fileID: 2800000, guid: f04ec2a04a9330d48a06ca897d47b427, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Shoes_Roughness
+    second: {fileID: 2800000, guid: 690ac5ba6354c794599d0457c099876d, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: lambert1_Height
+    second: {fileID: 2800000, guid: ff40b0af0029c644595d2874a594b77c, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: lambert1_Metallic
+    second: {fileID: 2800000, guid: b3453ab75559e434eb956599db722f5d, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: lambert1_Normal_OpenGL
+    second: {fileID: 2800000, guid: d787f620943aa61438479cee17b2ec51, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: lambert1_Roughness
+    second: {fileID: 2800000, guid: 2bd4b892b90a7594b8dcdc400f8b050e, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: lambert2_Height
+    second: {fileID: 2800000, guid: c68a3c34686f3ed4b93bb8007f5115c6, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: lambert2_Metallic
+    second: {fileID: 2800000, guid: 6273baacc58532c498656e5a932f9ee2, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: lambert2_Normal_OpenGL
+    second: {fileID: 2800000, guid: 473ef6c059081fa47a2c414de0ebcff7, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: lambert2_Roughness
+    second: {fileID: 2800000, guid: 2e99db28ded6c1748b5d9533a3c0e74f, type: 3}
+  materials:
+    materialImportMode: 2
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    removeConstantScaleCurves: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 3
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 0
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    useSRGBMaterialColor: 1
+    sortHierarchyByName: 1
+    importPhysicalCameras: 1
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    nodeNameCollisionStrategy: 1
+    fileIdsGeneration: 2
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    keepQuads: 0
+    weldVertices: 1
+    bakeAxisConversion: 0
+    preserveHierarchy: 0
+    skinWeightsMode: 0
+    maxBonesPerVertex: 4
+    minBoneWeight: 0.001
+    optimizeBones: 1
+    meshOptimizationFlags: -1
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVMarginMethod: 1
+    secondaryUVMinLightmapResolution: 40
+    secondaryUVMinObjectScale: 1
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+    strictVertexDataChecks: 0
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  referencedClips: []
+  importAnimation: 1
+  humanDescription:
+    serializedVersion: 3
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    globalScale: 1
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  autoGenerateAvatarMappingIfUnspecified: 1
+  animationType: 3
+  humanoidOversampling: 1
+  avatarSetup: 1
+  addHumanoidExtraRootOnlyWhenUsingAvatar: 1
+  importBlendShapeDeformPercent: 1
+  remapMaterialsIfMaterialImportModeIsNone: 0
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
