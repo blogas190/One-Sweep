@@ -15,11 +15,32 @@ MonoBehaviour:
   Title: Tutorial 5
   Exchanges:
   - Lines:
-    - Text: Using poles you can turn yourself around
+    - Text: Are you still with us, EMPLOYEE?!
       Guid:
-        Value: a78df039-05f1-482f-907e-04a0efae2ac5
+        Value: e7231828-2016-4fca-b6ab-ec2dfec6dd0c
+    - Text: Sorry for screaming, we were just checking up on some other janitors
+        and one of them just crashed into a cubicle because he did not know these
+        simple tricks!
+      Guid:
+        Value: c7c5ec93-65df-4577-b81f-11d384a4086a
+    - Text: You can use vertical pipes and poles to grab onto them and turn yourself
+        around to change your movement direction!
+      Guid:
+        Value: 03659bf4-7531-412f-8251-67ed7130405f
+    - Text: Also, if you wish to see the whole floor before moving, the implant we
+        put into you gives you access to cameras in the nearest vicinity!
+      Guid:
+        Value: 5d83700f-9757-433d-a223-ce185517fb93
+    - Text: And if you need some time to think before making a move, don't forget
+        that you can control the speed of your movement, even if just a little.
+      Guid:
+        Value: 3dab99ff-b0bc-4af3-a267-0bf6651a3d38
+    - Text: 'Now try it! [Use Ctrl to switch between camera modes, hold A and D to
+        control your speed, and a Pipe to turn yourself around]'
+      Guid:
+        Value: 30b2ed7f-4578-4151-952f-95d18941d04a
     Speaker: Tutorial
     Guid:
-      Value: 63e9130e-d646-41c5-8789-6983111c47ab
+      Value: 3523f7cd-9af5-406e-aad7-a60bc2007d7d
   Guid:
-    Value: 8b4e0407-17b0-42dd-b6c3-5bb53082fe5e
+    Value: 6671eada-84d2-4086-8eea-64fa4dcb9033

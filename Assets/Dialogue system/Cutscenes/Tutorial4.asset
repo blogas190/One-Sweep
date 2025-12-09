@@ -15,14 +15,27 @@ MonoBehaviour:
   Title: Tutorial 4
   Exchanges:
   - Lines:
-    - Text: To dash press SHIFT
+    - Text: "Wasn't that great! And it's not even all Cleanboard\u2122 can do!"
       Guid:
-        Value: 964e33f0-1d71-4f98-a52b-94f44a92af4c
-    - Text: Using a dash you can go further in the air or pass through some obstacles
+        Value: ffc8976f-c7ee-4813-b5d0-043d39e6f807
+    - Text: Our research team has placed AA battery in it which allows you to use
+        some of its charge to perform feats you wouldn't be capable of on your run
+        of the mill board!
       Guid:
-        Value: e687f600-5aad-4f67-b700-b5c0f2b4c746
+        Value: 66eff69c-f917-40cd-b6a5-e5e9e6cd3f6c
+    - Text: Let's say you need to reach the exit right there! But oh no, George and
+        Jimmy are blocking the way!
+      Guid:
+        Value: 3a1a2952-3edc-4f38-a12a-b4660b841bff
+    - Text: Worry not, as you can simply DASH through people! Or well, use dash to
+        gain some speed.
+      Guid:
+        Value: b7b2e38f-ca6b-4506-b9c7-fd2bf512991a
+    - Text: 'Now try it! [Press SHIFT to Dash]'
+      Guid:
+        Value: 53152756-be9b-43c6-bed5-822311f7902f
     Speaker: Tutorial
     Guid:
-      Value: a6996c1a-ba08-4492-835c-46e70d04f01b
+      Value: 72b273a0-fc16-43c9-9c51-d5348d8927f5
   Guid:
-    Value: aaaa7e0c-604b-4496-959b-d7ccdd056f20
+    Value: d6ed0c11-2d7a-4c89-b296-b836064a915d

@@ -5,112 +5,247 @@ using MoreMountains.Tools;
 
 public class PlayerMovement : MonoBehaviour
 {
+    // ============================================================
+    // DEBUG & TESTING
+    // ============================================================
+    [Tooltip("Enable testing mode for easier direction changes")]
     public bool isTesting = false;
-    [Header("Player Reference")]
+
+    // ============================================================
+    // REFERENCES
+    // ============================================================
+    [Header("References")]
+    [Tooltip("Reference to the GameStates manager")]
     public GameStates gameStates;
+
+    [Tooltip("Reference to the player GameObject")]
     public GameObject player;
-    private MeshRenderer p_renderer;
-    public MeshRenderer Renderer => p_renderer;
+
+    [Tooltip("Reference to the rail detection object")]
     public GameObject railCheck;
-    private Rigidbody p_rb;
+
+    [Tooltip("Reference to the GameManager")]
     public GameManager gameManager;
+
+    [Tooltip("Player animator component")]
     public Animator animator;
 
+    [Tooltip("Energy controller for ability costs")]
+    public EnergyController energy;
+
+    private Rigidbody p_rb;
+
+    // ============================================================
+    // FEEDBACKS
+    // ============================================================
     [Header("Feedbacks")]
+    [Tooltip("Feedback played when dash starts")]
     public MMFeedbacks DashFeedbackStart;
+
+    [Tooltip("Feedback played when dash ends")]
     public MMFeedbacks DashFeedbackEnd;
 
+    [Tooltip("Feedback played when vertical dash starts")]
     public MMFeedbacks VerticalDashFeedbackStart;
+
+    [Tooltip("Feedback played when vertical dash ends")]
     public MMFeedbacks VerticalDashFeedbackEnd;
 
+    [Tooltip("Feedback played when jumping")]
     public MMFeedbacks JumpFeedback;
+
+    [Tooltip("Feedback played when jump is reset/ready")]
     public MMFeedbacks JumpResetFeedback;
 
+    [Tooltip("Feedback played when entering a rail")]
     public MMFeedbacks RailFeedbackStart;
+
+    [Tooltip("Feedback played when exiting a rail")]
     public MMFeedbacks RailFeedbackEnd;
 
+    // ============================================================
+    // SPEED SETTINGS
+    // ============================================================
     [Header("Speed Settings")]
+    [Tooltip("Initial movement speed when starting to move")]
     public float startSpeed = 5f;
+
+    [Tooltip("Maximum movement speed achievable")]
     public float maxSpeed = 15f;
+
+    [Tooltip("Rate at which speed increases per second")]
     public float accelerationRate = 1f;
+
+    [Tooltip("Maximum acceleration rate when boosting")]
     public float accelerationMax = 2f;
 
+    [Tooltip("How fast you lose speed while being in air")]
+    public float airSpeedLoss = 1f;
+    // ============================================================
+    // JUMP SETTINGS
+    // ============================================================
     [Header("Jump Settings")]
+    [Tooltip("Upward force applied when jumping")]
     public float jumpForce = 10f;
+
+    [Tooltip("Vertical force applied during wall jump")]
     public float wallJumpForceVertical = 20f;
+
+    [Tooltip("Horizontal force applied during wall jump")]
     public float wallJumpForceHorizontal = 20f;
 
+    [Tooltip("Gravity multiplier at jump apex for hang time (lower = more float)")]
+    [Range(0.1f, 1f)]
+    public float jumpGravityModifier = 0.3f;
+
+    [Tooltip("Time after leaving ground where player can still jump (seconds)")]
+    [Range(0f, 0.5f)]
+    public float coyoteTime = 0.15f;
+
+    [Tooltip("Cooldown between wall jumps to prevent spam (seconds)")]
+    [Range(0f, 1f)]
+    public float wallJumpCooldown = 0.3f;
+
+    // ============================================================
+    // DASH SETTINGS
+    // ============================================================
     [Header("Dash Settings")]
+    [Tooltip("Force applied when dashing on ground")]
     public float groundDashForce = 200f;
+
+    [Tooltip("Force applied when dashing in air")]
     public float airDashForce = 200f;
+
+    [Tooltip("Duration of ground dash (seconds)")]
     public float dashTime = 1f;
+
+    [Tooltip("Duration of air dash (seconds)")]
     public float airDashTime = 1f;
-    public int dashNumber = 3;
+
+    [Tooltip("Speed boost added after dash")]
     public float speedBuff = 5f;
 
+    // ============================================================
+    // RAIL SETTINGS
+    // ============================================================
     [Header("Rail Settings")]
+    [Tooltip("Speed bonus added when on rail")]
     public float railSpeed = 20f;
+
+    [Tooltip("Vertical offset for detecting rail entry")]
     public float railCheckOffset = 1.5f;
+
+    [Tooltip("Vertical offset for player position on rail")]
     public float railOffset = 1.8f;
 
+    // ============================================================
+    // STICKY SURFACE SETTINGS
+    // ============================================================
     [Header("Sticky Surface Settings")]
+    [Tooltip("Movement speed on sticky surfaces")]
     public float stickySurfaceSpeed = 10f;
-    public float stickyGravityMultiplier = 0.2f; // Reduced gravity on sticky surfaces
 
+    [Tooltip("Gravity multiplier on sticky surfaces (lower = less gravity)")]
+    [Range(0f, 1f)]
+    public float stickyGravityMultiplier = 0.2f;
+
+    // ============================================================
+    // GROUND CHECK SETTINGS
+    // ============================================================
     [Header("Ground Check Settings")]
+    [Tooltip("Layer mask for ground detection")]
     public LayerMask groundLayer;
+
+    [Tooltip("Transform position for ground check sphere")]
     public Transform groundCheck;
+
+    [Tooltip("Radius of ground check sphere")]
     public float groundCheckRadius = 0.2f;
 
-    private bool onStickySurface = false;
-    private Vector3 stickySurfaceNormal;
-
+    // ============================================================
+    // PRIVATE STATE VARIABLES
+    // ============================================================
+    // Movement State
     private float direction = 0f;
     private float lastDirection = 0f;
     private bool moveLeft = false;
-    private bool moveRight = false; // by default
+    private bool moveRight = false;
+    private float speed;
+    private bool movementEnabled = true;
+    private float prevAccelerationRate;
+
+    // Input State
     private bool jump = false;
     private bool dash = false;
     private bool verticalDash = false;
-    private float speed;
+
+    // Surface State
     private bool onRail = false;
     private bool onWall = false;
+    private bool onStickySurface = false;
+    private Vector3 stickySurfaceNormal;
+
+    // Timers & Counters
     private float currentDashTime = 0f;
+    private float coyoteTimeCounter = 0f;
+    private float wallJumpCooldownTimer = 0f;
+
+    // Physics & Effects
     private Vector3 dashVector;
-    private bool movementEnabled = true;
-    private float prevAccelerationRate;
+    private bool hasReducedGravity = false;
+    private float startGravity = -25f;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        p_renderer = GetComponent<MeshRenderer>();
-        p_renderer.material.color = Color.green;
-
         p_rb = GetComponent<Rigidbody>();
+        energy = GetComponent<EnergyController>();
         speed = startSpeed;
         prevAccelerationRate = accelerationRate;
-
+        startGravity = Physics.gravity.y;
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-        //checking if the player failed
-        if(gameStates != null && gameStates.deathState)
+        if (CheckDeathState()) return;
+        UpdateRailMovement();
+        UpdateMovementConstraints();
+        UpdateStickySurface();
+        UpdateRotation();
+        UpdateAcceleration();
+        UpdateVelocity();
+        UpdateCoyoteTime();
+        HandleJump();
+        UpdateGravityModifiers();
+        HandleDash();
+    }
+
+    //--------------------FixedUpdate Functions----------------------------
+
+    private bool CheckDeathState()
+    {
+        if (gameStates != null && gameStates.deathState)
         {
+            // Reset all input flags
             moveLeft = false;
             moveRight = false;
             jump = false;
             dash = false;
 
-            //lastSpeed = speed;
-            //speed = 0f;
-            //p_rb.linearVelocity = Vector3.zero;
-            p_rb.constraints = RigidbodyConstraints.FreezeAll;
-            return;
+            // Freeze X and Z movement, but allow Y (falling)
+            p_rb.constraints = RigidbodyConstraints.FreezePositionX |
+                              RigidbodyConstraints.FreezePositionZ |
+                              RigidbodyConstraints.FreezeRotation;
+
+            return true; // Exit FixedUpdate early
         }
 
+        return false; // Continue with normal update
+    }
 
+    private void UpdateRailMovement()
+    {
         if (onRail && railCheck.GetComponent<RailCheck>().currentRail != null)
         {
             RailMovement(railCheck.GetComponent<RailCheck>().currentRail);
@@ -121,57 +256,111 @@ public class PlayerMovement : MonoBehaviour
             pos.z = 0f;
             transform.position = pos;
         }
+    }
 
-
+    private void UpdateMovementConstraints()
+    {
         if (!movementEnabled)
         {
             p_rb.constraints = RigidbodyConstraints.FreezeAll;
         }
+    }
 
+    private void UpdateStickySurface()
+    {
         if (onStickySurface)
         {
             StickySurfaceMovement();
         }
+    }
 
-        if (moveLeft) { transform.rotation = Quaternion.Euler(0f, 180f, 0f); } // temporary decision, fix later so it only flips on input in a seperate function
-        if (moveRight) { transform.rotation = Quaternion.Euler(0f, 0f, 0f); }
-        //acceleration
-        if (Grounded() && (moveLeft || moveRight))
+    private void UpdateRotation()
+    {
+        if (moveLeft)
         {
-            if (speed < startSpeed)
-            {
-                speed = startSpeed;
-            }
-            else if (speed > maxSpeed)
-            {
-                speed = maxSpeed;
-            }
-            else
-            { speed += accelerationRate * Time.fixedDeltaTime; }
+            transform.localScale = new Vector3(-1, transform.localScale.y, transform.localScale.z);
         }
+
+        if (moveRight)
+        {
+            transform.localScale = new Vector3(1, transform.localScale.y, transform.localScale.z);
+        }
+    }
+
+    private void UpdateAcceleration()
+    {
         animator.SetFloat("Speed", speed);
 
-        // Updated movement that uses Unity physics and fixes wall collisions
+        if (speed < startSpeed)
+        {
+            speed = startSpeed;
+        }
+        else if (speed > maxSpeed)
+        {
+            speed = maxSpeed;
+        }
+
+        if (Grounded() && (moveLeft || moveRight))
+        {
+            speed += accelerationRate * Time.fixedDeltaTime;
+        }
+        else if (!Grounded() && (moveLeft || moveRight))
+        {
+            speed -= airSpeedLoss * Time.fixedDeltaTime;
+        }
+    }
+
+    private void UpdateVelocity()
+    {
         Vector3 velocity = p_rb.linearVelocity;
         if ((moveLeft || moveRight) && Grounded() && !dash || onRail)
         {
             velocity.x = direction * speed;
         }
         p_rb.linearVelocity = velocity;
+    }
 
-        //Jump logic
+    private void UpdateCoyoteTime()
+    {
+        // Coyote time logic
+        if (Grounded())
+        {
+            coyoteTimeCounter = coyoteTime; // Reset counter when grounded
+        }
+        else
+        {
+            coyoteTimeCounter -= Time.fixedDeltaTime; // Count down when in air
+        }
+
+        if (wallJumpCooldownTimer > 0f)
+        {
+            wallJumpCooldownTimer -= Time.fixedDeltaTime;
+        }
+    }
+
+    private void HandleJump()
+    {
         if (jump)
         {
-            if (Grounded())
+            if (coyoteTimeCounter > 0f)
             {
                 JumpResetFeedback.PlayFeedbacks();
                 p_rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
                 JumpFeedback.PlayFeedbacks();
+                gameStates.MultVerticalGravity(jumpGravityModifier);
+                hasReducedGravity = true;
                 animator.SetTrigger("Jump");
+                coyoteTimeCounter = 0f;
                 jump = false;
             }
-            if (onWall) // can add feedbacks here should work like jump, just smoke in a different place
+            else if (onWall && wallJumpCooldownTimer <= 0f) // Changed to else if so it doesn't check wall jump after successful ground jump
             {
+                if (hasReducedGravity)
+                {
+                    gameStates.MultVerticalGravity(1f / jumpGravityModifier);
+                    hasReducedGravity = false;
+                }
+
                 if (moveLeft)
                 {
                     Vector3 wallJumpVector = new Vector3(-wallJumpForceHorizontal, wallJumpForceVertical, 0f);
@@ -182,24 +371,53 @@ public class PlayerMovement : MonoBehaviour
                     Vector3 wallJumpVector = new Vector3(wallJumpForceHorizontal, wallJumpForceVertical, 0f);
                     p_rb.AddForce(wallJumpVector, ForceMode.Impulse);
                 }
+                wallJumpCooldownTimer = wallJumpCooldown;
                 jump = false;
             }
-            if (onStickySurface)
+            else if (onStickySurface)
             {
                 StopStickySurface();
-
-                // Apply normal jump force
+                gameStates.MultVerticalGravity(jumpGravityModifier);
                 p_rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
                 jump = false;
-                return; // Exit early since we handled the sticky surface jump
+                return;
             }
             else
             {
                 jump = false;
             }
         }
+    }
 
-        //Dash logic
+    private void UpdateGravityModifiers()
+    {
+        // Safety check: Reset gravity if grounded and it's still reduced (shouldn't happen)
+        if (Grounded() && hasReducedGravity)
+        {
+            gameStates.MultVerticalGravity(1f / jumpGravityModifier);
+            hasReducedGravity = false;
+            Debug.LogWarning("Gravity was stuck reduced - force reset to normal");
+        }
+
+        if (!Grounded() && p_rb.linearVelocity.y > -0.5f && p_rb.linearVelocity.y < 0.5f)
+        {
+            // Near the peak - reduce gravity for hang time
+            if (Physics.gravity.y == startGravity)
+            {
+                gameStates.MultVerticalGravity(jumpGravityModifier);
+                hasReducedGravity = true;
+            }
+        }
+        else if (hasReducedGravity && !Grounded())
+        {
+            // Reset when leaving the apex (but not grounded yet)
+            gameStates.MultVerticalGravity(1f / jumpGravityModifier);
+            hasReducedGravity = false;
+        }
+    }
+
+    private void HandleDash()
+    {
         if (dash)
         {
             currentDashTime -= Time.fixedDeltaTime;
@@ -211,6 +429,7 @@ public class PlayerMovement : MonoBehaviour
                 dash = false;
                 p_rb.constraints = RigidbodyConstraints.None;
                 p_rb.constraints = RigidbodyConstraints.FreezeRotation;
+                energy.RemoveEnergy(energy.dashEnergy);
                 DashFeedbackEnd.PlayFeedbacks();
                 Debug.Log("Dash ended");
             }
@@ -227,13 +446,12 @@ public class PlayerMovement : MonoBehaviour
             }
         }
     }
-
     //--------------------Player Movement----------------------------------
 
     public void Move(InputAction.CallbackContext context)
     {
         //Checking for player input using unity's input system
-        if (context.performed)
+        if (context.performed && gameManager.currentState == GameState.playing)
         {
             if (isTesting)
             {
@@ -355,7 +573,7 @@ public class PlayerMovement : MonoBehaviour
 
     public void Dash(InputAction.CallbackContext context)
     {
-        if (context.performed && !dash && dashNumber >= 1)
+        if (context.performed && !dash && energy.currentEnergy >= energy.dashEnergy)
         {
             float dashDirection = (moveLeft || moveRight) ? direction : lastDirection;
             if (Grounded())
@@ -371,7 +589,6 @@ public class PlayerMovement : MonoBehaviour
             p_rb.AddForce(dashVector, ForceMode.Impulse);
 
             dash = true;
-            dashNumber--;
             if (speed < maxSpeed) { speed += speedBuff; }
             Debug.Log("Dash started");
             DashFeedbackStart.PlayFeedbacks();
@@ -381,17 +598,33 @@ public class PlayerMovement : MonoBehaviour
 
     public void VerticalDash(bool isUp, float verticalDashForce, float verticalDashTime, bool usesEnergy = true, bool callFeedback = true)
     {
-        if (dashNumber >= 1)
+        if (energy.currentEnergy >= energy.upTrickEnergy)
         {
-            if (isUp)   { dashVector = Vector3.up * verticalDashForce; }
-            else { dashVector = Vector3.down * verticalDashForce; }
+            if (isUp)   
+            { 
+                dashVector = Vector3.up * verticalDashForce;
+                if (!hasReducedGravity)
+                { 
+                    gameStates.MultVerticalGravity(jumpGravityModifier);
+                    hasReducedGravity = true;
+                }
+            }
+            else 
+            { 
+                dashVector = Vector3.down * verticalDashForce;
+                if (hasReducedGravity)
+                {
+                    gameStates.MultVerticalGravity(1f / jumpGravityModifier);
+                    hasReducedGravity = false;
+                }
+            }
             currentDashTime = verticalDashTime;
             p_rb.AddForce(dashVector, ForceMode.Impulse);
 
             verticalDash = true;
             if (usesEnergy)
             {
-                dashNumber--;
+                energy.RemoveEnergy(energy.upTrickEnergy);
             }
             Debug.Log("Vertical Dash started");
             if (callFeedback)

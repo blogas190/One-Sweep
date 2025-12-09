@@ -15,14 +15,24 @@ MonoBehaviour:
   Title: TUTORIAL 2
   Exchanges:
   - Lines:
-    - Text: Your goal is to clean all dirt in the room
+    - Text: Great job! Now we must remind you that your duties include cleaning floors,
+        walls, and sometimes even ceilings in this building.
       Guid:
-        Value: 8eb902ec-758c-410b-b1bb-8c17899a60f5
-    - Text: To clean it you just have to ride over with your hoverboard
+        Value: 88336caf-5694-4483-b2aa-635b1cc1b405
+    - Text: "And this is exactly what Cleanboard\u2122 is for! Ride on top of any
+        spots of dirt you can *spot* and it will take care of it."
       Guid:
-        Value: 910b23fd-6cf3-46e5-8194-1d855ac1f1b5
+        Value: e2929c03-a915-424a-bd5f-40b4fdb71cfe
+    - Text: Due to a recent lawsuit, we must clarify that failing to clean at least
+        80% of the dirt on the floor will lead to termination by disabling the safety
+        systems designed to slow you down at floor's exits.
+      Guid:
+        Value: 2a1df1c0-040c-40b3-a69f-95b9f5a16c35
+    - Text: 'Now try it! [RIDE ON TOP OF THE DIRT TO YOUR RIGHT AND REACH THE EXIT]'
+      Guid:
+        Value: 5c9f8bf1-1e6b-4300-a851-5294138311e8
     Speaker: Tutorial
     Guid:
-      Value: 5601766a-11a5-4799-91f8-39f4e4cffbe0
+      Value: 9279a05b-87d8-40bc-8f25-5ebcea4f944b
   Guid:
-    Value: 7863be6b-66f9-44b0-b2d6-976d13013b7d
+    Value: 2a639c6c-46b9-4fd6-8804-ac7b1aba8db9

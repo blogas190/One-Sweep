@@ -4,17 +4,23 @@ TITLE: Tutorial 1
 
 NAME: Tutorial
 
-To start moving press A or D
-Once you start to move, you cannot stop!
+Greetings, employee of GreatCorp™! [PRESS SPACE TO CONTINUE]
+And welcome to our newest development in VR training technology - CleanSky™. Here you will learn how to best perform your duties as __ASSISTANT CLEANBOARD™ JANITOR__ !
+First and foremost, we must inform you that due to the experimental nature of Cleanboard™, once you start moving you cannot stop or even turn around!
+However, once you reach any of our HQ's floor exits, be it elevators, like the one to your left, or gates, like the one to your right, our security systems will safely stop your movement.
+This means that you have to reach the exit in One Sweep™ in case you don't wish to suffer horrific damage to your body by accelerating into a wall!
+Now try it! [PRESS A or D to start moving in a direction]
 /
 /
 
-TITLE: TUTORIAL 2
+TITLE: Tutorial 2
 
 NAME: Tutorial
 
-Your goal is to clean all dirt in the room
-To clean it you just have to ride over with your hoverboard
+Great job! Now we must remind you that your duties include cleaning floors, walls, and sometimes even cellings of this building.
+And this is exactly what Cleanboard™ is for! Ride on top of any spots of dirt you can *spot* and it will take care of it.
+Due to a recent lawsuit, we must clarify that failing to clean at least 80% of the dirt on the floor will lead to termination by disabling the safety systems designed to slow you down at floor's exits.
+Now try it! [RIDE ON TOP OF THE DIRT TO YOUR RIGHT AND REACH THE EXIT]
 /
 /
 
@@ -22,9 +28,13 @@ TITLE: Tutorial 3
 
 NAME: Tutorial
 
-To jump, press SPACE
-If you land on a rail, you initiate a rail grind
-
+Wow! You are a natural __ASSISTANT CLEANBOARD™ JANITOR__ !
+As you might have noticed on your way here, the recent developments in gravitational and howering technologies massively influenced the design of our HQ.
+Unfortunately, Cleanboard™ does conflicts with gravtech or rocket boots.
+This means that you can sometimes encounter places you just have to jump over!
+However, not all is lost, as many features of our HQ can be used to go over obstacles or our open floor design!
+Like our beautiful Rail over there!
+Now try it! [Jump on the rail with SPACE to get to the other side]
 /
 /
 
@@ -32,9 +42,11 @@ TITLE: Tutorial 4
 
 NAME: Tutorial
 
-To dash press SHIFT
-Using a dash you can go further in the air or pass through some obstacles
-
+Wasn't that great! And it's not even all Cleanboard™ can do!
+Our research team has placed AA battery in it which allows you to use some of its charge to perform feats you wouldn't be capable of on your run of the mill board!
+Let's say you need to reach the exit right there! But oh no, George and Jimmy are blocking the way!
+Worry not, as you can simply DASH through people! Or well, use dash to gain some speed.
+Now try it! [Press SHIFT to Dash]
 /
 /
 
@@ -42,8 +54,12 @@ TITLE: Tutorial 5
 
 NAME: Tutorial
 
-Using poles you can turn yourself around
-
+Are you still with us, EMPLOYEE?!
+Sorry for screaming, we were just checking up on some other janitors and one of them just crashed into a cubicle because he did not know these simple tricks!
+You can use vertical pipes and poles to grab onto them and turn yourself around to change your movement direction!
+Also, in case you wish to see the whole floor before moving, the implant we put into you gives you access to cameras in the nearest vicinity!
+And if you need some time to think before making a move, don't forget that you can control the speed of your movement, even if just a little.
+Now try it! [Use Ctrl to switch between camera modes, A and D to control your speed, and a Pipe to turn yourself around]
 /
 /
 
@@ -51,37 +67,26 @@ TITLE: Tutorial 6
 
 NAME: Tutorial
 
-These walls can be jumped from
-Also, while in the air you can perform a trick!
-Pressing W while in the air will give you a slight boost up
-
+We are almost done, dear __ASSISTANT CLEANBOARD™ JANITOR__!
+There is one more way to turn youself around, be it more ACROBATIC.
+Some walls, especially in newer parts of our HQ are covered in Revers-o-gel™.
+Most of the employees use it for recreation or head trauma prevention, but you can use it to slow down your fall, turn around, and even jump from them!
+But that's not all your mobility options, as while you are in air you may use your DASH vertically as well!
+Now try it! [Dash vertically with W and S, turn around and jump with Revers-o-walls]
 /
 /
 
-TITLE: Tutorial 7
+TITLE: Tutorials 7 
 
 NAME: Tutorial
 
-Pressing S while in the air will slam down to the ground
-
-/
-/
-
-TITLE: Tutorials 8 
-
-NAME: Tutorial
-
-Pressing A while in the air will give you back your dash charge
-
-/
-/
-
-TITLE: Tutorial 9
-
-NAME: Tutorial
-
-And pressing D while in the air will let you clean dirt above and below you
-
+You have already noticed that all those fancy dashes use energy, mentally capable EMPLOYEE!
+So how do you restore it?
+Well you can always find some charged batteries on the floor that will fill your board up with it...
+But you can also charge it by manipulating Cleanboard's™ internal generator, however that would require some time in air.
+And landing while performing this action will lead to your untimely termination.
+And as this is the final bit of company training you shall receive, I have to inform you that you can also temporarily disconnect cleaning parts of your board while in air to clean dirt above and below you at the same time.
+Now try it! [Pick up batteries or use A in air to refill energy, use D in air to clean above and below]
 /
 /
 
@@ -89,10 +94,9 @@ TITLE: End of Tutorial
 
 NAME: Tutorial
 
-Well, now you are ready to start cleaning this messy building!
-Oh, almost forgot
-You can press R to restart the level
-That's it. Go get them!
-
+As I live and consume!
+You did it!
+Congratulations!
+Now it's time for some good and safe work! [Use R to restart a level]
 /
 /

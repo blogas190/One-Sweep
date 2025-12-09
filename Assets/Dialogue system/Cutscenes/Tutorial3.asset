@@ -15,14 +15,34 @@ MonoBehaviour:
   Title: Tutorial 3
   Exchanges:
   - Lines:
-    - Text: To jump, press SPACE
+    - Text: "Wow! You are a natural __ASSISTANT CLEANBOARD\u2122 JANITOR__ !"
       Guid:
-        Value: 4db20500-8d4e-4f74-9516-61e4c411dae1
-    - Text: If you land on a rail, you initiate a rail grind
+        Value: 5c4a6797-6c09-4e1f-8533-8a96c00e68d6
+    - Text: As you might have noticed on your way here, the recent developments in
+        gravitational and hovering technologies have massively influenced the design
+        of our HQ.
       Guid:
-        Value: b38588a4-4556-4539-9e37-d4632fbd7fcf
+        Value: 1e413dac-f214-4c02-a4b2-0cd8594ba84f
+    - Text: "Unfortunately, Cleanboard\u2122 does conflicts with gravtech or rocket
+        boots."
+      Guid:
+        Value: 8d810e93-3e7a-41ed-af96-11ede6198c10
+    - Text: This means that you can sometimes encounter places you just have to jump
+        over!
+      Guid:
+        Value: 0d029d60-608f-41f9-ae5a-2c8732e58341
+    - Text: However, not all is lost, as many features of our HQ can be used to go
+        over obstacles or our open floor design!
+      Guid:
+        Value: 8ece1c2b-59c0-4ab5-85b6-701cf84b1fb3
+    - Text: Like our beautiful Rail over there!
+      Guid:
+        Value: 1c1c0c34-8642-4316-9d7f-7915a9cfe851
+    - Text: 'Now try it! [Jump on the rail with SPACE to get to the other side]'
+      Guid:
+        Value: 6de41b18-6546-4fec-bc54-c6c7dd2cfaff
     Speaker: Tutorial
     Guid:
-      Value: d71fc181-db25-4437-b8b4-07b5ea41dae8
+      Value: 9937f51f-888a-492b-af59-05d1348ab9a9
   Guid:
-    Value: f0c11baa-09e5-4943-860a-70d7076168b7
+    Value: 7fc6812c-3f7c-4847-bf22-cb62b5942df6

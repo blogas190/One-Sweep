@@ -13,6 +13,7 @@ public class DebugController : MonoBehaviour
     private float lastUpdateTime;
     private Rigidbody playerRb;
     private PlayerMovement playerMovement;
+    private EnergyController energy;
 
     void Start()
     {
@@ -30,6 +31,7 @@ public class DebugController : MonoBehaviour
         {
             playerMovement = player.GetComponent<PlayerMovement>();
             playerRb = player.GetComponent<Rigidbody>();
+            energy = player.GetComponent<EnergyController>();
         }
 
         // Find debug text automatically if not assigned
@@ -68,8 +70,8 @@ public class DebugController : MonoBehaviour
             debugInfo += $"Starting Speed: {playerMovement.startSpeed:F2}\n";
             debugInfo += $"Maximum Speed: {playerMovement.maxSpeed:F2}\n";
             debugInfo += $"Grounded: {playerMovement.Grounded()}\n";
+            debugInfo += $"Current Energy: {energy.currentEnergy:F2}\n";
             debugInfo += $"Actual Velocity: {playerMovement.GetMagnitude()}\n";
-            debugInfo += $"Dashes Remaining: {playerMovement.dashNumber}\n";
             debugInfo += $"Acceleratiion rate: {playerMovement.accelerationRate}\n";
         }
 

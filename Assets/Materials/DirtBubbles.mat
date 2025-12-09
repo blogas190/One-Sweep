@@ -29,7 +29,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 6333bf1836456f948b7e869afd975ee0, type: 3}
+        m_Texture: {fileID: 2800000, guid: 5f8b107c81dbefe4b9ca14a509e1b850, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MaskTex:
@@ -61,7 +61,7 @@ Material:
     - _DomeSmoothness: 0.6
     - _DomeSpecular: 0.34
     - _EdgeFadeWidth: 0
-    - _EmissionStrength: 0.72
+    - _EmissionStrength: 0.24
     - _PuddleDensity: 8
     - _PuddleScale: 5
     - _QueueControl: 0

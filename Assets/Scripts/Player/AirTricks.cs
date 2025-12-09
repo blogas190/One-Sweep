@@ -1,24 +1,35 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Collections;
+using MoreMountains.Feedbacks;
+using MoreMountains.Tools;
 
 public class AirTricks : MonoBehaviour
 {
+    [Header("Trick Settings")]
     public float upTrickForce = 500f;
     public float upTrickTime = 0.1f;
+    public float upTrickGravityMod = 0.4f;
     public float downTrickForce = 1000f;
     public float downTrickTime = 0.1f;
     public float cleanTime = 1f;
     private float currentCleanTime;
     public float cleanBuff = 500000f;
     public float cleanGravityMod = 0.3f;
+    public float leftTrickTime = .75f;
 
+    [Header("Feedbacks")]
+    public MMFeedbacks RightTrickFeedbackStart;
+    public MMFeedbacks LeftTrickFeedback;
+    
+    [Header("References")]
     public RailCheck railCheck;
     public Animator animator;
 
     private PlayerMovement player;
     private GameStates states;
     private PlayerController controller;
+    private EnergyController energy;
     private float animationDelay;
     private float directionX = 0f;
     private float directionY = 0f;
@@ -33,6 +44,7 @@ public class AirTricks : MonoBehaviour
         player = GetComponent<PlayerMovement>();
         states = FindAnyObjectByType<GameStates>();
         controller = GetComponent<PlayerController>();
+        energy = GetComponent<EnergyController>();
     }
 
     void Update()
@@ -49,7 +61,6 @@ public class AirTricks : MonoBehaviour
     //Coroutine starter. Later this can used for animation timing as well
     private void SetAnimation(Color color, float delay)
     {
-        player.Renderer.material.color = color;
         StartCoroutine(RevertAnimationAfterDelay(delay));
     }
 
@@ -91,20 +102,22 @@ public class AirTricks : MonoBehaviour
 
         //animationDelay = 1f;
         //SetAnimation(Color.purple, animationDelay);
-        player.VerticalDash(true, upTrickForce, upTrickTime); // going up
+        if(energy.currentEnergy >= energy.upTrickEnergy)
+        {
+            player.VerticalDash(true, upTrickForce, upTrickTime); // going up
+        }
         //Debug.Log("Air Trick Up!");
         ////Dash reset. Change to max 1 later
         //if(player.dashNumber < 3) player.dashNumber++;
-
     }
 
     private void AirTrickLeft() // regain dashes
     {
-
-        animationDelay = 1f;
-        SetAnimation(Color.red, animationDelay);
         Debug.Log("Air Trick Left!");
-        if(player.dashNumber < 3) player.dashNumber++;
+        StartCoroutine(RevertAnimationAfterDelay(leftTrickTime));
+        animator.SetTrigger("LeftTrick");
+        LeftTrickFeedback.PlayFeedbacks();
+        energy.AddEnergy(energy.leftTrickEnergy);
     }
 
     private void AirTrickRight() // cleaning nuke
@@ -112,20 +125,27 @@ public class AirTricks : MonoBehaviour
         //SetAnimation(Color.yellow, animationDelay);
         //Debug.Log("Air Trick Right!");
         //if(player.dashNumber < 3) player.dashNumber++;
-        prevLengthUp = controller.lengthDetectUp;
-        prevLengthDown = controller.lengthDetectDown;
-
-        states.MultVerticalGravity(cleanGravityMod);
-        if (player.dashNumber >= 1)
+        if (energy.currentEnergy >= energy.rightTrickEnergy)
         {
+            prevLengthUp = controller.lengthDetectUp;
+            prevLengthDown = controller.lengthDetectDown;
+
+            states.MultVerticalGravity(cleanGravityMod);
+        
             BigClean(cleanTime);
+            animator.SetTrigger("TrickClean");
+            energy.RemoveEnergy(energy.rightTrickEnergy);
         }
+
     }
 
     private void AirTrickDown()
     {
-        player.VerticalDash(false, downTrickForce, downTrickTime); // going down
-        animator.SetTrigger("TrickDown");
+        if(energy.currentEnergy >= energy.downTrickEnergy)
+        {
+            player.VerticalDash(false, downTrickForce, downTrickTime); // going down
+            animator.SetTrigger("TrickDown");   
+        }
     }
 
     private IEnumerator RevertAnimationAfterDelay(float delay)
@@ -133,15 +153,12 @@ public class AirTricks : MonoBehaviour
         trickInProgress = true;
 
         yield return new WaitForSeconds(delay);
-        player.Renderer.material.color = Color.green;
 
         trickInProgress = false;
     }
 
     void BigClean(float cleanTime)
     {
-
-        player.Renderer.material.color = Color.yellow;
         controller.lengthDetectUp = cleanBuff;
         controller.lengthDetectDown = cleanBuff;
 
@@ -152,8 +169,9 @@ public class AirTricks : MonoBehaviour
     {
         trickInProgress = true;
 
+        RightTrickFeedbackStart.PlayFeedbacks();
+
         yield return new WaitForSeconds(delay);
-        player.Renderer.material.color = Color.green;
 
         controller.lengthDetectUp = prevLengthUp;
         controller.lengthDetectDown = prevLengthDown;
@@ -161,5 +179,7 @@ public class AirTricks : MonoBehaviour
         float gravityBack;
         gravityBack = (1 / cleanGravityMod);
         states.MultVerticalGravity(gravityBack);
+
+        RightTrickFeedbackStart.StopFeedbacks();
     }
 }

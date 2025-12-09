@@ -1,5 +1,4 @@
 using Michsky.UI.Reach;
-using UnityEditor.Rendering;
 using UnityEngine;
 
 public class UIManager : MonoBehaviour
@@ -19,6 +18,18 @@ public class UIManager : MonoBehaviour
         pauseMenu.Hide();
         levelComplete.Hide();
         hud.Show();
+    }
+
+    void Update()
+    {
+        if (GameManager.instance.currentState != GameState.playing)
+        {
+            hud.Hide();
+        }
+        else if (GameManager.instance.currentState == GameState.playing)
+        {
+            hud.Show();
+        }
     }
 
     public void TogglePause()

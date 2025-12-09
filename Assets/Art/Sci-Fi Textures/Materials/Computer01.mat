@@ -52,6 +52,10 @@ Material:
         m_Texture: {fileID: 2800000, guid: cca1a2ffab33c1c4684ea446e8e62683, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _MainTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
     - _EmissionScaleUI: 0.4

@@ -30,7 +30,8 @@ public class MainMenu : MonoBehaviour
 
     public void OnPlay()
     {
-        SceneManager.LoadScene("Tutorial Level 1");
+        SceneManager.LoadScene("New Tutorial Level 1");
+        GameManager.instance.ResumeGame();
         //Later change to proper level select and load;
     }
 }

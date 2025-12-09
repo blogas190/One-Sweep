@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Characters
   m_EditorClassIdentifier: 
   _characterList:
-  - Name: Test Radio
-    Photo: {fileID: 2800000, guid: 747dae6c3fe865e40a8d97aa632b1b09, type: 3}
+  - Name: Tutorial
+    Photo: {fileID: 2800000, guid: 94958bd93134605488e8a900355b43dd, type: 3}

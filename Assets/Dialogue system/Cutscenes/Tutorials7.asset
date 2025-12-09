@@ -1,0 +1,49 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d2a9460aae1c4420a415466d1db880f, type: 3}
+  m_Name: Tutorials7
+  m_EditorClassIdentifier: 
+  Title: Tutorials 7
+  Exchanges:
+  - Lines:
+    - Text: You have already noticed that all those fancy dashes use energy, mentally
+        capable EMPLOYEE!
+      Guid:
+        Value: c109b710-b4f9-45f3-ae04-bf1eed52d0f2
+    - Text: So how do you restore it?
+      Guid:
+        Value: 93f47df7-4911-4d38-aa88-99dc643eb09c
+    - Text: Well, you can always find some charged batteries on the floor that will
+        fill your board up with it...
+      Guid:
+        Value: b1dae123-191a-4393-ab1d-c3928190a729
+    - Text: "But you can also charge it by manipulating Cleanboard's\u2122 internal
+        generator, however that would require some time in air."
+      Guid:
+        Value: 5080be12-5e3e-49b1-8bf4-7d1114c0d8e5
+    - Text: And landing while performing this action will lead to your untimely termination.
+      Guid:
+        Value: 448db615-856c-493f-b579-57765f983849
+    - Text: And as this is the final bit of company training you shall receive, I
+        must inform you that you can also temporarily disconnect cleaning parts of
+        your board while in air to clean dirt above and below you at the same time.
+      Guid:
+        Value: 6390c493-5e6e-485f-86ad-c347bcb579b4
+    - Text: 'Now try it! [Pick up batteries or use A in air to refill energy, use
+        D in air to clean above and below]'
+      Guid:
+        Value: 326474dc-e8bb-4b06-a123-2ddb6950e0d7
+    Speaker: Tutorial
+    Guid:
+      Value: e0ae7eca-7e36-4f36-9d90-dd052138c34e
+  Guid:
+    Value: 36d8025f-c087-448f-9fbb-fa6f5e8d08b1

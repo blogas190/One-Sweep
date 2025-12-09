@@ -3,7 +3,37 @@ guid: a460845adb0ce224e8c5374d72c71f68
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Main
+    second: {fileID: 2100000, guid: 276f9413458c79d4da972431efc775a2, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Screen
+    second: {fileID: 2100000, guid: c314bc2790f5e3b4c96df134c19559e6, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: plastic2
+    second: {fileID: 2100000, guid: 24ecb5eec31d37e45a17537e4f95fa53, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: plastic3
+    second: {fileID: 2100000, guid: 84fe83f1cc32e76409f042c0365d6d67, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: plastic_bit1
+    second: {fileID: 2100000, guid: 54d95d5b659920a40ad0b0982a5dbe3a, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: side_thing
+    second: {fileID: 2100000, guid: 25946ba80df975e429687cf771267d8b, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

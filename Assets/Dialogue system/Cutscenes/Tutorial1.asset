@@ -15,14 +15,34 @@ MonoBehaviour:
   Title: Tutorial 1
   Exchanges:
   - Lines:
-    - Text: To start moving press A or D
+    - Text: "Greetings, employee of GreatCorp\u2122! [PRESS SPACE TO CONTINUE]"
       Guid:
-        Value: 3132ffbe-e6f6-4451-bf70-349535682a44
-    - Text: Once you start to move, you cannot stop!
+        Value: 04e21563-a41d-4585-8836-f60024b4b499
+    - Text: "And welcome to our newest development in VR training technology - CleanSky\u2122.
+        Here you will learn how to best perform your duties as __ASSISTANT CLEANBOARD\u2122
+        JANITOR__ !"
       Guid:
-        Value: c6f686e9-3cb4-4288-b4e0-aac73f7992f0
+        Value: 05b19ae6-97d6-49cd-a151-1dfac6ed87a9
+    - Text: "First and foremost, we must inform you that due to the experimental
+        nature of Cleanboard\u2122, once you start moving you cannot stop or even
+        turn around!"
+      Guid:
+        Value: 927548ed-fa96-4c47-988c-74d581e1155c
+    - Text: However, once you reach any of our HQ's floor exits, be it elevators,
+        like the one to your left, or gates, like the one to your right, our security
+        systems will safely stop your movement.
+      Guid:
+        Value: 94b75294-af95-4011-8bed-9cee395a92ca
+    - Text: "This means that you must reach the exit in One Sweep\u2122 in case you
+        don't wish to suffer horrific damage to your body by accelerating into a
+        wall!"
+      Guid:
+        Value: 5cab4b35-fc88-468f-a91a-72d91de3d80e
+    - Text: 'Now try it! [PRESS A or D to start moving in a direction]'
+      Guid:
+        Value: d7a406d9-ed02-4959-a7b2-7510ad7ca53d
     Speaker: Tutorial
     Guid:
-      Value: 2cf31615-0832-472c-a4cb-694b5ec596ef
+      Value: 2b62c5e4-1902-4108-9d61-2b2a0f911b0a
   Guid:
-    Value: cd53c06c-9d29-460a-92d2-6d616f0d0c57
+    Value: 48204b19-0c84-427a-8e7f-2251b6dc1fe6

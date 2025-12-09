@@ -15,20 +15,20 @@ MonoBehaviour:
   Title: End of Tutorial
   Exchanges:
   - Lines:
-    - Text: Well, now you are ready to start cleaning this messy building!
+    - Text: As I live and consume!
       Guid:
-        Value: 0b9a8538-569d-4c79-abb5-34ba711c2147
-    - Text: Oh, almost forgot
+        Value: 03be1a35-f591-4024-bf2b-999dfaef2961
+    - Text: You did it!
       Guid:
-        Value: a9ead225-70de-434c-b2c5-69696fa1bee2
-    - Text: You can press R to restart the level
+        Value: d94e946b-abc0-41fd-ab39-342ba392e556
+    - Text: Congratulations!
       Guid:
-        Value: 5aca1dad-0b48-4710-ac29-0f5f6bebf043
-    - Text: That's it. Go get them!
+        Value: f1e9c6ad-a48c-4bcb-aa3b-a3ac36d553c6
+    - Text: 'Now it''s time for some good and safe work! [Use R to restart a level]'
       Guid:
-        Value: b34d7795-e761-4b87-ab16-2eb4023600d0
+        Value: 110d98a0-9833-4394-8d25-ea18142b766e
     Speaker: Tutorial
     Guid:
-      Value: 408033a0-ec06-4b8a-abcb-d4435a43d57a
+      Value: 37ba1e6f-70fc-4278-8ee4-6b3b3752e76a
   Guid:
-    Value: 7fa9a75b-d1de-4ead-9104-932446915e68
+    Value: a100a68b-b2b7-4c93-8e99-61bd438e3f69

@@ -5,11 +5,13 @@ public class DeathBox : MonoBehaviour
     private GameStates states;
     private GameObject playerObj;
     private PlayerMovement playerMovement;
+    private Animator animator;
 
     void Start()
     {
         states = FindAnyObjectByType<GameStates>();
         playerObj = GameObject.FindGameObjectWithTag("Player");
+        animator = GetComponent<Animator>();
 
         if (playerObj != null)
         {
@@ -37,9 +39,13 @@ public class DeathBox : MonoBehaviour
             }
             else
             {
-                if (states != null)
+                if (states != null && !states.deathState)
                 {
                     states.StartDeath();
+                    if (animator != null)
+                    {
+                        animator.SetTrigger("Crashed");
+                    }
                 }
                 else
                 {

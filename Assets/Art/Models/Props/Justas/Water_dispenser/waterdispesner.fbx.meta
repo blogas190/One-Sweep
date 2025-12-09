@@ -3,7 +3,22 @@ guid: 0ae7e05f571572040a764ccf149532d2
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Main_body
+    second: {fileID: 2100000, guid: e316881b26bc4ce42a9c1d97ce8c4ccd, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Watter
+    second: {fileID: 2100000, guid: 7e64f983a458525468f4177c5b889bf7, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: nipples
+    second: {fileID: 2100000, guid: 7bfb8f9bb4bcf954b986aa4ba88d29d5, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

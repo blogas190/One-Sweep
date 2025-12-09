@@ -14,7 +14,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 1
   m_IsActive: 1
 --- !u!4 &5598041478823330539
 Transform:
@@ -92,9 +92,37 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -5246420644908670362, guid: 25d6bc54151f8854187c2b30858f9418, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -3739545678706517408, guid: 25d6bc54151f8854187c2b30858f9418, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -3181452503744645242, guid: 25d6bc54151f8854187c2b30858f9418, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 809479738687465538, guid: 25d6bc54151f8854187c2b30858f9418, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 25d6bc54151f8854187c2b30858f9418, type: 3}
       propertyPath: m_Name
       value: Desk_01
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 25d6bc54151f8854187c2b30858f9418, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2155543719479550154, guid: 25d6bc54151f8854187c2b30858f9418, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3319981061746304335, guid: 25d6bc54151f8854187c2b30858f9418, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

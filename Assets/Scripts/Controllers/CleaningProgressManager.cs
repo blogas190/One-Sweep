@@ -125,7 +125,7 @@ public class CleaningProgressManager : MonoBehaviour
     {
         if (totalDirtSpots == 0)
         {
-            cachedTotalProgress = 0f;
+            cachedTotalProgress = 100f;
             return;
         }
 

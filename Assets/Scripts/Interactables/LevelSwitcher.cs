@@ -3,7 +3,16 @@ using UnityEngine.SceneManagement;
 
 public class LevelSwitcher : MonoBehaviour
 {
-    public string nextLevel = "Level0";
+    [Header("Level Settings")]
+    [Tooltip("Name of the next level/scene to load")]
+    public string nextLevel = "Main Menu";
+
+    [Tooltip("Percentage of cleaning required to complete level (0-100)")]
+    [Range(0f, 100f)]
+    public float requiredCleanPercentage = 80f;
+
+    [Header("References")]
+    [Tooltip("Reference to the cleaning progress manager")]
     public CleaningProgressManager cleaningManager;
 
     private void Start()
@@ -43,9 +52,16 @@ public class LevelSwitcher : MonoBehaviour
         }
     }
 
+    // Check if the required cleaning percentage has been reached
+    public bool HasMetCleaningRequirement()
+    {
+        float currentPercentage = cleaningManager.GetTotalCleaningPercentage();
+        return currentPercentage >= requiredCleanPercentage;
+    }
+
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player") && cleaningManager.GetFullyCleanedDirtSpots() == cleaningManager.GetTotalDirtSpots())
+        if (other.CompareTag("Player") && HasMetCleaningRequirement())
         {
             GameManager.instance.LevelComplete();
             UIManager.instance.levelComplete.SetNextLevel(nextLevel);
@@ -60,7 +76,7 @@ public class CameraTakerHandler : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player") && parentSwitcher.cleaningManager.GetFullyCleanedDirtSpots() == parentSwitcher.cleaningManager.GetTotalDirtSpots())
+        if (other.CompareTag("Player") && parentSwitcher.HasMetCleaningRequirement())
         {
             parentSwitcher.DisableCameraFollow();
         }

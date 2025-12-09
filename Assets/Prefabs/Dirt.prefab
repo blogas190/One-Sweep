@@ -66,7 +66,7 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: e838491dcaf54f7409a3b2ebafe6a2c4, type: 2}
     - target: {fileID: 919132149155446097, guid: aa0f06ee743cdb44f9e77ec5add99934, type: 3}
       propertyPath: m_Name
-      value: plane 64x64
+      value: Dirt
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: aa0f06ee743cdb44f9e77ec5add99934, type: 3}
       propertyPath: m_TagString
@@ -103,7 +103,7 @@ MonoBehaviour:
   dirtMask: {fileID: 0}
   brushTexture: {fileID: 2800000, guid: afe30fa536677b046ad92694bb99a3c9, type: 3}
   dirtMaterial: {fileID: 2100000, guid: e838491dcaf54f7409a3b2ebafe6a2c4, type: 2}
-  cleanThreshold: 0.95
+  cleanThreshold: 0.8
   brushBlendShader: {fileID: 4800000, guid: efa4c8889df208a40b0a873e563aea4f, type: 3}
   setBrushWidth: 2000
   setBrushHeight: 7000

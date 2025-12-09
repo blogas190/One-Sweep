@@ -17,7 +17,7 @@ public class PlayerAudio : MonoBehaviour
     {
         if (playerMovement != null)
         {
-            if (playerMovement.Grounded() && playerMovement.IsOnRail() == false)
+            if (playerMovement.Grounded() && playerMovement.GetMagnitude() > 0 && playerMovement.IsOnRail() == false)
             {
                 if (!audioSource.isPlaying)
                     audioSource.Play();

@@ -15,17 +15,30 @@ MonoBehaviour:
   Title: Tutorial 6
   Exchanges:
   - Lines:
-    - Text: These walls can be jumped from
+    - Text: "We are almost done, dear __ASSISTANT CLEANBOARD\u2122 JANITOR__!"
       Guid:
-        Value: 5d95ad00-27a7-4bd0-8cd2-1c1c5b895bb6
-    - Text: Also, while in the air you can perform a trick!
+        Value: 57978c33-2381-4ee6-8ff5-911094e38a01
+    - Text: There is one more way to turn yourself around, be it more ACROBATIC.
       Guid:
-        Value: 083c296a-c207-42d0-9308-5f75815da0aa
-    - Text: Pressing W while in the air will give you a slight boost up
+        Value: 0f0e9241-679f-45da-ad1a-2c82ab362819
+    - Text: "Some walls, especially in newer parts of our HQ are covered in Revers-o-gel\u2122."
       Guid:
-        Value: b59b62c9-c1e0-4274-b323-f917813945e1
+        Value: af5fa665-644b-47a4-af33-c299d20d071c
+    - Text: Most of the employees use it for recreation or head trauma prevention,
+        but you can use it to slow down your fall, turn around, and even jump from
+        them!
+      Guid:
+        Value: f4b8a0ea-d508-4c3e-a522-4cc985eedcb0
+    - Text: But that's not all your mobility options, as while you are in air you
+        may use your DASH vertically as well!
+      Guid:
+        Value: ee749295-2745-4a91-8251-d75cbfc8b8dd
+    - Text: 'Now try it! [Dash vertically with W and S, turn around and jump with
+        Revers-o-walls]'
+      Guid:
+        Value: 85762b78-9451-4948-8046-17265ba7e331
     Speaker: Tutorial
     Guid:
-      Value: 19560050-d3ca-44fb-965a-feca428630d1
+      Value: 1ae53d46-9a31-41f3-a710-c1a1e9eca268
   Guid:
-    Value: 5e22f263-325d-4c19-bebb-45e6e28f57b0
+    Value: 2fbe8f42-643a-4685-bede-8b777c919fd1

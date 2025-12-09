@@ -7,6 +7,7 @@ public class HudController : BaseMenu
 {
 
     public ProgressBar cleanPercent;
+    public ProgressBar energyBar;
     public TextMeshProUGUI cameraMode;
     public MMFeedbacks cameraModeFeedback;
     public MMFeedbacks cleanPercentFeedbackEnd;
@@ -14,9 +15,11 @@ public class HudController : BaseMenu
 
     private float lastUpdateTime;
     private float lastCleanPercent = 0f;
+    private float lastEnergyValue;
     private bool hasTriggeredFeedback = false;
     private GameObject mainCamera;
     private CameraController camera;
+    public EnergyController energy;
 
     void Start()
     {
@@ -25,6 +28,10 @@ public class HudController : BaseMenu
             mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
             camera = mainCamera.GetComponent<CameraController>();
         }
+
+        lastEnergyValue = energy.EnergyPercentage();
+        energyBar.maxValueLimit = energy.maxEnergy;
+        energyBar.SetValue(energy.currentEnergy);
     }
 
     void Update()
@@ -38,6 +45,15 @@ public class HudController : BaseMenu
 
     void UpdateUI()
     {
+        if(energy != null)
+        {
+
+            if(lastEnergyValue != energy.currentEnergy)
+            {
+                energyBar.SetValue(energy.currentEnergy);
+                lastEnergyValue = energy.currentEnergy;
+            }
+        }
         if (CleaningProgressManager.Instance != null) //cleaning percentage
         {
             float totalProgress = CleaningProgressManager.Instance.GetTotalCleaningPercentage();
@@ -60,7 +76,7 @@ public class HudController : BaseMenu
             }
         }
         
-                if (camera != null && cameraMode != null) //camera mode display
+        if (camera != null && cameraMode != null) //camera mode display
         {
             if (camera.IsFollow())
             {
