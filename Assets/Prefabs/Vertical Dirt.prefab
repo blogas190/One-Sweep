@@ -129,7 +129,8 @@ MonoBehaviour:
   brushBlendShader: {fileID: 4800000, guid: efa4c8889df208a40b0a873e563aea4f, type: 3}
   setBrushWidth: 4000
   setBrushHeight: 4000
+  brushInterval: 0.02
   flipUVX: 0
   flipUVY: 0
-  checkInterval: 0.5
+  checkInterval: 0.1
   pixelSampleRate: 4

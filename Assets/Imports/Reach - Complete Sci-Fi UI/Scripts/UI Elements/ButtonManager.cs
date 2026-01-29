@@ -56,7 +56,6 @@ namespace Michsky.UI.Reach
         public GameObject selectOnLeft;
         public GameObject selectOnRight;
         public bool wrapAround = false;
-        public bool useSounds = true;
         [Range(0.1f, 1)] public float doubleClickPeriod = 0.25f;
         [Range(1, 15)] public float fadingMultiplier = 8;
 
@@ -81,6 +80,8 @@ namespace Michsky.UI.Reach
 
         void OnEnable()
         {
+            EnsureRaycastTarget();
+
             if (!isInitialized) { Initialize(); }
             if (!bypassUpdateOnEnable) { UpdateUI(); }
             if (Application.isPlaying && useUINavigation) { AddUINavigation(); }
@@ -103,6 +104,34 @@ namespace Michsky.UI.Reach
             if (highlightCG != null) { highlightCG.alpha = 0; }
         }
 
+        //Added-----------------------------------
+
+        void EnsureRaycastTarget()
+        {
+            Image img = GetComponent<Image>();
+
+            if (img == null)
+            {
+                img = gameObject.AddComponent<Image>();
+                img.color = new Color(0, 0, 0, 0);
+            }
+
+            img.raycastTarget = true;
+        }
+        void PlayHoverSound()
+        {
+            if (AudioManager.Instance != null)
+                AudioManager.Instance.PlayUIHover();
+        }
+
+        void PlayClickSound()
+        {
+            if (AudioManager.Instance != null)
+                AudioManager.Instance.PlayUIClick();
+        }
+
+        //----------------------------------------
+
         void Initialize()
         {
 #if UNITY_EDITOR
@@ -110,16 +139,9 @@ namespace Michsky.UI.Reach
                 return;
 #endif
             if (ControllerManager.instance != null) { ControllerManager.instance.buttons.Add(this); }
-            if (UIManagerAudio.instance == null) { useSounds = false; }
             if (normalCG == null) { normalCG = new GameObject().AddComponent<CanvasGroup>(); normalCG.gameObject.AddComponent<RectTransform>(); normalCG.transform.SetParent(transform); normalCG.gameObject.name = "Normal"; }
             if (highlightCG == null) { highlightCG = new GameObject().AddComponent<CanvasGroup>(); highlightCG.gameObject.AddComponent<RectTransform>(); highlightCG.transform.SetParent(transform); highlightCG.gameObject.name = "Highlight"; }
             if (disabledCG == null) { disabledCG = new GameObject().AddComponent<CanvasGroup>(); disabledCG.gameObject.AddComponent<RectTransform>(); disabledCG.transform.SetParent(transform); disabledCG.gameObject.name = "Disabled"; }
-            if (GetComponent<Image>() == null)
-            {
-                Image raycastImg = gameObject.AddComponent<Image>();
-                raycastImg.color = new Color(0, 0, 0, 0);
-                raycastImg.raycastTarget = true;
-            }
 
             normalCG.alpha = 1;
             highlightCG.alpha = 0;
@@ -306,8 +328,8 @@ namespace Michsky.UI.Reach
         public void OnPointerClick(PointerEventData eventData)
         {
             if (!isInteractable || eventData.button != PointerEventData.InputButton.Left) { return; }
-            if (useSounds) { UIManagerAudio.instance.audioSource.PlayOneShot(UIManagerAudio.instance.UIManagerAsset.clickSound); }
 
+            PlayClickSound();
             // Invoke click actions
             onClick.Invoke();
 
@@ -332,8 +354,8 @@ namespace Michsky.UI.Reach
         public void OnPointerEnter(PointerEventData eventData)
         {
             if (!isInteractable) { return; }
-            if (useSounds) { UIManagerAudio.instance.audioSource.PlayOneShot(UIManagerAudio.instance.UIManagerAsset.hoverSound); }
 
+            PlayHoverSound();
             StartCoroutine("SetHighlight");
             onHover.Invoke();
         }
@@ -350,7 +372,6 @@ namespace Michsky.UI.Reach
         public void OnSelect(BaseEventData eventData)
         {
             if (!isInteractable) { return; }
-            if (useSounds) { UIManagerAudio.instance.audioSource.PlayOneShot(UIManagerAudio.instance.UIManagerAsset.hoverSound); }
 
             StartCoroutine("SetHighlight");
             onSelect.Invoke();
@@ -368,7 +389,6 @@ namespace Michsky.UI.Reach
         public void OnSubmit(BaseEventData eventData)
         {
             if (!isInteractable) { return; }
-            if (useSounds) { UIManagerAudio.instance.audioSource.PlayOneShot(UIManagerAudio.instance.UIManagerAsset.clickSound); }
             if (EventSystem.current.currentSelectedGameObject != gameObject) { StartCoroutine("SetNormal"); }
 
             onClick.Invoke();

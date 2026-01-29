@@ -27,12 +27,25 @@ namespace Michsky.UI.Reach
         public bool showValue = true;
         public bool showPopupValue = true;
         public bool useRoundValue = false;
-        public bool useSounds = true;
         [Range(1, 15)] public float fadingMultiplier = 8;
 
         // Events
         [System.Serializable] public class SliderEvent : UnityEvent<float> { }
         [SerializeField] public SliderEvent onValueChanged = new SliderEvent();
+
+        //Added----------------------------
+        void PlayHoverSound()
+        {
+            if (AudioManager.Instance != null)
+                AudioManager.Instance.PlayUIHover();
+        }
+
+        void PlayValueChangeSound()
+        {
+            if (AudioManager.Instance != null)
+                AudioManager.Instance.PlayUIClick();
+        }        
+        //---------------------------------
 
         void Awake()
         {
@@ -70,10 +83,7 @@ namespace Michsky.UI.Reach
 
         void Start()
         {
-            if (UIManagerAudio.instance == null) 
-            {
-                useSounds = false; 
-            }
+            
         }
 
         public void Interactable(bool value)
@@ -109,8 +119,10 @@ namespace Michsky.UI.Reach
 
         public void OnPointerEnter(PointerEventData eventData)
         {
-            if (useSounds) { UIManagerAudio.instance.audioSource.PlayOneShot(UIManagerAudio.instance.UIManagerAsset.hoverSound); }
+
             if (!isInteractable) { return; }
+
+            PlayHoverSound();
 
             StartCoroutine("SetHighlight");
         }
@@ -127,6 +139,8 @@ namespace Michsky.UI.Reach
         {
             if (!isInteractable)
                 return;
+
+            PlayHoverSound();
 
             StartCoroutine("SetHighlight");
         }

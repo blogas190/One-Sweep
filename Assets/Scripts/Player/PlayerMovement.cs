@@ -70,11 +70,17 @@ public class PlayerMovement : MonoBehaviour
     [Tooltip("Initial movement speed when starting to move")]
     public float startSpeed = 5f;
 
+    [Tooltip("Target speed the player accelerates/decelerates towards naturally")]
+    public float targetSpeed = 10f;
+
     [Tooltip("Maximum movement speed achievable")]
     public float maxSpeed = 15f;
 
     [Tooltip("Rate at which speed increases per second")]
     public float accelerationRate = 1f;
+
+    [Tooltip("Rate at which speed decreases per second")]
+    public float decelerationRate = 1f;
 
     [Tooltip("Maximum acceleration rate when boosting")]
     public float accelerationMax = 2f;
@@ -173,6 +179,7 @@ public class PlayerMovement : MonoBehaviour
     private float speed;
     private bool movementEnabled = true;
     private float prevAccelerationRate;
+    private bool braking;
 
     // Input State
     private bool jump = false;
@@ -290,6 +297,7 @@ public class PlayerMovement : MonoBehaviour
     private void UpdateAcceleration()
     {
         animator.SetFloat("Speed", speed);
+        float desiredSpeed;
 
         if (speed < startSpeed)
         {
@@ -300,9 +308,22 @@ public class PlayerMovement : MonoBehaviour
             speed = maxSpeed;
         }
 
-        if (Grounded() && (moveLeft || moveRight))
+        if(Grounded() && (moveLeft || moveRight) && !braking)
         {
-            speed += accelerationRate * Time.fixedDeltaTime;
+            if(accelerationRate == accelerationMax)
+            {
+                desiredSpeed = maxSpeed;
+            }
+            else
+            {
+                desiredSpeed = targetSpeed;
+            }
+            
+            speed = Mathf.MoveTowards(speed, desiredSpeed, accelerationRate * Time.fixedDeltaTime);
+        }
+        else if (Grounded() && (moveLeft || moveRight) && braking)
+        {
+            speed = Mathf.MoveTowards(speed, startSpeed, accelerationRate * Time.fixedDeltaTime);
         }
         else if (!Grounded() && (moveLeft || moveRight))
         {
@@ -514,12 +535,12 @@ public class PlayerMovement : MonoBehaviour
 
                         if (dir < 0)
                         {
-                            if (moveLeft) { accelerationRate = accelerationMax; }
-                            if (moveRight) { accelerationRate = -accelerationRate; }
+                            if (moveLeft) { accelerationRate = accelerationMax;}
+                            if (moveRight) { braking = true; }
                         }
                         else if (dir >0)
                         {
-                            if (moveLeft) { accelerationRate = -accelerationRate; }
+                            if (moveLeft) { braking = true;}
                             if (moveRight) { accelerationRate = accelerationMax; }
                         }
                     }
@@ -531,6 +552,7 @@ public class PlayerMovement : MonoBehaviour
             if (!isTesting && (moveLeft || moveRight))
             {
                 accelerationRate = prevAccelerationRate;
+                braking = false;
             }    
         }
     }

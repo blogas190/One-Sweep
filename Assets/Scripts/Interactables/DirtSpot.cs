@@ -12,6 +12,8 @@ public class DirtSpot : MonoBehaviour
     [Header("Brush Settings")]
     public float setBrushWidth = 64f;
     public float setBrushHeight = 64f;
+    private float lastBrushTime;
+    public float brushInterval = 0.02f;
 
     [Header("UV Mapping Settings")]
     public bool flipUVX = false;
@@ -23,24 +25,24 @@ public class DirtSpot : MonoBehaviour
 
     private Material brushBlendMaterial;
     private RenderTexture tempRT;
-    private float brushWidth;
-    private float brushHeight;
+    protected float brushWidth;
+    protected float brushHeight;
 
     // Performance optimization variables
     private Texture2D persistentTexture;
-    private float lastCheckTime;
-    private bool isDestroyed = false;
+    protected float lastCheckTime;
+    protected bool isDestroyed = false;
 
     // Progress tracking
-    private float currentCleanPercentage = 0f;
+    protected float currentCleanPercentage = 0f;
 
     // Mesh bounds for proper UV mapping
-    private Bounds localBounds;
-    private MeshFilter meshFilter;
+    protected Bounds localBounds;
+    protected MeshFilter meshFilter;
 
     void Start()
     {
-        dirtMask = new RenderTexture(512, 512, 0, RenderTextureFormat.ARGB32);
+        dirtMask = new RenderTexture(256, 256, 0, RenderTextureFormat.ARGB32);
         dirtMask.Create();
 
         Material matInstance = new Material(dirtMaterial);
@@ -48,7 +50,7 @@ public class DirtSpot : MonoBehaviour
         matInstance.SetTexture("_MaskTex", dirtMask);
 
         brushBlendMaterial = new Material(brushBlendShader);
-        tempRT = new RenderTexture(512, 512, 0, RenderTextureFormat.ARGB32);
+        tempRT = new RenderTexture(256, 256, 0, RenderTextureFormat.ARGB32);
 
         // Get mesh bounds for proper UV calculation
         meshFilter = GetComponent<MeshFilter>();
@@ -75,15 +77,6 @@ public class DirtSpot : MonoBehaviour
         }
     }
 
-    void OnTriggerStay(Collider other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            Vector3 contactPoint = other.ClosestPointOnBounds(transform.position);
-            CleanAtWorldPos(contactPoint);
-        }
-    }
-
     public void CleanAtWorldPos(Vector3 worldPos)
     {
         Vector2 uv;
@@ -93,7 +86,7 @@ public class DirtSpot : MonoBehaviour
         }
     }
 
-    bool WorldPosToUV(Vector3 worldPos, out Vector2 uv)
+    protected virtual bool WorldPosToUV(Vector3 worldPos, out Vector2 uv)
     {
         // Transform world position to local space
         Vector3 localPos = transform.InverseTransformPoint(worldPos);
@@ -119,6 +112,8 @@ public class DirtSpot : MonoBehaviour
     void DrawBrush(Vector2 uv)
     {
         // Same calculation as the original working version
+        if (Time.time - lastBrushTime < brushInterval) return;
+        lastBrushTime = Time.time;
         Vector4 brushUV = new Vector4(uv.x, uv.y, brushWidth / dirtMask.width, brushHeight / dirtMask.height);
         brushBlendMaterial.SetTexture("_MainTex", dirtMask);
         brushBlendMaterial.SetTexture("_BrushTex", brushTexture);
@@ -128,7 +123,8 @@ public class DirtSpot : MonoBehaviour
         Graphics.Blit(tempRT, dirtMask);
 
         // Check immediately after cleaning
-        StartCoroutine(CheckIfCleanedAsync());
+        if (Time.time - lastCheckTime > checkInterval)
+            StartCoroutine(CheckIfCleanedAsync());
     }
 
     void Update()

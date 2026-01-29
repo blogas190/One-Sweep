@@ -39785,8 +39785,10 @@ MonoBehaviour:
   RailFeedbackStart: {fileID: 785629860911494837}
   RailFeedbackEnd: {fileID: 5811224316375883728}
   startSpeed: 5
+  targetSpeed: 10
   maxSpeed: 40
   accelerationRate: 4
+  decelerationRate: 1
   accelerationMax: 8
   airSpeedLoss: 1
   jumpForce: 750
@@ -39988,7 +39990,7 @@ MonoBehaviour:
   lengthDetectDown: 1
   lengthDetectUp: 1
   lengthDetectZ: 20
-  playerHeight: 2
+  playerHeight: 0.8
 --- !u!114 &5485314129679627670
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -40117,6 +40119,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e7630e186de037343898c2e61e774532, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  clip: {fileID: 0}
 --- !u!136 &2208333635500458896
 CapsuleCollider:
   m_ObjectHideFlags: 0

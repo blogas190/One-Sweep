@@ -5,6 +5,8 @@ public class SaveManager : MonoBehaviour
 {
     public PlayerMovement player;
 
+    public static SaveManager instance;
+
     public void SaveGame()
     {
         PlayerData data = new PlayerData();

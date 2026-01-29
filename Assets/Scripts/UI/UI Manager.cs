@@ -9,6 +9,7 @@ public class UIManager : MonoBehaviour
     public HudController hud;
     public PauseController pauseMenu;
     public LevelCompleteController levelComplete;
+    public SettingsController settings;
 
     private void Awake()
     {
@@ -17,6 +18,7 @@ public class UIManager : MonoBehaviour
 
         pauseMenu.Hide();
         levelComplete.Hide();
+        settings.Hide();
         hud.Show();
     }
 
@@ -36,7 +38,15 @@ public class UIManager : MonoBehaviour
     {
         if (GameManager.instance.currentState == GameState.paused)
         {
-            ResumeGame();
+            if(settings.isSettingsOpen == true)
+            {
+                settings.Hide();
+                settings.isSettingsOpen = false;
+            }
+            else
+            {
+                ResumeGame();
+            }
         }
         else if (GameManager.instance.currentState == GameState.playing)
         {
@@ -48,7 +58,6 @@ public class UIManager : MonoBehaviour
     {
         pauseMenu.Show();
         hud.Hide();
-        GameManager.instance.PauseGame();
     }
 
     public void ResumeGame()
@@ -62,5 +71,18 @@ public class UIManager : MonoBehaviour
     {
         hud.Hide();
         levelComplete.Show();
+    }
+
+    public void Settings()
+    {
+        pauseMenu.Hide();
+        settings.Show();
+        settings.isSettingsOpen = true;
+    }
+
+    public void SettingsBack()
+    {
+        settings.Hide();
+        pauseMenu.Show();
     }
 }

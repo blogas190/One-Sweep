@@ -107,9 +107,10 @@ MonoBehaviour:
   brushBlendShader: {fileID: 4800000, guid: efa4c8889df208a40b0a873e563aea4f, type: 3}
   setBrushWidth: 2000
   setBrushHeight: 7000
+  brushInterval: 0.02
   flipUVX: 1
   flipUVY: 0
-  checkInterval: 0.5
+  checkInterval: 0.1
   pixelSampleRate: 4
 --- !u!65 &1586579081558515338
 BoxCollider:

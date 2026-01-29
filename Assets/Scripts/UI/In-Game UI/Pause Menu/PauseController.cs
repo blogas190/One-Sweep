@@ -19,4 +19,9 @@ public class PauseController : BaseMenu
         saveManager.SaveGame();
         Application.Quit();
     }
+
+    public void OnSettings()
+    {
+        UIManager.instance.Settings();
+    }
 }

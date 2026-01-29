@@ -489,6 +489,10 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3863617293992459511, guid: 065d27349ce91614fb116a9fda20c6d0, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5350249989561973192, guid: 065d27349ce91614fb116a9fda20c6d0, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -614,6 +618,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7040322111280719706, guid: 065d27349ce91614fb116a9fda20c6d0, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7040322111280719706, guid: 065d27349ce91614fb116a9fda20c6d0, type: 3}
       propertyPath: m_SizeDelta.y
       value: 80
       objectReference: {fileID: 0}
@@ -628,6 +636,10 @@ PrefabInstance:
     - target: {fileID: 7616472044535921293, guid: 065d27349ce91614fb116a9fda20c6d0, type: 3}
       propertyPath: m_AnchorMin.y
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7616472044535921293, guid: 065d27349ce91614fb116a9fda20c6d0, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7616472044535921293, guid: 065d27349ce91614fb116a9fda20c6d0, type: 3}
       propertyPath: m_SizeDelta.x
@@ -668,6 +680,10 @@ PrefabInstance:
     - target: {fileID: 7966714665681322400, guid: 065d27349ce91614fb116a9fda20c6d0, type: 3}
       propertyPath: m_AnchorMin.y
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7966714665681322400, guid: 065d27349ce91614fb116a9fda20c6d0, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7966714665681322400, guid: 065d27349ce91614fb116a9fda20c6d0, type: 3}
       propertyPath: m_SizeDelta.x
@@ -1411,7 +1427,7 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -7511558181221131132, guid: 27632d4c444f49e4fbd7dc0d625c3ef7, type: 3}
-      propertyPath: 'm_Materials.Array.data[0]'
+      propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 796d5133e760f1b4db84b7f67c0e6447, type: 2}
     - target: {fileID: 919132149155446097, guid: 27632d4c444f49e4fbd7dc0d625c3ef7, type: 3}
@@ -2872,7 +2888,7 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -7511558181221131132, guid: 27632d4c444f49e4fbd7dc0d625c3ef7, type: 3}
-      propertyPath: 'm_Materials.Array.data[0]'
+      propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 796d5133e760f1b4db84b7f67c0e6447, type: 2}
     - target: {fileID: 919132149155446097, guid: 27632d4c444f49e4fbd7dc0d625c3ef7, type: 3}
@@ -3914,11 +3930,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9117999139297725599, guid: 46d03f88e58693c49835f5a71166ec75, type: 3}
       propertyPath: m_ActionEvents.Array.data[7].m_ActionName
-      value: 'Controls/Camera[/Keyboard/ctrl]'
+      value: Controls/Camera[/Keyboard/ctrl]
       objectReference: {fileID: 0}
     - target: {fileID: 9117999139297725599, guid: 46d03f88e58693c49835f5a71166ec75, type: 3}
       propertyPath: m_ActionEvents.Array.data[8].m_ActionName
-      value: 'Controls/Mouse[/Mouse/delta]'
+      value: Controls/Mouse[/Mouse/delta]
       objectReference: {fileID: 0}
     - target: {fileID: 9117999139297725599, guid: 46d03f88e58693c49835f5a71166ec75, type: 3}
       propertyPath: m_ActionEvents.Array.data[1].m_PersistentCalls.m_Calls.Array.size
@@ -4635,11 +4651,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4144658658556286278, guid: dfa13d227127d9d44b7ac7e921abbea6, type: 3}
       propertyPath: m_ActionEvents.Array.data[7].m_ActionName
-      value: 'Controls/Camera[/Keyboard/ctrl]'
+      value: Controls/Camera[/Keyboard/ctrl]
       objectReference: {fileID: 0}
     - target: {fileID: 4144658658556286278, guid: dfa13d227127d9d44b7ac7e921abbea6, type: 3}
       propertyPath: m_ActionEvents.Array.data[8].m_ActionName
-      value: 'Controls/Mouse[/Mouse/delta]'
+      value: Controls/Mouse[/Mouse/delta]
       objectReference: {fileID: 0}
     - target: {fileID: 4144658658556286278, guid: dfa13d227127d9d44b7ac7e921abbea6, type: 3}
       propertyPath: m_ActionEvents.Array.data[1].m_PersistentCalls.m_Calls.Array.size

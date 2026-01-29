@@ -5,6 +5,7 @@ public class MainMenu : MonoBehaviour
 {
     [SerializeField] GameObject mainMenuPanel;
     [SerializeField] GameObject optionsMenuPanel;
+    [SerializeField] string levelToStart;
 
     void Start()
     {
@@ -30,8 +31,13 @@ public class MainMenu : MonoBehaviour
 
     public void OnPlay()
     {
-        SceneManager.LoadScene("New Tutorial Level 1");
-        GameManager.instance.ResumeGame();
+        SceneManager.LoadScene(levelToStart);
         //Later change to proper level select and load;
+    }
+
+    public void OnBack()
+    {
+        optionsMenuPanel.SetActive(false);
+        mainMenuPanel.SetActive(true);
     }
 }
