@@ -21,6 +21,8 @@
 *.booproj
 *.svd
 
+*.zip
+
 # === OS Junk ===
 .DS_Store
 Thumbs.db
