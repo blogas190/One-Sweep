@@ -12,7 +12,7 @@ public class LevelCompleteController : BaseMenu
     }
     public void OnContinue()
     {
-        SceneManager.LoadScene(nextLevel);
+        SceneChanger.instance.LoadScene(nextLevel);
         GameManager.instance.ResumeGame();
     }
 

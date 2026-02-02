@@ -31,7 +31,7 @@ public class MainMenu : MonoBehaviour
 
     public void OnPlay()
     {
-        SceneManager.LoadScene(levelToStart);
+        SceneChanger.instance.LoadScene(levelToStart);
         //Later change to proper level select and load;
     }
 
