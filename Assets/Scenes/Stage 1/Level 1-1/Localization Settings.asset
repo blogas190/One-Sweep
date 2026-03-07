@@ -1,0 +1,42 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c100adba1f0bea4bb29ed7154d77640, type: 3}
+  m_Name: Localization Settings
+  m_EditorClassIdentifier: 
+  languages:
+  - languageID: en-US
+    languageName: English
+    localizedName: English (US)
+    localizationLanguage: {fileID: 11400000, guid: f91279fc408691241b8c6dbbce75b077, type: 2}
+    isExpanded: 0
+  - languageID: de-DE
+    languageName: German
+    localizedName: Deutsch
+    localizationLanguage: {fileID: 11400000, guid: a808334dfef8b2b49b3e90e5d267ba34, type: 2}
+    isExpanded: 0
+  - languageID: sv-SE
+    languageName: Swedish
+    localizedName: Svenska
+    localizationLanguage: {fileID: 11400000, guid: 874e42a90de9d41448f4de5f24caaaf6, type: 2}
+    isExpanded: 0
+  - languageID: tr-TR
+    languageName: Turkish
+    localizedName: "T\xFCrk\xE7e"
+    localizationLanguage: {fileID: 11400000, guid: a77aec543cd517e4bb01bf60fcfa0918, type: 2}
+    isExpanded: 0
+  tables:
+  - tableID: UI
+    localizationTable: {fileID: 11400000, guid: 18a352e22fdd00e49b0f3df3d79286bc, type: 2}
+    isExpanded: 0
+  defaultLanguageID: asd (aasdas)
+  defaultLanguageIndex: 0
+  enableExperimental: 0

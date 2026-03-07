@@ -1,0 +1,44 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9501c69babff75f45abcc8c316f59088, type: 3}
+  m_Name: Reach UI Manager
+  m_EditorClassIdentifier: 
+  enableDynamicUpdate: 0
+  achievementLibrary: {fileID: 11400000, guid: 4d17e10117d0c814cbf152ca22ffa40e, type: 2}
+  commonColor: {r: 1, g: 1, b: 1, a: 255}
+  rareColor: {r: 1, g: 0.49019608, b: 1, a: 255}
+  legendaryColor: {r: 1, g: 0.6862745, b: 0, a: 255}
+  hoverSound: {fileID: 8300000, guid: b0c6f64cafec37844b36e944782b6c71, type: 3}
+  clickSound: {fileID: 8300000, guid: 847a9ce46d96b1340974960cb12d4077, type: 3}
+  notificationSound: {fileID: 8300000, guid: 5d45526803d972443ac46e6a59472fea, type: 3}
+  accentColor: {r: 0, g: 0.78431374, b: 1, a: 1}
+  accentColorInvert: {r: 0.09803922, g: 0.13725491, b: 0.1764706, a: 1}
+  primaryColor: {r: 1, g: 1, b: 1, a: 1}
+  secondaryColor: {r: 1, g: 1, b: 1, a: 1}
+  negativeColor: {r: 1, g: 0.29411766, b: 0.29411766, a: 1}
+  backgroundColor: {r: 0.09803922, g: 0.13725491, b: 0.1764706, a: 1}
+  fontLight: {fileID: 11400000, guid: d8a56873836beee4fad7a141b14f89af, type: 2}
+  fontRegular: {fileID: 11400000, guid: 0ed77ebb2b55f2741a3aee7c395a6d2f, type: 2}
+  fontMedium: {fileID: 11400000, guid: 96618856953f8fc49bc1b4daab5a1e9b, type: 2}
+  fontSemiBold: {fileID: 11400000, guid: 90b2183278b99b64989bf4225182287d, type: 2}
+  fontBold: {fileID: 11400000, guid: 38b8e91ffa6469546a9ffc79122d2a0f, type: 2}
+  customFont: {fileID: 0}
+  enableLocalization: 0
+  localizationSettings: {fileID: 11400000, guid: 52d00e4d9cbd6e042ac34b58b17f6201, type: 2}
+  currentLanguage: {fileID: 11400000, guid: a808334dfef8b2b49b3e90e5d267ba34, type: 2}
+  brandLogo: {fileID: 21300000, guid: 4debac9b4d2520b4eab90fe7a0ea501f, type: 3}
+  gameLogo: {fileID: 21300000, guid: c6ffbf3e5393e2d449ede9ab9e730845, type: 3}
+  enableSplashScreen: 1
+  showSplashScreenOnce: 1
+  pakType: 0
+  pakText: Press {Any Key} To Start
+  pakLocalizationText: PAK_Part1 {PAK_Key} PAK_Part2
