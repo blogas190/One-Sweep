@@ -8,7 +8,7 @@ namespace Umbra {
     }
 
     [ExecuteAlways]
-    [HelpURL("https://kronnect.com/guides-category/umbra-soft-shadows")]
+    [HelpURL("https://kronnect.com/docs/umbra/")]
     public class UmbraSoftShadows : MonoBehaviour {
 
         [Tooltip("Currently used umbra profile with settings")]

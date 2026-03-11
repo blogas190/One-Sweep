@@ -483,7 +483,7 @@ namespace Umbra {
                 }
                 UmbraProfile profile = settings.profile;
 
-                var cmd = renderingData.commandBuffer;
+                var cmd = CommandBufferPool.Get("UmbraSoftShadows");
                 using (new ProfilingScope(cmd, m_ProfilingSampler)) {
 
                     int frameCount = Time.frameCount;
@@ -758,7 +758,7 @@ namespace Umbra {
             [Obsolete]
 #endif
             public override void Execute (ScriptableRenderContext context, ref RenderingData renderingData) {
-                var cmd = renderingData.commandBuffer;
+                var cmd = CommandBufferPool.Get("UmbraSoftShadows");
                 using (new ProfilingScope(cmd, m_ProfilingSampler)) {
                     ShadowData shadowData = renderingData.shadowData;
                     int cascadesCount = shadowData.mainLightShadowCascadesCount;
@@ -818,7 +818,7 @@ namespace Umbra {
 
                 if (shadows == null) return;
 
-                var cmd = renderingData.commandBuffer;
+                var cmd = CommandBufferPool.Get("UmbraSoftShadows");
                 using (new ProfilingScope(cmd, m_ProfilingSampler)) {
                     Blitter.BlitCameraTexture(cmd, shadows, source, mat, (int)Pass.DebugShadows);
                     if (settings.debugShadows && settings.profile != null && settings.profile.contactShadows) {
@@ -854,7 +854,7 @@ namespace Umbra {
             public override void Execute (ScriptableRenderContext context, ref RenderingData renderingData) {
                 Material mat = UmbraScreenSpaceShadowsPass.mat;
                 if (mat == null || source.rt == null) return;
-                var cmd = renderingData.commandBuffer;
+                var cmd = CommandBufferPool.Get("UmbraSoftShadows");
                 using (new ProfilingScope(cmd, m_ProfilingSampler)) {
                     UmbraProfile profile = settings.profile;
                     if (profile.transparentReceiverPlane) {
@@ -892,7 +892,7 @@ namespace Umbra {
             public override void Execute (ScriptableRenderContext context, ref RenderingData renderingData) {
                 Material mat = UmbraScreenSpaceShadowsPass.mat;
                 if (mat == null || source == null) return;
-                var cmd = renderingData.commandBuffer;
+                var cmd = CommandBufferPool.Get("UmbraSoftShadows");
                 using (new ProfilingScope(cmd, m_ProfilingSampler)) {
                     Color shadowColor = settings.profile.overlayShadowsColor;
                     shadowColor.a = settings.profile.overlayShadowsIntensity;

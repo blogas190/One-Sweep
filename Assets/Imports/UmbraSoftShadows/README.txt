@@ -18,7 +18,7 @@ Help & Support Forum
 Check the Documentation folder for detailed instructions:
 
 Have any question or issue?
-* Support-Web: https://kronnect.com/support
+* Support-Web: https://kronnect.com/docs/umbra/
 * Support-Discord: https://discord.gg/EH2GMaM
 * Email: contact@kronnect.com
 * Twitter: @Kronnect
@@ -46,8 +46,15 @@ https://assetstore.unity.com/publishers/15018
 Version history
 ---------------
 
+Version 10.1
+- [Fix] Fixed ImportTexture compatibility with Unity 6 Render Graph
+
+Version 10.0
+- Added support for Unity 6.4
+
 Version 7.1
 - Added "Force Depth Prepass" option in Advanced Section. Useful to support forward-only materials in deferred rendering path.
+- [Fix] Fixes for Unity 6.3
 
 Version 7.0.1
 - [Fix] Fixed compatibility with forward opaques in deferred rendering path (also must choose Normals Source = Reconstruct From Depth)

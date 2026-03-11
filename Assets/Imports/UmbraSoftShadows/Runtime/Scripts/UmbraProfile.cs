@@ -53,7 +53,7 @@ namespace Umbra {
 
 
     [CreateAssetMenu(fileName = "UmbraProfile", menuName = "Umbra Profile", order = 251)]
-    [HelpURL("https://kronnect.com/guides-category/umbra-soft-shadows")]
+    [HelpURL("https://kronnect.com/docs/umbra/")]
     public class UmbraProfile : ScriptableObject {
 
         [Tooltip("Which shadow generation system should be used")]

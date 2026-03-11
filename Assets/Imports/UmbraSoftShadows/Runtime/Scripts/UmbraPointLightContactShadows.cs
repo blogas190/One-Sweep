@@ -5,7 +5,7 @@ namespace Umbra {
 
     [RequireComponent(typeof(Light))]
     [ExecuteAlways]
-    [HelpURL("https://kronnect.com/guides-category/umbra-soft-shadows")]
+    [HelpURL("https://kronnect.com/docs/umbra/")]
     public class UmbraPointLightContactShadows : MonoBehaviour {
 
         public BoxCollider boxCollider;

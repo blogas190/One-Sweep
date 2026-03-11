@@ -62,7 +62,17 @@ namespace Umbra {
 
                     builder.AllowGlobalStateModification(true);
 
+#if UNITY_6000_0_OR_NEWER
+                    TextureHandle shadowmap = renderGraph.ImportTexture(m_RenderTarget, new RenderTargetInfo {
+                        width = desc.width,
+                        height = desc.height,
+                        volumeDepth = 1,
+                        msaaSamples = 1,
+                        format = desc.graphicsFormat
+                    });
+#else
                     TextureHandle shadowmap = renderGraph.ImportTexture(m_RenderTarget);
+#endif
                     builder.UseTexture(shadowmap, AccessFlags.ReadWrite);
 
                     if (UmbraSoftShadows.isDeferred && resourceData.gBuffer[2].IsValid()) {
