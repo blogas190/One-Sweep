@@ -17,6 +17,7 @@ public class AirTricks : MonoBehaviour
     public float cleanBuff = 500000f;
     public float cleanGravityMod = 0.3f;
     public float leftTrickTime = .75f;
+    [SerializeField] private float minYDistance = 0.1f;
 
     [Header("Feedbacks")]
     public MMFeedbacks RightTrickFeedbackStart;
@@ -45,12 +46,15 @@ public class AirTricks : MonoBehaviour
         states = FindAnyObjectByType<GameStates>();
         controller = GetComponent<PlayerController>();
         energy = GetComponent<EnergyController>();
+
+
     }
 
     void Update()
     {
+
         //checking if the player hits the ground during a trick
-        if(trickInProgress && player.Grounded())
+        if (trickInProgress && player.Grounded())
         {
             //sends a flag to the gameStates script which handles death
             states.StartDeath();
@@ -64,11 +68,40 @@ public class AirTricks : MonoBehaviour
         StartCoroutine(RevertAnimationAfterDelay(delay));
     }
 
+    private bool InAir()
+    {
+        bool nearGround = false;
+
+        Vector3 downCast = new Vector3(transform.position.x, transform.position.y - 0.8f, transform.position.z);
+        Ray rayDown = new Ray(downCast, Vector3.down);
+        RaycastHit hit;
+
+        int groundLayer = LayerMask.GetMask("Ground");
+
+        if (Physics.Raycast(rayDown, out hit, minYDistance, groundLayer))
+        {
+            nearGround = true;
+        }
+        else
+        {
+            Debug.Log("NO NEAR GROUND DETECTED!");
+        }
+
+        if (player.Grounded() || nearGround)
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+    }
+
     //Taking the input on which trick to perform
     //Need to add a way to handle diagonal inputs
     public void Trick(InputAction.CallbackContext context)
     {
-        if(context.performed && !player.Grounded() && trickInProgress == false)
+        if(context.performed && !player.Grounded() && trickInProgress == false && InAir())
         {
             Vector2 input = context.ReadValue<Vector2>();
             directionX = input.x;
