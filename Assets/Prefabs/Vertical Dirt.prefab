@@ -63,6 +63,8 @@ MeshRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -84,9 +86,11 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!64 &6783299314669423930
 MeshCollider:
@@ -127,8 +131,8 @@ MonoBehaviour:
   dirtMaterial: {fileID: 2100000, guid: 09d0ca1ac779e1e4db7a40d977ed5ed2, type: 2}
   cleanThreshold: 0.8
   brushBlendShader: {fileID: 4800000, guid: efa4c8889df208a40b0a873e563aea4f, type: 3}
-  setBrushWidth: 4000
-  setBrushHeight: 4000
+  setBrushWidth: 2000
+  setBrushHeight: 2000
   brushInterval: 0.02
   flipUVX: 0
   flipUVY: 0

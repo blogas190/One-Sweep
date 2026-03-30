@@ -95,50 +95,47 @@ Shader "Custom/DirtBlend_URP"
             }
             
             // Generate dirt puddle pattern using world space coordinates
-            float generateDirtPattern(float2 uv, float2 worldUV)
+            float generateDirtPattern(float2 uv)
             {
-                // Create border fade - circles won't spawn near edges (in UV space)
                 float borderFade = 1.0;
                 float edgeDistance = 0.15;
-                
-                float distFromLeft = smoothstep(0.0, edgeDistance, uv.x);
-                float distFromRight = smoothstep(0.0, edgeDistance, 1.0 - uv.x);
+    
+                float distFromLeft   = smoothstep(0.0, edgeDistance, uv.x);
+                float distFromRight  = smoothstep(0.0, edgeDistance, 1.0 - uv.x);
                 float distFromBottom = smoothstep(0.0, edgeDistance, uv.y);
-                float distFromTop = smoothstep(0.0, edgeDistance, 1.0 - uv.y);
-                
+                float distFromTop    = smoothstep(0.0, edgeDistance, 1.0 - uv.y);
+    
                 borderFade = distFromLeft * distFromRight * distFromBottom * distFromTop;
-                
-                // Use world position scaled by density for consistent circle count
-                float2 scaledUV = worldUV * _CircleDensity;
-                float2 gridID = floor(scaledUV);
-                float2 gridUV = frac(scaledUV);
-                
+
+                float2 scaledUV = uv * _CircleDensity;
+                float2 gridID   = floor(scaledUV);
+                float2 gridUV   = frac(scaledUV);
+
                 float minDist = 1.0;
-                
-                // Check neighboring cells for circle centers
+
                 for(int y = -1; y <= 1; y++)
                 {
                     for(int x = -1; x <= 1; x++)
                     {
                         float2 neighbor = float2(x, y);
-                        float2 cellID = gridID + neighbor;
-                        
+                        float2 cellID   = gridID + neighbor;
+
                         float2 randomOffset = float2(
                             hash(cellID),
                             hash(cellID + 100.0)
                         );
-                        
+
                         float randomRadius = _CircleSize * (0.6 + hash(cellID + 200.0) * 0.8);
-                        float2 circlePos = neighbor + randomOffset;
-                        float dist = length(gridUV - circlePos);
-                        
+                        float2 circlePos   = neighbor + randomOffset;
+                        float dist         = length(gridUV - circlePos);
+
                         float edgeSoftness = 0.1;
                         float circle = smoothstep(randomRadius + edgeSoftness, randomRadius - edgeSoftness, dist);
-                        
+
                         minDist = min(minDist, 1.0 - circle);
                     }
                 }
-                
+
                 return (1.0 - minDist) * borderFade;
             }
 
@@ -171,8 +168,8 @@ Shader "Custom/DirtBlend_URP"
                     worldUV = input.worldPos.xy;
                 }
                 
-                // Generate procedural dirt puddle pattern using appropriate world coordinates
-                float dirtPattern = generateDirtPattern(input.uv, worldUV);
+                float dirtPattern = generateDirtPattern(input.uv);
+
                 
                 // Sample the mask texture
                 half mask = SAMPLE_TEXTURE2D(_MaskTex, sampler_MaskTex, input.uv).r;

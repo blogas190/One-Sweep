@@ -28,17 +28,17 @@ public class DirtSpot : MonoBehaviour
     protected float brushWidth;
     protected float brushHeight;
 
-    // Performance optimization variables
     private Texture2D persistentTexture;
-    protected float lastCheckTime;
     protected bool isDestroyed = false;
-
-    // Progress tracking
     protected float currentCleanPercentage = 0f;
-
-    // Mesh bounds for proper UV mapping
     protected Bounds localBounds;
     protected MeshFilter meshFilter;
+
+    protected float lastCheckTime;
+
+
+    // FIX: guard flag prevents overlapping coroutines
+    private bool isChecking = false;
 
     void Start()
     {
@@ -52,68 +52,52 @@ public class DirtSpot : MonoBehaviour
         brushBlendMaterial = new Material(brushBlendShader);
         tempRT = new RenderTexture(256, 256, 0, RenderTextureFormat.ARGB32);
 
-        // Get mesh bounds for proper UV calculation
         meshFilter = GetComponent<MeshFilter>();
-        if (meshFilter != null && meshFilter.sharedMesh != null)
-        {
-            localBounds = meshFilter.sharedMesh.bounds;
-        }
-        else
-        {
-            // Fallback to default bounds
-            localBounds = new Bounds(Vector3.zero, new Vector3(1f, 0f, 1f));
-        }
+        localBounds = (meshFilter != null && meshFilter.sharedMesh != null)
+            ? meshFilter.sharedMesh.bounds
+            : new Bounds(Vector3.zero, new Vector3(1f, 0f, 1f));
 
-        // Calculate brush size based on world space (same as original)
-        brushWidth = setBrushWidth / (localBounds.size.x * transform.localScale.x);
-        brushHeight = setBrushHeight / (localBounds.size.z * transform.localScale.z);
+        CalculateBrushSize();
 
-        persistentTexture = new Texture2D(dirtMask.width, dirtMask.height, TextureFormat.RGB24, false);
+        persistentTexture = new Texture2D(dirtMask.width, dirtMask.height, TextureFormat.RGBA32, false);
 
-        // Register with the cleaning progress manager
         if (CleaningProgressManager.Instance != null)
-        {
             CleaningProgressManager.Instance.RegisterDirtSpot(this);
-        }
     }
 
     public void CleanAtWorldPos(Vector3 worldPos)
     {
-        Vector2 uv;
-        if (WorldPosToUV(worldPos, out uv))
-        {
+        if (WorldPosToUV(worldPos, out Vector2 uv))
             DrawBrush(uv);
-        }
+    }
+
+    protected virtual void CalculateBrushSize()
+    {
+        brushWidth = setBrushWidth / (localBounds.size.x * transform.lossyScale.x);
+        brushHeight = setBrushHeight / (localBounds.size.z * transform.lossyScale.z);
     }
 
     protected virtual bool WorldPosToUV(Vector3 worldPos, out Vector2 uv)
     {
-        // Transform world position to local space
         Vector3 localPos = transform.InverseTransformPoint(worldPos);
-
-        // Get mesh bounds min and max
         Vector3 boundsMin = localBounds.min;
         Vector3 boundsMax = localBounds.max;
 
-        // Map local position to UV space [0,1]
         float uvX = Mathf.InverseLerp(boundsMin.x, boundsMax.x, localPos.x);
         float uvY = Mathf.InverseLerp(boundsMin.z, boundsMax.z, localPos.z);
 
-        // Apply flipping based on inspector settings
         if (flipUVX) uvX = 1.0f - uvX;
         if (flipUVY) uvY = 1.0f - uvY;
 
         uv = new Vector2(uvX, uvY);
-
-        // Check if UV is within valid range
         return (uv.x >= 0 && uv.x <= 1 && uv.y >= 0 && uv.y <= 1);
     }
 
     void DrawBrush(Vector2 uv)
     {
-        // Same calculation as the original working version
         if (Time.time - lastBrushTime < brushInterval) return;
         lastBrushTime = Time.time;
+
         Vector4 brushUV = new Vector4(uv.x, uv.y, brushWidth / dirtMask.width, brushHeight / dirtMask.height);
         brushBlendMaterial.SetTexture("_MainTex", dirtMask);
         brushBlendMaterial.SetTexture("_BrushTex", brushTexture);
@@ -122,26 +106,24 @@ public class DirtSpot : MonoBehaviour
         Graphics.Blit(dirtMask, tempRT, brushBlendMaterial);
         Graphics.Blit(tempRT, dirtMask);
 
-        // Check immediately after cleaning
-        if (Time.time - lastCheckTime > checkInterval)
-            StartCoroutine(CheckIfCleanedAsync());
+        // FIX: Removed duplicate check here — Update() handles it
     }
 
     void Update()
     {
-        // Periodically check cleanliness to update progress
-        if (Time.time - lastCheckTime > checkInterval)
-        {
+        // FIX: isChecking flag ensures only one coroutine runs at a time
+        if (!isChecking && Time.time - lastCheckTime > checkInterval)
             StartCoroutine(CheckIfCleanedAsync());
-        }
     }
 
     IEnumerator CheckIfCleanedAsync()
     {
         if (isDestroyed) yield break;
 
+        isChecking = true;           // lock
         lastCheckTime = Time.time;
 
+        // GPU to CPU readback
         RenderTexture.active = dirtMask;
         persistentTexture.ReadPixels(new Rect(0, 0, dirtMask.width, dirtMask.height), 0, 0);
         persistentTexture.Apply();
@@ -149,77 +131,50 @@ public class DirtSpot : MonoBehaviour
 
         yield return null;
 
-        Color[] pixels = persistentTexture.GetPixels();
+        // FIX: GetPixels32 returns bytes instead of floats — faster + less GC
+        Color32[] pixels = persistentTexture.GetPixels32();
         int cleanCount = 0;
         int totalSamples = 0;
 
         for (int i = 0; i < pixels.Length; i += pixelSampleRate)
         {
-            if (pixels[i].r > 0.9f)
-            {
+            if (pixels[i].r > 229) // 0.9f * 255 ≈ 229
                 cleanCount++;
-            }
+
             totalSamples++;
 
             if (totalSamples % 1000 == 0)
-            {
                 yield return null;
-            }
         }
 
         float cleanPercent = (float)cleanCount / totalSamples;
         currentCleanPercentage = cleanPercent;
 
-        // Update the global progress manager
         if (CleaningProgressManager.Instance != null)
-        {
             CleaningProgressManager.Instance.UpdateDirtSpotProgress(this, cleanPercent);
-        }
 
-        // Destroy if fully cleaned
         if (cleanPercent >= cleanThreshold && !isDestroyed)
         {
             isDestroyed = true;
 
-            // Unregister from progress manager before destroying
             if (CleaningProgressManager.Instance != null)
-            {
                 CleaningProgressManager.Instance.UnregisterDirtSpot(this);
-            }
 
             Destroy(gameObject);
         }
+
+        isChecking = false;          // unlock
     }
 
-    public float GetCleanPercentage()
-    {
-        return currentCleanPercentage;
-    }
+    public float GetCleanPercentage() => currentCleanPercentage;
 
     void OnDestroy()
     {
-        // Unregister from progress manager
         if (CleaningProgressManager.Instance != null)
-        {
             CleaningProgressManager.Instance.UnregisterDirtSpot(this);
-        }
 
-        // Clean up resources
-        if (persistentTexture != null)
-        {
-            Destroy(persistentTexture);
-        }
-
-        if (tempRT != null)
-        {
-            tempRT.Release();
-            Destroy(tempRT);
-        }
-
-        if (dirtMask != null)
-        {
-            dirtMask.Release();
-            Destroy(dirtMask);
-        }
+        if (persistentTexture != null) Destroy(persistentTexture);
+        if (tempRT != null) { tempRT.Release(); Destroy(tempRT); }
+        if (dirtMask != null) { dirtMask.Release(); Destroy(dirtMask); }
     }
 }

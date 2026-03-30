@@ -6,6 +6,12 @@ using MoreMountains.Tools;
 
 public class AirTricks : MonoBehaviour
 {
+    [Header("Toggle Tricks")]
+    [SerializeField] private bool canUp = true;
+    [SerializeField] private bool canDown = true;
+    [SerializeField] private bool canRight = false;
+    [SerializeField] private bool canLeft = false;
+
     [Header("Trick Settings")]
     public float upTrickForce = 500f;
     public float upTrickTime = 0.1f;
@@ -46,8 +52,6 @@ public class AirTricks : MonoBehaviour
         states = FindAnyObjectByType<GameStates>();
         controller = GetComponent<PlayerController>();
         energy = GetComponent<EnergyController>();
-
-
     }
 
     void Update()
@@ -107,22 +111,22 @@ public class AirTricks : MonoBehaviour
             directionX = input.x;
             directionY = input.y;
 
-            if(directionX < -0.5f)
+            if(directionX < -0.5f && canLeft)
             {
                 AirTrickLeft();
             }
 
-            else if(directionX > 0.5f)
+            else if(directionX > 0.5f && canRight)
             {
                 AirTrickRight();
             }
 
-            if(directionY < -0.5f && railCheck.blockedRail == null)
+            if(directionY < -0.5f && railCheck.blockedRail == null && canDown)
             {
                 AirTrickDown();
             }
 
-            else if (directionY > 0.5f)
+            else if (directionY > 0.5f && canUp)
             {
                 AirTrickUp();
             }

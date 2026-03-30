@@ -40079,7 +40079,7 @@ MonoBehaviour:
   RailFeedbackStart: {fileID: 785629860911494837}
   RailFeedbackEnd: {fileID: 5811224316375883728}
   startSpeed: 5
-  targetSpeed: 15
+  targetSpeed: 20
   maxSpeed: 40
   accelerationRate: 4
   decelerationRate: 1
@@ -40268,6 +40268,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c15b6245742ed5d42987ee152768d035, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canUp: 1
+  canDown: 1
+  canRight: 0
+  canLeft: 0
   upTrickForce: 500
   upTrickTime: 0.01
   upTrickGravityMod: 0.4
@@ -40296,7 +40300,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lengthDetectDown: 1
   lengthDetectUp: 1
-  lengthDetectZ: 20
+  lengthDetectZ: 15
   playerHeight: 0.8
 --- !u!114 &5485314129679627670
 MonoBehaviour:

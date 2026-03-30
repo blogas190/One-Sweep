@@ -1,5 +1,11 @@
-using UnityEngine;
+﻿using UnityEngine;
 
+/// <summary>
+/// Moves a platform along various paths.
+/// Requires a Rigidbody set to Kinematic � uses MovePosition so physics
+/// contacts are resolved properly and standing Rigidbodies inherit movement.
+/// </summary>
+[RequireComponent(typeof(Rigidbody))]
 public class Mover : MonoBehaviour
 {
     // Custom struct for point following, allowing individual wait times.
@@ -16,6 +22,10 @@ public class Mover : MonoBehaviour
     public float speed = 5f;
     public bool autoStart = true;
     public bool loop = true;
+    [Tooltip("If enabled, the object rotates to face its direction of travel for all movement types.")]
+    public bool faceMovementDirection = false;
+    [Tooltip("How fast the object rotates to face the travel direction (degrees/sec). 0 = instant snap.")]
+    public float rotationSpeed = 0f;
 
     [Header("Wait Time Settings")]
     [Tooltip("If checked, the object will wait before starting movement or when reaching end points (Straight/Circular).")]
@@ -31,7 +41,9 @@ public class Mover : MonoBehaviour
     public Vector3 center;
     public float radius = 2f;
     public bool clockwise = true;
-    public CircularPlane plane = CircularPlane.XZ; // XZ is horizontal in 3D
+    public CircularPlane plane = CircularPlane.XZ;
+    [Tooltip("Starting angle in degrees (0 = right/+X on XZ plane). Clockwise direction applies from this angle.")]
+    public float startAngle = 0f;
 
     [Header("Point Following")]
     [Tooltip("Each point can have its own waiting time defined.")]
@@ -41,190 +53,141 @@ public class Mover : MonoBehaviour
     public bool showPath = true;
     public Color pathColor = Color.yellow;
 
-    public enum MovementType
-    {
-        Straight,
-        Circular,
-        FollowPoints
-    }
+    public enum MovementType { Straight, Circular, FollowPoints }
+    public enum CircularPlane { XY, XZ, YZ }
 
-    public enum CircularPlane
-    {
-        XY,  // 2D style (vertical circle)
-        XZ,  // Horizontal circle (most common in 3D)
-        YZ   // Side circle
-    }
+    //internals
+    private Rigidbody rb;
 
     private bool isMoving = false;
     private float progress = 0f;
     private int currentPointIndex = 0;
     private bool movingForward = true;
-    private Vector3 initialPosition;
 
-    // Wait time variables
     private bool isWaiting = false;
     private float waitTimer = 0f;
 
+    // Exposed so MovingPlatform can read the per-frame delta
+    [HideInInspector] public Vector3 deltaPosition;
+    private Vector3 previousPosition;
+
+    void OnValidate()
+    {
+        // Snap the object to its starting position in the editor whenever
+        // relevant fields are changed, so the user gets live preview feedback.
+#if UNITY_EDITOR
+        if (Application.isPlaying) return;
+
+        // Ensure Rigidbody exists (OnValidate can fire before Awake)
+        if (rb == null) rb = GetComponent<Rigidbody>();
+
+        switch (movementType)
+        {
+            case MovementType.Straight:
+                transform.position = startPoint;
+                break;
+
+            case MovementType.Circular:
+                float angleRad = startAngle * Mathf.Deg2Rad;
+                transform.position = center + GetCircularOffset(angleRad);
+                break;
+
+            case MovementType.FollowPoints:
+                if (waypoints != null && waypoints.Length > 0)
+                    transform.position = waypoints[0].position;
+                break;
+        }
+#endif
+    }
+
     void Reset()
     {
-        Vector3 currentPos = transform.position;
-
-        // Set default values based on current object position
-        startPoint = currentPos;
-        endPoint = currentPos + Vector3.right * 5f;
-        center = currentPos;
-
-        // Use the new Waypoint struct for defaults
-        waypoints = new Waypoint[] {
-            new Waypoint { position = currentPos, waitTime = 1f },
-            new Waypoint { position = currentPos + Vector3.right * 5f, waitTime = 1f },
-            new Waypoint { position = currentPos + Vector3.forward * 5f, waitTime = 1f },
+        Vector3 p = transform.position;
+        startPoint = p;
+        endPoint = p + Vector3.right * 5f;
+        center = p;
+        waypoints = new Waypoint[]
+        {
+            new Waypoint { position = p,                        waitTime = 1f },
+            new Waypoint { position = p + Vector3.right * 5f,  waitTime = 1f },
+            new Waypoint { position = p + Vector3.forward * 5f,waitTime = 1f },
         };
+    }
+
+    void Awake()
+    {
+        rb = GetComponent<Rigidbody>();
+        rb.isKinematic = true;          // Must be kinematic we drive it manually
+        rb.interpolation = RigidbodyInterpolation.Interpolate; // Smooth visual movement
     }
 
     void Start()
     {
         InitializeDefaultValues();
-        initialPosition = transform.position;
+        previousPosition = transform.position;
 
-        if (autoStart)
-        {
-            StartMovement();
-        }
+        if (autoStart) StartMovement();
     }
 
-    void InitializeDefaultValues()
-    {
-        Vector3 currentPos = transform.position;
-
-        // Set default straight movement points if they haven't been changed from zero
-        if (startPoint == Vector3.zero && endPoint == Vector3.zero)
-        {
-            startPoint = currentPos;
-            endPoint = currentPos + Vector3.right * 5f;
-        }
-
-        // Set default circular center if it hasn't been changed from zero
-        if (center == Vector3.zero)
-        {
-            center = currentPos;
-        }
-
-        // Set default points array if it's empty or null
-        if (waypoints == null || waypoints.Length == 0)
-        {
-            waypoints = new Waypoint[] {
-                new Waypoint { position = currentPos, waitTime = 1f },
-                new Waypoint { position = currentPos + Vector3.right * 5f, waitTime = 1f },
-            };
-        }
-    }
-
+    // Wait timer runs in Update (normal time); actual movement is in FixedUpdate
     void Update()
     {
-        if (!isMoving) return;
+        if (!isMoving || !isWaiting) return;
 
-        if (isWaiting)
+        waitTimer += Time.deltaTime;
+        if (waitTimer >= GetCurrentWaitTime())
         {
-            // Handle waiting state
-            waitTimer += Time.deltaTime;
-            if (waitTimer >= GetCurrentWaitTime())
-            {
-                isWaiting = false;
-                waitTimer = 0f;
-                // Once waiting is over, perform the step logic
-                ContinueMovement();
-            }
-        }
-        else
-        {
-            // Handle movement state
-            switch (movementType)
-            {
-                case MovementType.Straight:
-                    MoveStraight();
-                    break;
-                case MovementType.Circular:
-                    MoveCircular();
-                    break;
-                case MovementType.FollowPoints:
-                    MoveFollowPoints();
-                    break;
-            }
+            isWaiting = false;
+            waitTimer = 0f;
+            ContinueMovement();
         }
     }
 
-    // Determines the required wait time based on movement type and current index
-    float GetCurrentWaitTime()
+    void FixedUpdate()
     {
-        if (movementType == MovementType.FollowPoints)
-        {
-            if (waypoints.Length > 0 && currentPointIndex >= 0 && currentPointIndex < waypoints.Length)
-            {
-                return waypoints[currentPointIndex].waitTime;
-            }
-            return 0f; // Default wait time if points array is invalid
-        }
-        else // Straight or Circular
-        {
-            return useGlobalWaitTime ? globalWaitTime : 0f;
-        }
-    }
+        deltaPosition = Vector3.zero;
 
-    // Called when the waiting phase is complete.
-    void ContinueMovement()
-    {
+        if (!isMoving || isWaiting) return;
+
+        Vector3 before = rb.position;
+
         switch (movementType)
         {
-            case MovementType.Straight:
-                // After waiting, swap points and reset progress to start the new journey
-                Vector3 temp = startPoint;
-                startPoint = endPoint;
-                endPoint = temp;
-                progress = 0f;
-                break;
-            case MovementType.FollowPoints:
-                // After waiting, advance the point index
-                if (movingForward)
-                {
-                    currentPointIndex++;
-                }
-                else
-                {
-                    currentPointIndex--;
-                }
-                break;
-            case MovementType.Circular:
-                // For circular loop, simply reset progress
-                progress = 0f;
-                break;
+            case MovementType.Straight: MoveStraight(); break;
+            case MovementType.Circular: MoveCircular(); break;
+            case MovementType.FollowPoints: MoveFollowPoints(); break;
         }
-    }
 
-    // --- Movement Implementations ---
+        // Record how far the platform moved this physics step
+        deltaPosition = rb.position - before;
+    }
 
     void MoveStraight()
     {
-        progress += speed * Time.deltaTime / Vector3.Distance(startPoint, endPoint);
+        float dist = Vector3.Distance(startPoint, endPoint);
+        if (dist < 0.001f) return;
 
-        Vector3 currentPos = Vector3.Lerp(startPoint, endPoint, progress);
-        transform.position = currentPos;
+        progress += speed * Time.fixedDeltaTime / dist;
+        Vector3 newPos = Vector3.Lerp(startPoint, endPoint, progress);
+        rb.MovePosition(newPos);
+
+        if (faceMovementDirection)
+        {
+            Vector3 dir = (endPoint - startPoint).normalized;
+            ApplyFacingDirection(dir);
+        }
 
         if (progress >= 1f)
         {
             if (loop)
             {
-                // Enter waiting state if wait time is used
                 if (useGlobalWaitTime && globalWaitTime > 0f)
                 {
                     isWaiting = true;
                 }
                 else
                 {
-                    // If no wait time, immediately swap points and continue
-                    Vector3 temp = startPoint;
-                    startPoint = endPoint;
-                    endPoint = temp;
+                    Vector3 tmp = startPoint; startPoint = endPoint; endPoint = tmp;
                     progress = 0f;
                 }
             }
@@ -236,125 +199,151 @@ public class Mover : MonoBehaviour
         }
     }
 
+    // Rotates the rigidbody to face the given world-space direction.
+    // Uses slerp if rotationSpeed > 0, otherwise snaps instantly.
+    void ApplyFacingDirection(Vector3 dir)
+    {
+        if (dir == Vector3.zero) return;
+        Quaternion target = Quaternion.LookRotation(dir, Vector3.up);
+        if (rotationSpeed > 0f)
+            rb.MoveRotation(Quaternion.RotateTowards(rb.rotation, target, rotationSpeed * Time.fixedDeltaTime));
+        else
+            rb.MoveRotation(target);
+    }
+
     void MoveCircular()
     {
-        progress += speed * Time.deltaTime; // Progress here is distance traveled, not 0-1 interpolation
+        // progress stores the current angle in radians directly.
+        // Angular speed = linear speed / radius  (arc-length formula: s = r * theta)
+        float angularSpeed = speed / radius;
+        progress += angularSpeed * Time.fixedDeltaTime;
 
-        float angle = progress / radius; // Calculate angle based on arc length/radius
-        if (!clockwise) angle = -angle;
+        float angle = (clockwise ? progress : -progress) + startAngle * Mathf.Deg2Rad;
 
-        Vector3 offset = GetCircularOffset(angle);
-        transform.position = center + offset;
+        rb.MovePosition(center + GetCircularOffset(angle));
 
-        // Check if a full circle is completed (progress > 2 * PI * radius)
-        if (progress * 2f * Mathf.PI >= 360f * Mathf.Deg2Rad * radius)
+        // Apply tangent rotation if requested
+        if (faceMovementDirection)
         {
-            if (loop)
-            {
-                // Enter waiting state if wait time is used
-                if (useGlobalWaitTime && globalWaitTime > 0f)
-                {
-                    isWaiting = true;
-                    // Keep progress at 0 for smooth loop start after wait
-                    progress = 0f;
-                }
-                else
-                {
-                    progress = 0f; // Immediately reset progress
-                }
-            }
-            else
+            Vector3 tangent = GetCircularTangent(angle);
+            ApplyFacingDirection(tangent);
+        }
+
+        // One full revolution = 2π radians
+        if (progress >= 2f * Mathf.PI)
+        {
+            progress -= 2f * Mathf.PI; // keep sub-revolution remainder
+            if (!loop)
             {
                 isMoving = false;
-                // Clamp position to final rotation if needed, but for circular it just stops.
+            }
+            else if (useGlobalWaitTime && globalWaitTime > 0f)
+            {
+                isWaiting = true;
             }
         }
     }
 
-    // Helper to calculate circular offset based on plane
-    Vector3 GetCircularOffset(float angle)
+    // Returns the tangent (forward) direction at the given angle on the circle.
+    Vector3 GetCircularTangent(float angle)
     {
-        Vector3 offset = Vector3.zero;
-        float cosA = Mathf.Cos(angle) * radius;
-        float sinA = Mathf.Sin(angle) * radius;
-
+        // Derivative of GetCircularOffset: d/dangle (cos*r, 0, sin*r) = (-sin*r, 0, cos*r)
+        float ms = clockwise ? 1f : -1f; // match direction
+        float nx = -Mathf.Sin(angle) * ms;
+        float ny = Mathf.Cos(angle) * ms;
         switch (plane)
         {
-            case CircularPlane.XY:
-                offset = new Vector3(cosA, sinA, 0);
-                break;
-            case CircularPlane.XZ:
-                // Note: Cosine is usually X, Sine is Z for horizontal plane
-                offset = new Vector3(cosA, 0, sinA);
-                break;
-            case CircularPlane.YZ:
-                offset = new Vector3(0, cosA, sinA);
-                break;
+            case CircularPlane.XY: return new Vector3(nx, ny, 0f).normalized;
+            case CircularPlane.XZ: return new Vector3(nx, 0f, ny).normalized;
+            case CircularPlane.YZ: return new Vector3(0f, nx, ny).normalized;
         }
-        return offset;
+        return Vector3.forward;
+    }
+
+    // Returns the "up" axis perpendicular to the circular plane, used for LookRotation.
+    Vector3 GetCircularUp()
+    {
+        switch (plane)
+        {
+            case CircularPlane.XY: return Vector3.back;
+            case CircularPlane.XZ: return Vector3.up;
+            case CircularPlane.YZ: return Vector3.right;
+        }
+        return Vector3.up;
+    }
+
+    Vector3 GetCircularOffset(float angle)
+    {
+        float c = Mathf.Cos(angle) * radius;
+        float s = Mathf.Sin(angle) * radius;
+        switch (plane)
+        {
+            case CircularPlane.XY: return new Vector3(c, s, 0);
+            case CircularPlane.XZ: return new Vector3(c, 0, s);
+            case CircularPlane.YZ: return new Vector3(0, c, s);
+        }
+        return Vector3.zero;
     }
 
     void MoveFollowPoints()
     {
         if (waypoints.Length < 2) return;
 
-        // Get the target position from the current waypoint struct
-        Vector3 currentTargetPos = waypoints[currentPointIndex].position;
-        Vector3 currentPos = transform.position;
+        Vector3 target = waypoints[currentPointIndex].position;
+        Vector3 current = rb.position;
+        float dist = Vector3.Distance(current, target);
 
-        Vector3 direction = (currentTargetPos - currentPos).normalized;
-        float distance = Vector3.Distance(currentPos, currentTargetPos);
-
-        if (distance > 0.05f) // Use a small epsilon for checking arrival
+        if (dist > 0.05f)
         {
-            Vector3 newPos = Vector3.MoveTowards(currentPos, currentTargetPos, speed * Time.deltaTime);
-            transform.position = newPos;
+            rb.MovePosition(Vector3.MoveTowards(current, target, speed * Time.fixedDeltaTime));
+            if (faceMovementDirection)
+                ApplyFacingDirection((target - current).normalized);
         }
         else
         {
-            // Snap to point and initiate wait
-            transform.position = currentTargetPos;
-
-            // Check if there is a wait time at this specific point
-            if (GetCurrentWaitTime() > 0f)
-            {
-                isWaiting = true;
-            }
-            else
-            {
-                // If no wait time, immediately advance to the next point
-                AdvancePointIndex();
-            }
+            rb.MovePosition(target);
+            if (GetCurrentWaitTime() > 0f) isWaiting = true;
+            else AdvancePointIndex();
         }
     }
 
-    // Handles the complex index advancement logic for FollowPoints (looping/ping-pong)
+    float GetCurrentWaitTime()
+    {
+        if (movementType == MovementType.FollowPoints)
+        {
+            if (waypoints.Length > 0 && currentPointIndex >= 0 && currentPointIndex < waypoints.Length)
+                return waypoints[currentPointIndex].waitTime;
+            return 0f;
+        }
+        return useGlobalWaitTime ? globalWaitTime : 0f;
+    }
+
+    void ContinueMovement()
+    {
+        switch (movementType)
+        {
+            case MovementType.Straight:
+                Vector3 tmp = startPoint; startPoint = endPoint; endPoint = tmp;
+                progress = 0f;
+                break;
+            case MovementType.FollowPoints:
+                AdvancePointIndex();
+                break;
+            case MovementType.Circular:
+                progress = 0f;
+                break;
+        }
+    }
+
     void AdvancePointIndex()
     {
         if (loop)
         {
-            if (movingForward)
-            {
-                currentPointIndex++;
-                if (currentPointIndex >= waypoints.Length)
-                {
-                    // Reverse direction when hitting the end
-                    currentPointIndex = waypoints.Length - 2; // Move back to the second to last point
-                    movingForward = false;
-                }
-            }
-            else // moving backward
-            {
-                currentPointIndex--;
-                if (currentPointIndex < 0)
-                {
-                    // Reverse direction when hitting the start
-                    currentPointIndex = 1; // Move to the second point
-                    movingForward = true;
-                }
-            }
+            currentPointIndex++;
+            if (currentPointIndex >= waypoints.Length)
+                currentPointIndex = 0; // wrap to start
         }
-        else // No loop
+        else
         {
             currentPointIndex++;
             if (currentPointIndex >= waypoints.Length)
@@ -365,68 +354,56 @@ public class Mover : MonoBehaviour
         }
     }
 
-
-    // --- Public Control Methods ---
+    void InitializeDefaultValues()
+    {
+        Vector3 p = transform.position;
+        if (startPoint == Vector3.zero && endPoint == Vector3.zero)
+        { startPoint = p; endPoint = p + Vector3.right * 5f; }
+        if (center == Vector3.zero) center = p;
+        if (waypoints == null || waypoints.Length == 0)
+        {
+            waypoints = new Waypoint[]
+            {
+                new Waypoint { position = p,                       waitTime = 1f },
+                new Waypoint { position = p + Vector3.right * 5f, waitTime = 1f },
+            };
+        }
+    }
 
     public void StartMovement()
     {
-        isMoving = true;
-        progress = 0f;
-        currentPointIndex = 0;
-        movingForward = true;
-        isWaiting = false;
-        waitTimer = 0f;
+        isMoving = true; progress = 0f; currentPointIndex = 0;
+        movingForward = true; isWaiting = false; waitTimer = 0f;
 
-        // Set initial position based on movement type
         switch (movementType)
         {
             case MovementType.Straight:
-                transform.position = startPoint;
+                rb.MovePosition(startPoint);
                 break;
             case MovementType.Circular:
-                Vector3 startOffset = GetCircularOffset(0f);
-                transform.position = center + startOffset;
+                rb.MovePosition(center + GetCircularOffset(startAngle * Mathf.Deg2Rad));
                 break;
             case MovementType.FollowPoints:
                 if (waypoints.Length > 0)
                 {
-                    transform.position = waypoints[0].position;
-                    // Start waiting immediately at the first point if it has a wait time
-                    if (waypoints[0].waitTime > 0f)
-                    {
-                        isWaiting = true;
-                    }
+                    rb.MovePosition(waypoints[0].position);
+                    if (waypoints[0].waitTime > 0f) isWaiting = true;
                 }
                 break;
         }
     }
 
-    public void StopMovement()
-    {
-        isMoving = false;
-        isWaiting = false;
-        waitTimer = 0f;
-    }
+    public void StopMovement() { isMoving = false; isWaiting = false; waitTimer = 0f; }
+    public void ResetToStart() { StopMovement(); StartMovement(); }
 
-    public void ResetToStart()
-    {
-        StopMovement();
-        StartMovement();
-    }
-
-    // Public getters for other scripts
     public bool IsMoving() => isMoving;
     public float GetProgress() => progress;
-
-    // Updated GetCurrentTarget to handle waypoints
     public Vector3 GetCurrentTarget()
     {
         switch (movementType)
         {
-            case MovementType.Straight:
-                return endPoint;
-            case MovementType.Circular:
-                return center;
+            case MovementType.Straight: return endPoint;
+            case MovementType.Circular: return center;
             case MovementType.FollowPoints:
                 if (waypoints.Length > 0 && currentPointIndex >= 0 && currentPointIndex < waypoints.Length)
                     return waypoints[currentPointIndex].position;
@@ -435,25 +412,15 @@ public class Mover : MonoBehaviour
         return transform.position;
     }
 
-    // --- Debug Visualization ---
-
     void OnDrawGizmosSelected()
     {
         if (!showPath) return;
-
         Gizmos.color = pathColor;
-
         switch (movementType)
         {
-            case MovementType.Straight:
-                DrawStraightPath();
-                break;
-            case MovementType.Circular:
-                DrawCircularPath();
-                break;
-            case MovementType.FollowPoints:
-                DrawPointsPath();
-                break;
+            case MovementType.Straight: DrawStraightPath(); break;
+            case MovementType.Circular: DrawCircularPath(); break;
+            case MovementType.FollowPoints: DrawPointsPath(); break;
         }
     }
 
@@ -466,48 +433,24 @@ public class Mover : MonoBehaviour
 
     void DrawCircularPath()
     {
-        // Draw circle
         int segments = 64;
-        float angleStep = 2f * Mathf.PI / segments;
-
+        float step = 2f * Mathf.PI / segments;
         for (int i = 0; i < segments; i++)
-        {
-            float angle1 = i * angleStep;
-            float angle2 = (i + 1) * angleStep;
-
-            Vector3 point1 = center + GetCircularOffset(angle1);
-            Vector3 point2 = center + GetCircularOffset(angle2);
-
-            Gizmos.DrawLine(point1, point2);
-        }
-
-        // Draw center
+            Gizmos.DrawLine(center + GetCircularOffset(i * step), center + GetCircularOffset((i + 1) * step));
         Gizmos.DrawWireSphere(center, 0.1f);
     }
 
     void DrawPointsPath()
     {
         if (waypoints.Length < 2) return;
-
         for (int i = 0; i < waypoints.Length; i++)
         {
-            // Draw point sphere
             Gizmos.color = (i == currentPointIndex && isMoving) ? Color.red : pathColor;
             Gizmos.DrawWireSphere(waypoints[i].position, 0.3f);
-
-            // Draw line to next point
             if (i < waypoints.Length - 1)
-            {
-                Gizmos.color = pathColor;
-                Gizmos.DrawLine(waypoints[i].position, waypoints[i + 1].position);
-            }
+            { Gizmos.color = pathColor; Gizmos.DrawLine(waypoints[i].position, waypoints[i + 1].position); }
         }
-
-        // Draw loop connection if looping
         if (loop && waypoints.Length > 2)
-        {
-            Gizmos.color = Color.cyan;
-            Gizmos.DrawLine(waypoints[waypoints.Length - 1].position, waypoints[0].position);
-        }
+        { Gizmos.color = Color.cyan; Gizmos.DrawLine(waypoints[waypoints.Length - 1].position, waypoints[0].position); }
     }
 }

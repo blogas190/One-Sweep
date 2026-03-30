@@ -2,6 +2,12 @@ using UnityEngine;
 
 public class VerticalDirtSpot : DirtSpot
 {
+    protected override void CalculateBrushSize()
+    {
+        brushWidth = setBrushWidth / (localBounds.size.x * transform.lossyScale.x);
+        brushHeight = setBrushHeight / (localBounds.size.y * transform.lossyScale.y);
+    }
+
     protected override bool WorldPosToUV(Vector3 worldPos, out Vector2 uv)
     {
         // Convert world to local

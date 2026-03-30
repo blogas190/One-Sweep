@@ -202,6 +202,9 @@ public class PlayerMovement : MonoBehaviour
     private bool hasReducedGravity = false;
     private float startGravity = -25f;
 
+    // Moving platform
+    private Rigidbody currentPlatformRb = null;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -308,9 +311,9 @@ public class PlayerMovement : MonoBehaviour
             speed = maxSpeed;
         }
 
-        if(Grounded() && (moveLeft || moveRight) && !braking)
+        if (Grounded() && (moveLeft || moveRight) && !braking)
         {
-            if(accelerationRate == accelerationMax)
+            if (accelerationRate == accelerationMax)
             {
                 desiredSpeed = maxSpeed;
             }
@@ -318,7 +321,7 @@ public class PlayerMovement : MonoBehaviour
             {
                 desiredSpeed = targetSpeed;
             }
-            
+
             speed = Mathf.MoveTowards(speed, desiredSpeed, accelerationRate * Time.fixedDeltaTime);
         }
         else if (Grounded() && (moveLeft || moveRight) && braking)
@@ -336,7 +339,8 @@ public class PlayerMovement : MonoBehaviour
         Vector3 velocity = p_rb.linearVelocity;
         if ((moveLeft || moveRight) && Grounded() && !dash || onRail)
         {
-            velocity.x = direction * speed;
+            float platformVelocityX = currentPlatformRb != null ? currentPlatformRb.linearVelocity.x : 0f;
+            velocity.x = direction * speed + platformVelocityX;
         }
         p_rb.linearVelocity = velocity;
     }
@@ -535,12 +539,12 @@ public class PlayerMovement : MonoBehaviour
 
                         if (dir < 0)
                         {
-                            if (moveLeft) { accelerationRate = accelerationMax;}
+                            if (moveLeft) { accelerationRate = accelerationMax; }
                             if (moveRight) { braking = true; }
                         }
-                        else if (dir >0)
+                        else if (dir > 0)
                         {
-                            if (moveLeft) { braking = true;}
+                            if (moveLeft) { braking = true; }
                             if (moveRight) { accelerationRate = accelerationMax; }
                         }
                     }
@@ -553,7 +557,7 @@ public class PlayerMovement : MonoBehaviour
             {
                 accelerationRate = prevAccelerationRate;
                 braking = false;
-            }    
+            }
         }
     }
 
@@ -622,17 +626,17 @@ public class PlayerMovement : MonoBehaviour
     {
         if (energy.currentEnergy >= energy.upTrickEnergy)
         {
-            if (isUp)   
-            { 
+            if (isUp)
+            {
                 dashVector = Vector3.up * verticalDashForce;
                 if (!hasReducedGravity)
-                { 
+                {
                     gameStates.MultVerticalGravity(jumpGravityModifier);
                     hasReducedGravity = true;
                 }
             }
-            else 
-            { 
+            else
+            {
                 dashVector = Vector3.down * verticalDashForce;
                 if (hasReducedGravity)
                 {
@@ -826,7 +830,9 @@ public class PlayerMovement : MonoBehaviour
     public bool Grounded()
     {
         bool ground = false;
-        if (Physics.CheckSphere(groundCheck.position, groundCheckRadius, groundLayer) || onRail) { ground = true;
+        if (Physics.CheckSphere(groundCheck.position, groundCheckRadius, groundLayer) || onRail)
+        {
+            ground = true;
         }
         //Debug.Log("Grounded: " + ground);
         return ground;
@@ -840,5 +846,31 @@ public class PlayerMovement : MonoBehaviour
     public bool IsOnRail()
     {
         return onRail;
+    }
+
+    //----------------------------------------------------
+    // Moving platform tracking
+    //----------------------------------------------------
+
+    private void OnCollisionStay(Collision collision)
+    {
+        // Check if we're standing on top of a moving platform
+        if (collision.rigidbody == null || !collision.rigidbody.isKinematic) return;
+
+        foreach (ContactPoint cp in collision.contacts)
+        {
+            // Contact normal points from surface toward us — if it's upward, we're on top
+            if (cp.normal.y > 0.5f)
+            {
+                currentPlatformRb = collision.rigidbody;
+                return;
+            }
+        }
+    }
+
+    private void OnCollisionExit(Collision collision)
+    {
+        if (collision.rigidbody == currentPlatformRb)
+            currentPlatformRb = null;
     }
 }
