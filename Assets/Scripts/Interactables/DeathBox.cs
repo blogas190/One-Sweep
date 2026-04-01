@@ -2,14 +2,12 @@ using UnityEngine;
 public class DeathBox : MonoBehaviour
 {
     public bool isDashable = false;
-    private GameStates states;
     private GameObject playerObj;
     private PlayerMovement playerMovement;
     private Animator animator;
 
     void Start()
     {
-        states = FindAnyObjectByType<GameStates>();
         playerObj = GameObject.FindGameObjectWithTag("Player");
         animator = GetComponent<Animator>();
 
@@ -39,13 +37,14 @@ public class DeathBox : MonoBehaviour
             }
             else
             {
-                if (states != null && !states.deathState)
+                if (GameStates.instance != null && !GameStates.instance.deathState)
                 {
-                    states.StartDeath();
-                    if (animator != null)
-                    {
-                        animator.SetTrigger("Crashed");
-                    }
+                    GameStates.instance.StartDeath();
+                }
+                else if(GameStates.instance.deathState)
+                {
+                    Debug.Log("Player dead already, ignoring further death triggers.");
+                    return;
                 }
                 else
                 {

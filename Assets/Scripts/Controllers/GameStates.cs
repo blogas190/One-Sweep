@@ -1,14 +1,11 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.InputSystem;
 using System.Collections;
 using MoreMountains.Feedbacks;
-using MoreMountains.Tools;
 
 public class GameStates : MonoBehaviour
 {
     public static GameStates instance { get; private set; }
-    private PlayerMovement player;
 
     public CleaningProgressManager cleaningProgressManager;
     private GameManager gameManager;
@@ -20,9 +17,17 @@ public class GameStates : MonoBehaviour
 
     private float deathRestartTimer = 2f;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    void Awake()
     {
-        player = FindAnyObjectByType<PlayerMovement>();
+        if (instance != null && instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        instance = this;
+        DontDestroyOnLoad(gameObject);
+        
         prevGravity = Physics.gravity.y;
         gameManager = GetComponent<GameManager>();
     }
