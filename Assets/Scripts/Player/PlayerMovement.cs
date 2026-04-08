@@ -12,6 +12,12 @@ public class PlayerMovement : MonoBehaviour
     public bool isTesting = false;
 
     // ============================================================
+    // SETTINGS
+    // ============================================================
+    [Header("Settings")]
+    [SerializeField] private PlayerMovementSO _settings;
+
+    // ============================================================
     // REFERENCES
     // ============================================================
     [Header("References")]
@@ -64,96 +70,15 @@ public class PlayerMovement : MonoBehaviour
     public MMFeedbacks RailFeedbackEnd;
 
     // ============================================================
-    // SPEED SETTINGS
-    // ============================================================
-    [Header("Speed Settings")]
-    [Tooltip("Initial movement speed when starting to move")]
-    public float startSpeed = 5f;
-
-    [Tooltip("Target speed the player accelerates/decelerates towards naturally")]
-    public float targetSpeed = 10f;
-
-    [Tooltip("Maximum movement speed achievable")]
-    public float maxSpeed = 15f;
-
-    [Tooltip("Rate at which speed increases per second")]
-    public float accelerationRate = 1f;
-
-    [Tooltip("Rate at which speed decreases per second")]
-    public float decelerationRate = 1f;
-
-    [Tooltip("Maximum acceleration rate when boosting")]
-    public float accelerationMax = 2f;
-
-    [Tooltip("How fast you lose speed while being in air")]
-    public float airSpeedLoss = 1f;
-    // ============================================================
-    // JUMP SETTINGS
-    // ============================================================
-    [Header("Jump Settings")]
-    [Tooltip("Upward force applied when jumping")]
-    public float jumpForce = 10f;
-
-    [Tooltip("Vertical force applied during wall jump")]
-    public float wallJumpForceVertical = 20f;
-
-    [Tooltip("Horizontal force applied during wall jump")]
-    public float wallJumpForceHorizontal = 20f;
-
-    [Tooltip("Gravity multiplier at jump apex for hang time (lower = more float)")]
-    [Range(0.1f, 1f)]
-    public float jumpGravityModifier = 0.3f;
-
-    [Tooltip("Time after leaving ground where player can still jump (seconds)")]
-    [Range(0f, 0.5f)]
-    public float coyoteTime = 0.15f;
-
-    [Tooltip("Cooldown between wall jumps to prevent spam (seconds)")]
-    [Range(0f, 1f)]
-    public float wallJumpCooldown = 0.3f;
-
-    // ============================================================
-    // DASH SETTINGS
-    // ============================================================
-    [Header("Dash Settings")]
-    [Tooltip("Force applied when dashing on ground")]
-    public float groundDashForce = 200f;
-
-    [Tooltip("Force applied when dashing in air")]
-    public float airDashForce = 200f;
-
-    [Tooltip("Duration of ground dash (seconds)")]
-    public float dashTime = 1f;
-
-    [Tooltip("Duration of air dash (seconds)")]
-    public float airDashTime = 1f;
-
-    [Tooltip("Speed boost added after dash")]
-    public float speedBuff = 5f;
-
-    // ============================================================
-    // RAIL SETTINGS
-    // ============================================================
-    [Header("Rail Settings")]
-    [Tooltip("Speed bonus added when on rail")]
-    public float railSpeed = 20f;
-
-    [Tooltip("Vertical offset for detecting rail entry")]
-    public float railCheckOffset = 1.5f;
-
-    [Tooltip("Vertical offset for player position on rail")]
-    public float railOffset = 1.8f;
-
-    // ============================================================
     // STICKY SURFACE SETTINGS
     // ============================================================
-    [Header("Sticky Surface Settings")]
-    [Tooltip("Movement speed on sticky surfaces")]
-    public float stickySurfaceSpeed = 10f;
+    //[Header("Sticky Surface Settings")]
+    //[Tooltip("Movement speed on sticky surfaces")]
+    //public float stickySurfaceSpeed = 10f;
 
-    [Tooltip("Gravity multiplier on sticky surfaces (lower = less gravity)")]
-    [Range(0f, 1f)]
-    public float stickyGravityMultiplier = 0.2f;
+    //[Tooltip("Gravity multiplier on sticky surfaces (lower = less gravity)")]
+    //[Range(0f, 1f)]
+    //public float stickyGravityMultiplier = 0.2f;
 
     // ============================================================
     // GROUND CHECK SETTINGS
@@ -194,23 +119,40 @@ public class PlayerMovement : MonoBehaviour
 
     // Timers & Counters
     private float currentDashTime = 0f;
+    private bool wasGrounded = true; // tracks previous frame grounded state for landing detection
     private float coyoteTimeCounter = 0f;
     private float wallJumpCooldownTimer = 0f;
 
     // Physics & Effects
     private Vector3 dashVector;
-    private bool hasReducedGravity = false;
     private float startGravity = -25f;
+
+    // Gravity state machine replaces the fragile hasReducedGravity bool.
+    // Normal    : full gravity, no modifier active.
+    // Apex      : reduced gravity applied at jump apex for hang time.
+    // VerticalUp: reduced gravity while an upward vertical dash is active.
+    private enum GravityState { Normal, Apex, VerticalUp }
+    private GravityState gravityState = GravityState.Normal;
+
+    [Tooltip("Vertical velocity window in which apex hang-time gravity kicks in")]
+    [Range(0.1f, 3f)]
+    public float apexVelocityThreshold = 0.5f;
 
     // Moving platform
     private Rigidbody currentPlatformRb = null;
+
+    // Runtime copies of SO values that get mutated during play (rail/boost)
+    private float accelerationRate;
+    private float accelerationMax;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         p_rb = GetComponent<Rigidbody>();
         energy = GetComponent<EnergyController>();
-        speed = startSpeed;
+        speed = _settings.StartSpeed;
+        accelerationRate = _settings.AccelerationRate;
+        accelerationMax = _settings.AccelerationMax;
         prevAccelerationRate = accelerationRate;
         startGravity = Physics.gravity.y;
     }
@@ -221,7 +163,7 @@ public class PlayerMovement : MonoBehaviour
         if (CheckDeathState()) return;
         UpdateRailMovement();
         UpdateMovementConstraints();
-        UpdateStickySurface();
+        //UpdateStickySurface();
         UpdateRotation();
         UpdateAcceleration();
         UpdateVelocity();
@@ -229,6 +171,22 @@ public class PlayerMovement : MonoBehaviour
         HandleJump();
         UpdateGravityModifiers();
         HandleDash();
+    }
+
+    // Sets gravity to an absolute value, never stacked multiplications.
+    // This is the single source of truth for all gravity changes.
+    private void SetGravityState(GravityState newState)
+    {
+        if (gravityState == newState) return;
+        gravityState = newState;
+
+        float target = newState == GravityState.Normal
+            ? startGravity
+            : startGravity * _settings.JumpGravityModifier;
+
+        Physics.gravity = new Vector3(Physics.gravity.x, target, Physics.gravity.z);
+        // Keep gameStates in sync if it caches gravity internally
+        // (call its setter only with the absolute final value, not a multiplier)
     }
 
     //--------------------FixedUpdate Functions----------------------------
@@ -276,13 +234,13 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    private void UpdateStickySurface()
-    {
-        if (onStickySurface)
-        {
-            StickySurfaceMovement();
-        }
-    }
+    //private void UpdateStickySurface()
+    //{
+    //    if (onStickySurface)
+    //    {
+    //        StickySurfaceMovement();
+    //    }
+    //}
 
     private void UpdateRotation()
     {
@@ -300,48 +258,60 @@ public class PlayerMovement : MonoBehaviour
     private void UpdateAcceleration()
     {
         animator.SetFloat("Speed", speed);
-        float desiredSpeed;
 
-        if (speed < startSpeed)
+        if (speed < _settings.StartSpeed) speed = _settings.StartSpeed;
+        else if (speed > _settings.MaxSpeed) speed = _settings.MaxSpeed;
+
+        // Landing snap: on the first grounded frame after being airborne,
+        // blend speed toward the actual horizontal rigidbody velocity so the
+        // player never floats in from a high-speed jump and then slowly crawls.
+        bool isGrounded = Grounded();
+        if (isGrounded && !wasGrounded)
         {
-            speed = startSpeed;
+            float actualHorizontalSpeed = Mathf.Abs(p_rb.linearVelocity.x);
+            float snappedSpeed = Mathf.Lerp(speed, actualHorizontalSpeed, _settings.LandingSpeedSync);
+            speed = Mathf.Clamp(snappedSpeed, _settings.StartSpeed, _settings.MaxSpeed);
         }
-        else if (speed > maxSpeed)
+        wasGrounded = isGrounded;
+
+        if (onRail)
         {
-            speed = maxSpeed;
+            speed = Mathf.MoveTowards(speed, _settings.MaxSpeed, accelerationRate * Time.fixedDeltaTime);
+            return;
         }
 
         if (Grounded() && (moveLeft || moveRight) && !braking)
         {
-            if (accelerationRate == accelerationMax)
-            {
-                desiredSpeed = maxSpeed;
-            }
-            else
-            {
-                desiredSpeed = targetSpeed;
-            }
-
+            float desiredSpeed = (accelerationRate == accelerationMax) ? _settings.MaxSpeed : _settings.TargetSpeed;
             speed = Mathf.MoveTowards(speed, desiredSpeed, accelerationRate * Time.fixedDeltaTime);
         }
         else if (Grounded() && (moveLeft || moveRight) && braking)
         {
-            speed = Mathf.MoveTowards(speed, startSpeed, accelerationRate * Time.fixedDeltaTime);
+            speed = Mathf.MoveTowards(speed, _settings.StartSpeed, accelerationRate * Time.fixedDeltaTime);
         }
         else if (!Grounded() && (moveLeft || moveRight))
         {
-            speed -= airSpeedLoss * Time.fixedDeltaTime;
+            speed -= _settings.AirSpeedLoss * Time.fixedDeltaTime;
         }
     }
 
     private void UpdateVelocity()
     {
         Vector3 velocity = p_rb.linearVelocity;
-        if ((moveLeft || moveRight) && Grounded() && !dash || onRail)
+
+        if (onRail)
+        {
+            velocity.x = direction * speed;
+            p_rb.linearVelocity = velocity;
+            return;
+        }
+
+        if ((moveLeft || moveRight) && Grounded() && !dash)
         {
             float platformVelocityX = currentPlatformRb != null ? currentPlatformRb.linearVelocity.x : 0f;
             velocity.x = direction * speed + platformVelocityX;
         }
+
         p_rb.linearVelocity = velocity;
     }
 
@@ -350,7 +320,7 @@ public class PlayerMovement : MonoBehaviour
         // Coyote time logic
         if (Grounded())
         {
-            coyoteTimeCounter = coyoteTime; // Reset counter when grounded
+            coyoteTimeCounter = _settings.CoyoteTime; // Reset counter when grounded
         }
         else
         {
@@ -370,40 +340,37 @@ public class PlayerMovement : MonoBehaviour
             if (coyoteTimeCounter > 0f)
             {
                 JumpResetFeedback.PlayFeedbacks();
-                p_rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+                p_rb.AddForce(Vector3.up * _settings.JumpForce, ForceMode.Impulse);
                 JumpFeedback.PlayFeedbacks();
-                gameStates.MultVerticalGravity(jumpGravityModifier);
-                hasReducedGravity = true;
+                // Snap to normal before launch so rapid mid-air re-jumps never inherit reduced gravity.
+                SetGravityState(GravityState.Normal);
                 animator.SetTrigger("Jump");
                 coyoteTimeCounter = 0f;
                 jump = false;
             }
-            else if (onWall && wallJumpCooldownTimer <= 0f) // Changed to else if so it doesn't check wall jump after successful ground jump
+            else if (onWall && wallJumpCooldownTimer <= 0f)
             {
-                if (hasReducedGravity)
-                {
-                    gameStates.MultVerticalGravity(1f / jumpGravityModifier);
-                    hasReducedGravity = false;
-                }
+                // Wall jump: restore normal gravity before applying force.
+                SetGravityState(GravityState.Normal);
 
                 if (moveLeft)
                 {
-                    Vector3 wallJumpVector = new Vector3(-wallJumpForceHorizontal, wallJumpForceVertical, 0f);
+                    Vector3 wallJumpVector = new Vector3(-_settings.WallJumpForceHorizontal, _settings.WallJumpForceVertical, 0f);
                     p_rb.AddForce(wallJumpVector, ForceMode.Impulse);
                 }
                 if (moveRight)
                 {
-                    Vector3 wallJumpVector = new Vector3(wallJumpForceHorizontal, wallJumpForceVertical, 0f);
+                    Vector3 wallJumpVector = new Vector3(_settings.WallJumpForceHorizontal, _settings.WallJumpForceVertical, 0f);
                     p_rb.AddForce(wallJumpVector, ForceMode.Impulse);
                 }
-                wallJumpCooldownTimer = wallJumpCooldown;
+                wallJumpCooldownTimer = _settings.WallJumpCooldown;
                 jump = false;
             }
             else if (onStickySurface)
             {
-                StopStickySurface();
-                gameStates.MultVerticalGravity(jumpGravityModifier);
-                p_rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+                //StopStickySurface();
+                SetGravityState(GravityState.Normal);
+                p_rb.AddForce(Vector3.up * _settings.JumpForce, ForceMode.Impulse);
                 jump = false;
                 return;
             }
@@ -416,28 +383,30 @@ public class PlayerMovement : MonoBehaviour
 
     private void UpdateGravityModifiers()
     {
-        // Safety check: Reset gravity if grounded and it's still reduced (shouldn't happen)
-        if (Grounded() && hasReducedGravity)
+        // Grounded: always restore full gravity regardless of what state we were in.
+        if (Grounded())
         {
-            gameStates.MultVerticalGravity(1f / jumpGravityModifier);
-            hasReducedGravity = false;
-            Debug.LogWarning("Gravity was stuck reduced - force reset to normal");
+            SetGravityState(GravityState.Normal);
+            return;
         }
 
-        if (!Grounded() && p_rb.linearVelocity.y > -0.5f && p_rb.linearVelocity.y < 0.5f)
+        // In-air logic. VerticalUp state is managed entirely by VerticalDash()
+        // and HandleDash(), so we only touch Normal <-> Apex here.
+        if (gravityState == GravityState.VerticalUp) return;
+
+        float vy = p_rb.linearVelocity.y;
+
+        // Apex window: velocity is near zero (neither strongly rising nor falling).
+        bool atApex = Mathf.Abs(vy) <= _settings.ApexVelocityThreshold;
+
+        if (atApex)
         {
-            // Near the peak - reduce gravity for hang time
-            if (Physics.gravity.y == startGravity)
-            {
-                gameStates.MultVerticalGravity(jumpGravityModifier);
-                hasReducedGravity = true;
-            }
+            SetGravityState(GravityState.Apex);
         }
-        else if (hasReducedGravity && !Grounded())
+        else
         {
-            // Reset when leaving the apex (but not grounded yet)
-            gameStates.MultVerticalGravity(1f / jumpGravityModifier);
-            hasReducedGravity = false;
+            // Outside apex window ? restore normal gravity so the fall feels snappy.
+            SetGravityState(GravityState.Normal);
         }
     }
 
@@ -466,10 +435,12 @@ public class PlayerMovement : MonoBehaviour
             if (currentDashTime <= 0f)
             {
                 verticalDash = false;
+                SetGravityState(GravityState.Normal);
                 Debug.Log("Vertical Dash ended");
                 VerticalDashFeedbackEnd.PlayFeedbacks();
             }
         }
+
     }
     //--------------------Player Movement----------------------------------
 
@@ -484,7 +455,7 @@ public class PlayerMovement : MonoBehaviour
                 {
                     Vector2 input = context.ReadValue<Vector2>();
                     direction = input.x;
-                    speed = startSpeed; //for debugging, resets the speed on changing directions
+                    speed = _settings.StartSpeed; //for debugging, resets the speed on changing directions
 
                     //direction flags so we can limit the player's options later
                     if (direction < 0 && lastDirection != direction)
@@ -511,7 +482,7 @@ public class PlayerMovement : MonoBehaviour
                 {
                     Vector2 input = context.ReadValue<Vector2>();
                     direction = input.x;
-                    speed = startSpeed;
+                    speed = _settings.StartSpeed;
 
                     if (direction < 0 && lastDirection != direction)
                     {
@@ -532,7 +503,7 @@ public class PlayerMovement : MonoBehaviour
                 }
                 else // making the player go faster or slower
                 {
-                    if (Grounded())
+                    if (Grounded() && _settings.CanControlSpeed)
                     {
                         Vector2 input = context.ReadValue<Vector2>();
                         float dir = input.x;
@@ -599,23 +570,23 @@ public class PlayerMovement : MonoBehaviour
 
     public void Dash(InputAction.CallbackContext context)
     {
-        if (context.performed && !dash && energy.currentEnergy >= energy.dashEnergy)
+        if (context.performed && !dash && energy.currentEnergy >= energy.dashEnergy && _settings.CanDash)
         {
             float dashDirection = (moveLeft || moveRight) ? direction : lastDirection;
             if (Grounded())
             {
-                dashVector = new Vector3(dashDirection, 0f, 0f) * groundDashForce;
-                currentDashTime = dashTime;
+                dashVector = new Vector3(dashDirection, 0f, 0f) * _settings.GroundDashForce;
+                currentDashTime = _settings.DashTime;
             }
             else
             {
-                dashVector = new Vector3(dashDirection, 0f, 0f) * airDashForce;
-                currentDashTime = airDashTime;
+                dashVector = new Vector3(dashDirection, 0f, 0f) * _settings.AirDashForce;
+                currentDashTime = _settings.AirDashTime;
             }
             p_rb.AddForce(dashVector, ForceMode.Impulse);
 
             dash = true;
-            if (speed < maxSpeed) { speed += speedBuff; }
+            if (speed < _settings.MaxSpeed) { speed += _settings.SpeedBuff; }
             Debug.Log("Dash started");
             DashFeedbackStart.PlayFeedbacks();
             animator.SetTrigger("Dash");
@@ -629,20 +600,12 @@ public class PlayerMovement : MonoBehaviour
             if (isUp)
             {
                 dashVector = Vector3.up * verticalDashForce;
-                if (!hasReducedGravity)
-                {
-                    gameStates.MultVerticalGravity(jumpGravityModifier);
-                    hasReducedGravity = true;
-                }
+                SetGravityState(GravityState.VerticalUp);
             }
-            else
+            else // downward dash
             {
                 dashVector = Vector3.down * verticalDashForce;
-                if (hasReducedGravity)
-                {
-                    gameStates.MultVerticalGravity(1f / jumpGravityModifier);
-                    hasReducedGravity = false;
-                }
+                SetGravityState(GravityState.Normal);
             }
             currentDashTime = verticalDashTime;
             p_rb.AddForce(dashVector, ForceMode.Impulse);
@@ -664,10 +627,9 @@ public class PlayerMovement : MonoBehaviour
 
     public void RailStartMovementAngled(GameObject rail, Vector3 collisionPoint)
     {
-        // Match rail's Z position
-        if ((transform.position.y - railCheckOffset) < collisionPoint.y)
+        if ((transform.position.y - _settings.RailCheckOffset) < collisionPoint.y)
         {
-            transform.position = new Vector3(transform.position.x, collisionPoint.y + railOffset, rail.transform.position.z);
+            transform.position = new Vector3(transform.position.x, collisionPoint.y + _settings.RailOffset, rail.transform.position.z);
         }
         else
         {
@@ -678,7 +640,11 @@ public class PlayerMovement : MonoBehaviour
         p_rb.angularVelocity = Vector3.zero;
         p_rb.constraints = RigidbodyConstraints.FreezeRotation;
 
-        accelerationRate += railSpeed;
+        //speed += railSpeed;          // directly bump speed up
+        accelerationRate += _settings.RailSpeed;
+        accelerationMax += _settings.RailSpeed;
+        if (speed > _settings.MaxSpeed) speed = _settings.MaxSpeed;
+
         onRail = true;
         RailMovement(rail);
         RailFeedbackStart.PlayFeedbacks();
@@ -686,17 +652,12 @@ public class PlayerMovement : MonoBehaviour
 
     public void RailMovement(GameObject rail)
     {
-        if (onRail)
-        {
-            p_rb.constraints = RigidbodyConstraints.None;
-            p_rb.constraints = RigidbodyConstraints.FreezeRotation;
-            Vector3 velocity = p_rb.linearVelocity;
-            velocity.x = direction * speed;
-        }
-        else
-        {
-            return;
-        }
+        if (!onRail) return;
+
+        p_rb.constraints = RigidbodyConstraints.FreezeRotation;
+        Vector3 velocity = p_rb.linearVelocity;
+        velocity.x = direction * speed;
+        p_rb.linearVelocity = velocity;
     }
 
     public void RailStopMovement()
@@ -705,64 +666,65 @@ public class PlayerMovement : MonoBehaviour
         pos.z = 0f;
         transform.position = pos;
         accelerationRate = prevAccelerationRate;
+        accelerationMax -= _settings.RailSpeed;
         RailFeedbackEnd.PlayFeedbacks();
         RailFeedbackStart.StopFeedbacks();
     }
 
     //--------------------Sticky surface-----------------------------
 
-    public void StartStickySurface(Vector3 surfaceNormal)
-    {
-        Debug.Log("Started sticky surface movement");
-        onStickySurface = true;
-        stickySurfaceNormal = surfaceNormal;
+    //public void StartStickySurface(Vector3 surfaceNormal)
+    //{
+    //    Debug.Log("Started sticky surface movement");
+    //    onStickySurface = true;
+    //    stickySurfaceNormal = surfaceNormal;
 
-        // Get current velocity
-        Vector3 currentVelocity = p_rb.linearVelocity;
+    //    // Get current velocity
+    //    Vector3 currentVelocity = p_rb.linearVelocity;
 
-        // Convert horizontal speed to vertical movement direction
-        float horizontalSpeed = Mathf.Abs(currentVelocity.x);
-        // Transfer horizontal speed to vertical speed
-        speed = Mathf.Max(speed, horizontalSpeed);
+    //    // Convert horizontal speed to vertical movement direction
+    //    float horizontalSpeed = Mathf.Abs(currentVelocity.x);
+    //    // Transfer horizontal speed to vertical speed
+    //    speed = Mathf.Max(speed, horizontalSpeed);
 
-        // Reduce gravity effect
-        p_rb.useGravity = false;
+    //    // Reduce gravity effect
+    //    p_rb.useGravity = false;
 
-        // Apply custom gravity
-        p_rb.AddForce(Vector3.down * Physics.gravity.magnitude * stickyGravityMultiplier, ForceMode.Acceleration);
-    }
+    //    // Apply custom gravity
+    //    p_rb.AddForce(Vector3.down * Physics.gravity.magnitude * stickyGravityMultiplier, ForceMode.Acceleration);
+    //}
 
-    public void StickySurfaceMovement()
-    {
-        if (!onStickySurface) return;
+    //public void StickySurfaceMovement()
+    //{
+    //    if (!onStickySurface) return;
 
-        Vector3 velocity = stickySurfaceNormal.normalized * speed;
+    //    Vector3 velocity = stickySurfaceNormal.normalized * speed;
 
-        if (speed < maxSpeed)
-        {
-            speed += accelerationRate * Time.fixedDeltaTime;
-        }
+    //    if (speed < maxSpeed)
+    //    {
+    //        speed += accelerationRate * Time.fixedDeltaTime;
+    //    }
 
-        p_rb.linearVelocity = velocity;
-    }
+    //    p_rb.linearVelocity = velocity;
+    //}
 
-    public void StopStickySurface()
-    {
-        Debug.Log("Stopped sticky surface movement");
-        onStickySurface = false;
-        Vector3 velocity = p_rb.linearVelocity;
-        float verticalSpeed = Mathf.Abs(velocity.y);
+    //public void StopStickySurface()
+    //{
+    //    Debug.Log("Stopped sticky surface movement");
+    //    onStickySurface = false;
+    //    Vector3 velocity = p_rb.linearVelocity;
+    //    float verticalSpeed = Mathf.Abs(velocity.y);
 
-        velocity.x = verticalSpeed;
-        velocity.y = 0f;
-        p_rb.linearVelocity = velocity;
+    //    velocity.x = verticalSpeed;
+    //    velocity.y = 0f;
+    //    p_rb.linearVelocity = velocity;
 
-        // Keep the speed for continued horizontal movement
-        speed = Mathf.Max(startSpeed, verticalSpeed);
+    //    // Keep the speed for continued horizontal movement
+    //    speed = Mathf.Max(startSpeed, verticalSpeed);
 
-        // Re-enable normal gravity
-        p_rb.useGravity = true;
-    }
+    //    // Re-enable normal gravity
+    //    p_rb.useGravity = true;
+    //}
 
     //----------------------------------------------------
     //Setters
@@ -786,8 +748,8 @@ public class PlayerMovement : MonoBehaviour
 
     public void SetSpeed(float newSpeed)
     {
-        if (newSpeed < maxSpeed) speed = newSpeed;
-        else speed = maxSpeed;
+        if (newSpeed < _settings.MaxSpeed) speed = newSpeed;
+        else speed = _settings.MaxSpeed;
         Vector3 velocity = p_rb.linearVelocity;
         velocity.x = direction * speed;
         p_rb.linearVelocity = velocity;
@@ -859,7 +821,7 @@ public class PlayerMovement : MonoBehaviour
 
         foreach (ContactPoint cp in collision.contacts)
         {
-            // Contact normal points from surface toward us — if it's upward, we're on top
+            // Contact normal points from surface toward us if it's upward, we're on top
             if (cp.normal.y > 0.5f)
             {
                 currentPlatformRb = collision.rigidbody;

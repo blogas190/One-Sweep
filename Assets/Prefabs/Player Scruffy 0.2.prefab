@@ -40064,6 +40064,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isTesting: 0
+  _settings: {fileID: 11400000, guid: a87f5d8d1fbd9c645831878e0a83157d, type: 2}
   gameStates: {fileID: 0}
   player: {fileID: 5730501008601755791}
   railCheck: {fileID: 7557957178541881319}
@@ -40078,34 +40079,12 @@ MonoBehaviour:
   JumpResetFeedback: {fileID: 1886954398074701401}
   RailFeedbackStart: {fileID: 785629860911494837}
   RailFeedbackEnd: {fileID: 5811224316375883728}
-  startSpeed: 5
-  targetSpeed: 20
-  maxSpeed: 40
-  accelerationRate: 4
-  decelerationRate: 1
-  accelerationMax: 8
-  airSpeedLoss: 0.5
-  jumpForce: 750
-  wallJumpForceVertical: 1000
-  wallJumpForceHorizontal: 1000
-  jumpGravityModifier: 0.3
-  coyoteTime: 0.15
-  wallJumpCooldown: 0.2
-  groundDashForce: 8000
-  airDashForce: 2000
-  dashTime: 0.05
-  airDashTime: 0.001
-  speedBuff: 5
-  railSpeed: 3
-  railCheckOffset: 1.5
-  railOffset: 1.8
-  stickySurfaceSpeed: 10
-  stickyGravityMultiplier: 0.2
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
   groundCheck: {fileID: 1775744415958178097}
   groundCheckRadius: 0.22
+  apexVelocityThreshold: 0.5
 --- !u!114 &4144658658556286278
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -40268,20 +40247,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c15b6245742ed5d42987ee152768d035, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canUp: 1
-  canDown: 1
-  canRight: 0
-  canLeft: 0
-  upTrickForce: 500
-  upTrickTime: 0.01
-  upTrickGravityMod: 0.4
-  downTrickForce: 6000
-  downTrickTime: 0.01
-  cleanTime: 1
-  cleanBuff: 500000
-  cleanGravityMod: 0.3
-  leftTrickTime: 0.75
-  minYDistance: 1
+  _settings: {fileID: 11400000, guid: 678f503ab71bcef4f8010bc3e9dafeb8, type: 2}
   RightTrickFeedbackStart: {fileID: 2880847917518975682}
   LeftTrickFeedback: {fileID: 8228936491451629308}
   railCheck: {fileID: 1994459691562252939}
@@ -47731,7 +47697,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: -1.14, z: 0}
-  m_LocalScale: {x: 1.7999008, y: 1.356737, z: 5.7798195}
+  m_LocalScale: {x: 1.7999008, y: 1.356737, z: 25.876253}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1194368333993836913}

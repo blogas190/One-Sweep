@@ -6,10 +6,9 @@ public class DebugController : MonoBehaviour
 {
     public TextMeshProUGUI debugText;
     public GameObject player;
-
+    public PlayerMovementSO playerSettings;
     public bool showDebug = true;
     public float updateRate = 0.1f; // Update more frequently to show real-time progress
-
     private float lastUpdateTime;
     private Rigidbody playerRb;
     private PlayerMovement playerMovement;
@@ -25,7 +24,6 @@ public class DebugController : MonoBehaviour
                 player = GameObject.Find("Player");
             }
         }
-
         // Get components from player
         if (player != null)
         {
@@ -33,7 +31,6 @@ public class DebugController : MonoBehaviour
             playerRb = player.GetComponent<Rigidbody>();
             energy = player.GetComponent<EnergyController>();
         }
-
         // Find debug text automatically if not assigned
         if (debugText == null)
         {
@@ -45,7 +42,6 @@ public class DebugController : MonoBehaviour
     {
         if (!showDebug || debugText == null || player == null)
             return;
-
         // Update at specified rate to avoid performance issues
         if (Time.time - lastUpdateTime >= updateRate)
         {
@@ -67,12 +63,12 @@ public class DebugController : MonoBehaviour
         if (playerMovement != null)
         {
             debugInfo += $"Speed: {playerMovement.GetCurrentSpeed():F2}\n";
-            debugInfo += $"Starting Speed: {playerMovement.startSpeed:F2}\n";
-            debugInfo += $"Maximum Speed: {playerMovement.maxSpeed:F2}\n";
+            debugInfo += $"Starting Speed: {(playerSettings != null ? playerSettings.StartSpeed.ToString("F2") : "N/A")}\n";
+            debugInfo += $"Maximum Speed: {(playerSettings != null ? playerSettings.MaxSpeed.ToString("F2") : "N/A")}\n";
             debugInfo += $"Grounded: {playerMovement.Grounded()}\n";
             debugInfo += $"Current Energy: {energy.currentEnergy:F2}\n";
             debugInfo += $"Actual Velocity: {playerMovement.GetMagnitude()}\n";
-            debugInfo += $"Acceleratiion rate: {playerMovement.accelerationRate}\n";
+            debugInfo += $"Acceleration Rate: {(playerSettings != null ? playerSettings.AccelerationRate.ToString() : "N/A")}\n";
         }
 
         // Use the new cleaning progress system
@@ -87,7 +83,6 @@ public class DebugController : MonoBehaviour
             debugInfo += $"Fully Cleaned: {cleanedSpots}\n";
             debugInfo += $"Remaining: {remainingSpots}\n";
             debugInfo += $"Cleaning Progress: {totalProgress:F1}%\n";
-
             // Uncomment this line for debugging the calculation:
             // debugInfo += $"Debug: {CleaningProgressManager.Instance.GetDetailedProgress()}\n";
         }
@@ -99,7 +94,6 @@ public class DebugController : MonoBehaviour
         }
 
         debugInfo += $"FPS: {(1f / Time.deltaTime):F0}\n";
-
         debugText.text = debugInfo;
     }
 }

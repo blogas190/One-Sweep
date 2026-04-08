@@ -1,0 +1,108 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &2937604463719374283
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1314781218757242019, guid: 9b28a1a8c06cb5f44a42cba9dea326cb, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: b8eee52d0c6d60f42ac63a41452454f0, type: 2}
+    - target: {fileID: 5287046063217463766, guid: 9b28a1a8c06cb5f44a42cba9dea326cb, type: 3}
+      propertyPath: m_Name
+      value: Vertical Decal Dirt Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: 6162252103508833724, guid: 9b28a1a8c06cb5f44a42cba9dea326cb, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 8.7767935
+      objectReference: {fileID: 0}
+    - target: {fileID: 6162252103508833724, guid: 9b28a1a8c06cb5f44a42cba9dea326cb, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 7.0182066
+      objectReference: {fileID: 0}
+    - target: {fileID: 6162252103508833724, guid: 9b28a1a8c06cb5f44a42cba9dea326cb, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 369.83
+      objectReference: {fileID: 0}
+    - target: {fileID: 6162252103508833724, guid: 9b28a1a8c06cb5f44a42cba9dea326cb, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 8.41
+      objectReference: {fileID: 0}
+    - target: {fileID: 6162252103508833724, guid: 9b28a1a8c06cb5f44a42cba9dea326cb, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 5.41
+      objectReference: {fileID: 0}
+    - target: {fileID: 6162252103508833724, guid: 9b28a1a8c06cb5f44a42cba9dea326cb, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6162252103508833724, guid: 9b28a1a8c06cb5f44a42cba9dea326cb, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6162252103508833724, guid: 9b28a1a8c06cb5f44a42cba9dea326cb, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6162252103508833724, guid: 9b28a1a8c06cb5f44a42cba9dea326cb, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6162252103508833724, guid: 9b28a1a8c06cb5f44a42cba9dea326cb, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6162252103508833724, guid: 9b28a1a8c06cb5f44a42cba9dea326cb, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6162252103508833724, guid: 9b28a1a8c06cb5f44a42cba9dea326cb, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7062934859905694018, guid: 9b28a1a8c06cb5f44a42cba9dea326cb, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 7062934859905694018, guid: 9b28a1a8c06cb5f44a42cba9dea326cb, type: 3}
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5287046063217463766, guid: 9b28a1a8c06cb5f44a42cba9dea326cb, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 829167178809759454}
+  m_SourcePrefab: {fileID: 100100000, guid: 9b28a1a8c06cb5f44a42cba9dea326cb, type: 3}
+--- !u!1 &7033263432529611805 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5287046063217463766, guid: 9b28a1a8c06cb5f44a42cba9dea326cb, type: 3}
+  m_PrefabInstance: {fileID: 2937604463719374283}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &829167178809759454
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7033263432529611805}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ed4201c80b6da14795b64a7442602c4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::VerticalDecalDirtSpot
+  brushTexture: {fileID: 2800000, guid: afe30fa536677b046ad92694bb99a3c9, type: 3}
+  dirtMaterial: {fileID: 2100000, guid: b8eee52d0c6d60f42ac63a41452454f0, type: 2}
+  cleanThreshold: 0.8
+  brushBlendShader: {fileID: 4800000, guid: efa4c8889df208a40b0a873e563aea4f, type: 3}
+  setBrushWidth: 2000
+  setBrushHeight: 2000
+  brushInterval: 0.02
+  flipUVX: 0
+  flipUVY: 0
+  checkInterval: 0.1
+  pixelSampleRate: 4
+  decalTexture: {fileID: 2800000, guid: 93cd4e9d3c0f5904daaff7b3baaf6c69, type: 3}

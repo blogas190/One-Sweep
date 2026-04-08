@@ -19,6 +19,12 @@ public class LevelSwitcher : MonoBehaviour
     {
         // Ensure the CameraTaker collider has a trigger listener
         Transform cameraTaker = transform.Find("CameraTaker");
+
+        if (cleaningManager == null)
+        {
+            cleaningManager = FindAnyObjectByType<CleaningProgressManager>();
+        }
+
         if (cameraTaker != null)
         {
             CameraTakerHandler handler = cameraTaker.gameObject.AddComponent<CameraTakerHandler>();

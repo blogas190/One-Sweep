@@ -74,7 +74,7 @@ GameObject:
   - component: {fileID: 8614215369343618441}
   m_Layer: 0
   m_Name: RailTop
-  m_TagString: Rail
+  m_TagString: AngledRail
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -185,7 +185,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 1b965c03fc25b3545b7eee34b615bef0, type: 3}
       propertyPath: m_TagString
-      value: Rail
+      value: AngledRail
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

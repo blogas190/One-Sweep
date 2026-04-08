@@ -6,29 +6,16 @@ using MoreMountains.Tools;
 
 public class AirTricks : MonoBehaviour
 {
-    [Header("Toggle Tricks")]
-    [SerializeField] private bool canUp = true;
-    [SerializeField] private bool canDown = true;
-    [SerializeField] private bool canRight = false;
-    [SerializeField] private bool canLeft = false;
-
-    [Header("Trick Settings")]
-    public float upTrickForce = 500f;
-    public float upTrickTime = 0.1f;
-    public float upTrickGravityMod = 0.4f;
-    public float downTrickForce = 1000f;
-    public float downTrickTime = 0.1f;
-    public float cleanTime = 1f;
-    private float currentCleanTime;
-    public float cleanBuff = 500000f;
-    public float cleanGravityMod = 0.3f;
-    public float leftTrickTime = .75f;
-    [SerializeField] private float minYDistance = 0.1f;
+    // ============================================================
+    // SETTINGS
+    // ============================================================
+    [Header("Settings")]
+    [SerializeField] private AirTricksSO _settings;
 
     [Header("Feedbacks")]
     public MMFeedbacks RightTrickFeedbackStart;
     public MMFeedbacks LeftTrickFeedback;
-    
+
     [Header("References")]
     public RailCheck railCheck;
     public Animator animator;
@@ -45,7 +32,6 @@ public class AirTricks : MonoBehaviour
 
     private bool trickInProgress = false;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         player = GetComponent<PlayerMovement>();
@@ -56,7 +42,6 @@ public class AirTricks : MonoBehaviour
 
     void Update()
     {
-
         //checking if the player hits the ground during a trick
         if (trickInProgress && player.Grounded())
         {
@@ -65,7 +50,7 @@ public class AirTricks : MonoBehaviour
             trickInProgress = false;
         }
     }
-    
+
     //Coroutine starter. Later this can used for animation timing as well
     private void SetAnimation(Color color, float delay)
     {
@@ -82,7 +67,7 @@ public class AirTricks : MonoBehaviour
 
         int groundLayer = LayerMask.GetMask("Ground");
 
-        if (Physics.Raycast(rayDown, out hit, minYDistance, groundLayer))
+        if (Physics.Raycast(rayDown, out hit, _settings.MinYDistance, groundLayer))
         {
             nearGround = true;
         }
@@ -105,28 +90,26 @@ public class AirTricks : MonoBehaviour
     //Need to add a way to handle diagonal inputs
     public void Trick(InputAction.CallbackContext context)
     {
-        if(context.performed && !player.Grounded() && trickInProgress == false && InAir())
+        if (context.performed && !player.Grounded() && trickInProgress == false && InAir())
         {
             Vector2 input = context.ReadValue<Vector2>();
             directionX = input.x;
             directionY = input.y;
 
-            if(directionX < -0.5f && canLeft)
+            if (directionX < -0.5f && _settings.CanLeft)
             {
                 AirTrickLeft();
             }
-
-            else if(directionX > 0.5f && canRight)
+            else if (directionX > 0.5f && _settings.CanRight)
             {
                 AirTrickRight();
             }
 
-            if(directionY < -0.5f && railCheck.blockedRail == null && canDown)
+            if (directionY < -0.5f && railCheck.blockedRail == null && _settings.CanDown)
             {
                 AirTrickDown();
             }
-
-            else if (directionY > 0.5f && canUp)
+            else if (directionY > 0.5f && _settings.CanUp)
             {
                 AirTrickUp();
             }
@@ -136,22 +119,16 @@ public class AirTricks : MonoBehaviour
     //Trick logic
     private void AirTrickUp()
     {
-
-        //animationDelay = 1f;
-        //SetAnimation(Color.purple, animationDelay);
-        if(energy.currentEnergy >= energy.upTrickEnergy)
+        if (energy.currentEnergy >= energy.upTrickEnergy)
         {
-            player.VerticalDash(true, upTrickForce, upTrickTime); // going up
+            player.VerticalDash(true, _settings.UpTrickForce, _settings.UpTrickTime);
         }
-        //Debug.Log("Air Trick Up!");
-        ////Dash reset. Change to max 1 later
-        //if(player.dashNumber < 3) player.dashNumber++;
     }
 
     private void AirTrickLeft() // regain dashes
     {
         Debug.Log("Air Trick Left!");
-        StartCoroutine(RevertAnimationAfterDelay(leftTrickTime));
+        StartCoroutine(RevertAnimationAfterDelay(_settings.LeftTrickTime));
         animator.SetTrigger("LeftTrick");
         LeftTrickFeedback.PlayFeedbacks();
         energy.AddEnergy(energy.leftTrickEnergy);
@@ -159,29 +136,25 @@ public class AirTricks : MonoBehaviour
 
     private void AirTrickRight() // cleaning nuke
     {
-        //SetAnimation(Color.yellow, animationDelay);
-        //Debug.Log("Air Trick Right!");
-        //if(player.dashNumber < 3) player.dashNumber++;
         if (energy.currentEnergy >= energy.rightTrickEnergy)
         {
             prevLengthUp = controller.lengthDetectUp;
             prevLengthDown = controller.lengthDetectDown;
 
-            states.MultVerticalGravity(cleanGravityMod);
-        
-            BigClean(cleanTime);
+            states.MultVerticalGravity(_settings.CleanGravityMod);
+
+            BigClean(_settings.CleanTime);
             animator.SetTrigger("TrickClean");
             energy.RemoveEnergy(energy.rightTrickEnergy);
         }
-
     }
 
     private void AirTrickDown()
     {
-        if(energy.currentEnergy >= energy.downTrickEnergy)
+        if (energy.currentEnergy >= energy.downTrickEnergy)
         {
-            player.VerticalDash(false, downTrickForce, downTrickTime); // going down
-            animator.SetTrigger("TrickDown");   
+            player.VerticalDash(false, _settings.DownTrickForce, _settings.DownTrickTime);
+            animator.SetTrigger("TrickDown");
         }
     }
 
@@ -196,8 +169,8 @@ public class AirTricks : MonoBehaviour
 
     void BigClean(float cleanTime)
     {
-        controller.lengthDetectUp = cleanBuff;
-        controller.lengthDetectDown = cleanBuff;
+        controller.lengthDetectUp = _settings.CleanBuff;
+        controller.lengthDetectDown = _settings.CleanBuff;
 
         StartCoroutine(RevertClean(cleanTime));
     }
@@ -213,8 +186,7 @@ public class AirTricks : MonoBehaviour
         controller.lengthDetectUp = prevLengthUp;
         controller.lengthDetectDown = prevLengthDown;
         trickInProgress = false;
-        float gravityBack;
-        gravityBack = (1 / cleanGravityMod);
+        float gravityBack = (1 / _settings.CleanGravityMod);
         states.MultVerticalGravity(gravityBack);
 
         RightTrickFeedbackStart.StopFeedbacks();
