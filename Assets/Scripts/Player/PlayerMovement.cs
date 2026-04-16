@@ -313,6 +313,10 @@ public class PlayerMovement : MonoBehaviour
         }
 
         p_rb.linearVelocity = velocity;
+
+        Vector3 v = p_rb.linearVelocity;
+        v.x = Mathf.Clamp(v.x, -_settings.MaxSpeed, _settings.MaxSpeed);
+        p_rb.linearVelocity = v;
     }
 
     private void UpdateCoyoteTime()
@@ -641,8 +645,8 @@ public class PlayerMovement : MonoBehaviour
         p_rb.constraints = RigidbodyConstraints.FreezeRotation;
 
         //speed += railSpeed;          // directly bump speed up
-        accelerationRate += _settings.RailSpeed;
-        accelerationMax += _settings.RailSpeed;
+        accelerationRate = _settings.AccelerationRate + _settings.RailSpeed;
+        accelerationMax = _settings.AccelerationMax + _settings.RailSpeed;
         if (speed > _settings.MaxSpeed) speed = _settings.MaxSpeed;
 
         onRail = true;
@@ -665,8 +669,8 @@ public class PlayerMovement : MonoBehaviour
         Vector3 pos = transform.position;
         pos.z = 0f;
         transform.position = pos;
-        accelerationRate = prevAccelerationRate;
-        accelerationMax -= _settings.RailSpeed;
+        accelerationRate = _settings.AccelerationRate;
+        accelerationMax = _settings.AccelerationMax;
         RailFeedbackEnd.PlayFeedbacks();
         RailFeedbackStart.StopFeedbacks();
     }

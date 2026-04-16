@@ -2,13 +2,13 @@
 - Project name: One Sweep
 - Unity version: Unity 6000.3.10f1
 - Active scene:
-  - Name: Level 1-4
+  - Name: Level 2-7
   - Tags:
-    - Untagged, Respawn, Finish, EditorOnly, MainCamera, Player, GameController, Ground, Dirt, AngledRail, VerticalDirt, Rail, Door
+    - Untagged, Respawn, Finish, EditorOnly, MainCamera, Player, GameController, Ground, Dirt, AngledRail, VerticalDirt
   - Layers:
     - Default, TransparentFX, Ignore Raycast, Water, UI, Ground, Dirt, RailDetection
 - Active game object:
-  - Name: Player Scruffy 0.2
-  - Tag: Player
+  - Name: Level Controllers
+  - Tag: Untagged
   - Layer: Default
 <!-- UNITY CODE ASSIST INSTRUCTIONS END -->
