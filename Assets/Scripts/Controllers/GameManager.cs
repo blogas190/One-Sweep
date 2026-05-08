@@ -27,6 +27,13 @@ public class GameManager : MonoBehaviour
 
         instance = this;
         DontDestroyOnLoad(gameObject);
+
+        AudioManager.Instance.LoadAllVolumes();
+    }
+
+    void Update()
+    {
+        Debug.Log("Current Game State: " + currentState);
     }
 
     public void ToggleDialogue()
@@ -43,34 +50,56 @@ public class GameManager : MonoBehaviour
 
     public void PauseGame()
     {
-        Time.timeScale = 0;
-        currentState = GameState.paused;
+        SetState(GameState.paused);
     }
 
     public void ResumeGame()
     {
-        Time.timeScale = 1;
-        currentState = GameState.playing;
+        SetState(GameState.playing);
     }
 
     public void StartDialogue()
     {
-        currentState = GameState.dialogue;
+        SetState(GameState.dialogue);
     }
 
     public void LevelComplete()
     {
-        currentState = GameState.levelComplete;
-        Time.timeScale = 0;
+        SetState(GameState.levelComplete);
         UIManager.instance.ShowLevelComplete();
     }
 
     public void LoadMainMenu()
     {
-        Time.timeScale = 1;
-        currentState = GameState.mainMenu;
         saveManager.SaveGame();
-        SceneManager.LoadScene("Main Menu");
+        SceneChanger.instance.LoadScene("Main Menu");
+    }
+
+    public void SetState(GameState newState)
+    {
+        currentState = newState;
+
+        switch (currentState)
+        {
+            case GameState.mainMenu:
+                Time.timeScale = 1;
+                break;
+            case GameState.playing:
+                Time.timeScale = 1;
+                break;
+            case GameState.paused:
+                Time.timeScale = 0;
+                break;
+            case GameState.gameOver:
+                Time.timeScale = 0;
+                break;
+            case GameState.dialogue:
+                Time.timeScale = 1;
+                break;
+            case GameState.levelComplete:
+                Time.timeScale = 0;
+                break;
+        }
     }
 
     //LoadNextLeveL

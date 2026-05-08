@@ -1,11 +1,10 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
     [SerializeField] GameObject mainMenuPanel;
+    [SerializeField] GameObject levelSelectPanel;
     [SerializeField] GameObject optionsMenuPanel;
-    [SerializeField] string levelToStart;
 
     void Start()
     {
@@ -16,6 +15,7 @@ public class MainMenu : MonoBehaviour
     {
         mainMenuPanel.SetActive(true);
         optionsMenuPanel.SetActive(false);
+        levelSelectPanel.SetActive(false);
     }
 
     public void OnOptionsMenu()
@@ -31,13 +31,20 @@ public class MainMenu : MonoBehaviour
 
     public void OnPlay()
     {
-        SceneChanger.instance.LoadScene(levelToStart);
-        //Later change to proper level select and load;
+        mainMenuPanel.SetActive(false);
+        levelSelectPanel.SetActive(true);
     }
 
     public void OnBack()
     {
-        optionsMenuPanel.SetActive(false);
+        if(levelSelectPanel.activeSelf)
+        {
+            levelSelectPanel.SetActive(false);
+        }
+        else if(optionsMenuPanel.activeSelf)
+        {
+            optionsMenuPanel.SetActive(false);
+        }
         mainMenuPanel.SetActive(true);
     }
 }

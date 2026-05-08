@@ -1089,17 +1089,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8719556979933603885, guid: 1fa698e1630d8bd4daa3579ea21bb1f5, type: 3}
   m_PrefabInstance: {fileID: 31181283}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &32370839 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7725921131289914234, guid: 065d27349ce91614fb116a9fda20c6d0, type: 3}
-  m_PrefabInstance: {fileID: 1903645325}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f57bb437b79d1e84f8e4d3d31a8ceea8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &33241150
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3572,28 +3561,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8719556979933603885, guid: 1fa698e1630d8bd4daa3579ea21bb1f5, type: 3}
   m_PrefabInstance: {fileID: 107052863}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &112458502 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5535366375544699341, guid: 065d27349ce91614fb116a9fda20c6d0, type: 3}
-  m_PrefabInstance: {fileID: 1903645325}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6da43522623d4704e979466dc7650b65, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &112458504 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5856773158271350628, guid: 065d27349ce91614fb116a9fda20c6d0, type: 3}
-  m_PrefabInstance: {fileID: 1903645325}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &126978815
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -14298,17 +14265,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 217564409686175546, guid: b3f7c0c614ca4e64aa4424f7fb34dc11, type: 3}
   m_PrefabInstance: {fileID: 500480532}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &501231132 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4424694996889287608, guid: 065d27349ce91614fb116a9fda20c6d0, type: 3}
-  m_PrefabInstance: {fileID: 1903645325}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6da43522623d4704e979466dc7650b65, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &504356832
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -19905,19 +19861,19 @@ PrefabInstance:
     - target: {fileID: 8042461705746971523, guid: 46d03f88e58693c49835f5a71166ec75, type: 3}
       propertyPath: cameraMode
       value: 
-      objectReference: {fileID: 112458504}
+      objectReference: {fileID: 0}
     - target: {fileID: 8042461705746971523, guid: 46d03f88e58693c49835f5a71166ec75, type: 3}
       propertyPath: cleanPercent
       value: 
-      objectReference: {fileID: 32370839}
+      objectReference: {fileID: 0}
     - target: {fileID: 8042461705746971523, guid: 46d03f88e58693c49835f5a71166ec75, type: 3}
       propertyPath: cameraModeFeedback
       value: 
-      objectReference: {fileID: 112458502}
+      objectReference: {fileID: 0}
     - target: {fileID: 8042461705746971523, guid: 46d03f88e58693c49835f5a71166ec75, type: 3}
       propertyPath: cleanPercentFeedbackEnd
       value: 
-      objectReference: {fileID: 501231132}
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -21164,6 +21120,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 569745117}
     m_Modifications:
     - target: {fileID: 401941463778557751, guid: dfa13d227127d9d44b7ac7e921abbea6, type: 3}
+      propertyPath: _settings
+      value: 
+      objectReference: {fileID: 11400000, guid: bbdb8f7151ab6974c9fcfca222996443, type: 2}
+    - target: {fileID: 401941463778557751, guid: dfa13d227127d9d44b7ac7e921abbea6, type: 3}
       propertyPath: gameStates
       value: 
       objectReference: {fileID: 1536527959}
@@ -21219,6 +21179,10 @@ PrefabInstance:
       propertyPath: canDown
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2930205476920754366, guid: dfa13d227127d9d44b7ac7e921abbea6, type: 3}
+      propertyPath: _settings
+      value: 
+      objectReference: {fileID: 11400000, guid: 65bef46e378ccc94f81b041e64b2d8b4, type: 2}
     - target: {fileID: 4144658658556286278, guid: dfa13d227127d9d44b7ac7e921abbea6, type: 3}
       propertyPath: m_ActionEvents.Array.data[1].m_PersistentCalls.m_Calls.Array.data[1].m_Mode
       value: 0
@@ -32328,6 +32292,10 @@ PrefabInstance:
     - target: {fileID: 1139138324744770039, guid: 7ea75d959ddaa334db26035f48e902c5, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.402
+      objectReference: {fileID: 0}
+    - target: {fileID: 2013190239104732717, guid: 7ea75d959ddaa334db26035f48e902c5, type: 3}
+      propertyPath: nextLevel
+      value: 1-4
       objectReference: {fileID: 0}
     - target: {fileID: 2013190239104732717, guid: 7ea75d959ddaa334db26035f48e902c5, type: 3}
       propertyPath: cleaningManager

@@ -63,7 +63,14 @@ public class TurretBullet : MonoBehaviour
         velocity = direction.normalized * speed;
         lifetime = bulletLifetime;
         isArched = false;
+
+        // Face the direction of travel immediately
+        if (velocity != Vector3.zero)
+        {
+            transform.rotation = Quaternion.LookRotation(velocity);
+        }
     }
+
 
     public void InitializeArched(Vector3 start, Vector3 target, float height, float bulletLifetime)
     {
@@ -78,6 +85,12 @@ public class TurretBullet : MonoBehaviour
 
         elapsedTime = 0f;
         isArched = true;
+
+        Vector3 initialDir = (target - start).normalized;
+        if (initialDir != Vector3.zero)
+        {
+            transform.rotation = Quaternion.LookRotation(initialDir);
+        }
     }
 
     void UpdateStraightMovement()
@@ -94,13 +107,25 @@ public class TurretBullet : MonoBehaviour
         {
             Vector3 newPos = Vector3.Lerp(startPos, targetPos, t);
             newPos.y += arcHeight * Mathf.Sin(t * Mathf.PI);
+
+            // Calculate movement direction for rotation
+            Vector3 moveDir = newPos - transform.position;
+            if (moveDir != Vector3.zero)
+            {
+                transform.rotation = Quaternion.LookRotation(moveDir);
+            }
+
             transform.position = newPos;
         }
         else
         {
-            // Continue straight after reaching target
             Vector3 direction = (targetPos - startPos).normalized;
             transform.position += direction * 10f * Time.deltaTime;
+
+            if (direction != Vector3.zero)
+            {
+                transform.rotation = Quaternion.LookRotation(direction);
+            }
         }
     }
 

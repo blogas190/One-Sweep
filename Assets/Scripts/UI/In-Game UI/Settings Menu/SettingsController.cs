@@ -13,17 +13,16 @@ public class SettingsController : BaseMenu
 
     public bool isSettingsOpen = false;
 
-    void Start()
+    public void SyncSliders()
     {
-        ApplyAllVolumes();
-    }
-
-    private void ApplyAllVolumes()
-    {
-        OnMasterVolumeChanged();
-        OnMusicVolumeChanged();
-        OnSFXVolumeChanged();
-        OnUIVolumeChanged();
+        if (AudioManager.Instance == null)
+        {
+            return;
+        }
+        masterSlider.SetValueWithoutNotify(AudioManager.Instance.masterVolume);
+        musicSlider.SetValueWithoutNotify(AudioManager.Instance.musicVolume);
+        sfxSlider.SetValueWithoutNotify(AudioManager.Instance.sfxVolume);
+        uiSlider.SetValueWithoutNotify(AudioManager.Instance.uiVolume);
     }
 
     public void OnMasterVolumeChanged()
@@ -64,7 +63,7 @@ public class SettingsController : BaseMenu
     public void OnBack()
     {
         UIManager.instance.SettingsBack();
-        isSettingsOpen = false;
-        saveManager.SaveGame();
+        PlayerPrefs.Save();
+        //saveManager.SaveGame();
     }
 }

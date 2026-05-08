@@ -36,9 +36,15 @@ public class SceneChanger : MonoBehaviour
         if(loadingScreenInstance == null)
         {
             loadingScreenInstance = Instantiate(loadingScreenPrefab);
+            DontDestroyOnLoad(loadingScreenInstance);
         }
 
         loadingScreenInstance.SetActive(true);
+
+        if(Time.timeScale == 0)
+        {
+            Time.timeScale = 1;
+        }
 
         FadeController fade = loadingScreenInstance.GetComponentInChildren<FadeController>();
 
@@ -64,11 +70,10 @@ public class SceneChanger : MonoBehaviour
         {
             yield return null;
         }
-
-        // Extra safety frame (covers Unity hitches)
         yield return null;
 
-        // Fade out AFTER everything is ready
+        OnSceneLoaded(sceneName);
+
         if (fade != null)
         {
             yield return fade.Fade(1f, 0f, 0.4f);
@@ -76,5 +81,21 @@ public class SceneChanger : MonoBehaviour
 
         loadingScreenInstance.SetActive(false);
         isLoading = false;
+        Destroy(loadingScreenInstance);
+        loadingScreenInstance = null;
+    }
+
+    private void OnSceneLoaded(string sceneName)
+    {
+        if(GameManager.instance == null) return;
+
+        switch(sceneName)
+        {
+            case "Main Menu":
+                GameManager.instance.SetState(GameState.mainMenu);
+                break;
+            default:
+                break;
+        }
     }
 }

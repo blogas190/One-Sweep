@@ -107,6 +107,9 @@ public class Turret : MonoBehaviour
 
         if (animator != null)
         {
+            animator.ResetTrigger(shootingTrigger);
+            animator.ResetTrigger(activateTrigger);
+            animator.SetTrigger(startReloadTrigger);  // trigger the closing animation
             animator.SetBool(reloadBool, true);
         }
     }

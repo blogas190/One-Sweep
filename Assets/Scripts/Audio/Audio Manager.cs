@@ -25,6 +25,11 @@ public class AudioManager : MonoBehaviour
     [Header("Audio Mixer")]
     [SerializeField] private AudioMixer audioMixer;
 
+    public float masterVolume { get; private set; } = 1f;
+    public float musicVolume { get; private set; } = 1f;
+    public float sfxVolume { get; private set; } = 1f;
+    public float uiVolume { get; private set; } = 1f;
+
     void Awake()
     {
         if (Instance != null && Instance != this)
@@ -39,6 +44,9 @@ public class AudioManager : MonoBehaviour
         sfx = new SFXSystem(sfxPool);
         music = new MusicSystem(musicSource, this);
         ui = new UISystem(uiSource, uiHover, uiClick);
+
+        Debug.Log("Loading saved volumes...");
+        LoadAllVolumes();
     }
 
     //--------------------------------------------
@@ -114,22 +122,38 @@ public class AudioManager : MonoBehaviour
 
     public void SetMasterVolume(float value)
     {
+        masterVolume = value;
         audioMixer.SetFloat("masterVolume", LinearToDecibel(value));
+        PlayerPrefs.SetFloat("masterVolume", value);
     }
 
     public void SetMusicVolume(float value)
     {
+        musicVolume = value;
         audioMixer.SetFloat("musicVolume", LinearToDecibel(value));
+        PlayerPrefs.SetFloat("musicVolume", value);
     }
 
     public void SetSFXVolume(float value)
     {
+        sfxVolume = value;
         audioMixer.SetFloat("sfxVolume", LinearToDecibel(value));
+        PlayerPrefs.SetFloat("sfxVolume", value);
     }
 
     public void SetUIVolume(float value)
     {
+        uiVolume = value;
         audioMixer.SetFloat("uiVolume", LinearToDecibel(value));
+        PlayerPrefs.SetFloat("uiVolume", value);
+    }
+
+    public void LoadAllVolumes()
+    {
+        SetMasterVolume(PlayerPrefs.GetFloat("masterVolume", 1f));
+        SetMusicVolume(PlayerPrefs.GetFloat("musicVolume", 1f));
+        SetSFXVolume(PlayerPrefs.GetFloat("sfxVolume", 1f));
+        SetUIVolume(PlayerPrefs.GetFloat("uiVolume", 1f));
     }
 
     private float LinearToDecibel(float value)

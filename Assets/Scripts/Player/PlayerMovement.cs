@@ -15,7 +15,7 @@ public class PlayerMovement : MonoBehaviour
     // SETTINGS
     // ============================================================
     [Header("Settings")]
-    [SerializeField] private PlayerMovementSO _settings;
+    public PlayerMovementSO _settings;
 
     // ============================================================
     // REFERENCES
@@ -599,6 +599,8 @@ public class PlayerMovement : MonoBehaviour
 
     public void VerticalDash(bool isUp, float verticalDashForce, float verticalDashTime, bool usesEnergy = true, bool callFeedback = true)
     {
+        if (verticalDash) return;
+
         if (energy.currentEnergy >= energy.upTrickEnergy)
         {
             if (isUp)

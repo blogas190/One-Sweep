@@ -8,6 +8,7 @@ public class UIController : MonoBehaviour
 {
     public ProgressBar cleanPercent;
     public TextMeshProUGUI cameraMode;
+    public TextMeshProUGUI timer;
     public MMFeedbacks cameraModeFeedback;
     public GameObject inGameUI;
     public GameObject player;
@@ -88,6 +89,11 @@ public class UIController : MonoBehaviour
                     hasTriggeredFeedback = true;
                 }
             }
+        }
+
+        if (timer != null)
+        {
+            string _timerText = Time.fixedDeltaTime.ToString();
         }
 
         if (camera != null && cameraMode != null) //camera mode display

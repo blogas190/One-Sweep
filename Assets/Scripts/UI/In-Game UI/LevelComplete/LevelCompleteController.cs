@@ -1,5 +1,3 @@
-using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.InputSystem;
 
 public class LevelCompleteController : BaseMenu
@@ -8,12 +6,11 @@ public class LevelCompleteController : BaseMenu
 
     public void SetNextLevel(string next)
     {
-        nextLevel = next;
+        nextLevel = "Level " + next;
     }
     public void OnContinue()
     {
         SceneChanger.instance.LoadScene(nextLevel);
-        GameManager.instance.ResumeGame();
     }
 
     public void OnComplete(InputAction.CallbackContext context)

@@ -110,7 +110,7 @@ MonoBehaviour:
   player: {fileID: 0}
   cameraSpeed: 8
   freeCamSensitivity: 0.1
-  offset: {x: 0, y: 3, z: -20}
+  offset: {x: 0, y: 3, z: -15}
   maxVerticalOffset: 100
   maxHorizontalOffset: 100
   isFollowing: 1
@@ -151,7 +151,6 @@ MonoBehaviour:
   m_ScreenCoordScaleBias: {x: 0, y: 0, z: 0, w: 0}
   m_RequiresDepthTexture: 0
   m_RequiresColorTexture: 0
-  m_Version: 2
   m_TaaSettings:
     m_Quality: 3
     m_FrameInfluence: 0.1
@@ -159,6 +158,7 @@ MonoBehaviour:
     m_MipBias: 0
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
+  m_Version: 2
 --- !u!114 &2647702031615460044
 MonoBehaviour:
   m_ObjectHideFlags: 0
