@@ -4734,6 +4734,30 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 608219354}
+    - target: {fileID: 5712597169878671095, guid: b4499f11767116140bafc04a7c95b719, type: 3}
+      propertyPath: boundsMax.x
+      value: 413.44
+      objectReference: {fileID: 0}
+    - target: {fileID: 5712597169878671095, guid: b4499f11767116140bafc04a7c95b719, type: 3}
+      propertyPath: boundsMax.y
+      value: 48.65
+      objectReference: {fileID: 0}
+    - target: {fileID: 5712597169878671095, guid: b4499f11767116140bafc04a7c95b719, type: 3}
+      propertyPath: boundsMax.z
+      value: -30
+      objectReference: {fileID: 0}
+    - target: {fileID: 5712597169878671095, guid: b4499f11767116140bafc04a7c95b719, type: 3}
+      propertyPath: boundsMin.x
+      value: -31.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 5712597169878671095, guid: b4499f11767116140bafc04a7c95b719, type: 3}
+      propertyPath: boundsMin.y
+      value: -7.54
+      objectReference: {fileID: 0}
+    - target: {fileID: 5712597169878671095, guid: b4499f11767116140bafc04a7c95b719, type: 3}
+      propertyPath: boundsMin.z
+      value: -30
+      objectReference: {fileID: 0}
     - target: {fileID: 6824124762703485348, guid: b4499f11767116140bafc04a7c95b719, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

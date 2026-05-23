@@ -1,0 +1,46 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d2a9460aae1c4420a415466d1db880f, type: 3}
+  m_Name: 16
+  m_EditorClassIdentifier: Assembly-CSharp::Dossamer.Dialogue.Schema.Cutscene
+  Title: 1-6
+  Exchanges:
+  - Lines:
+    - Text: Janitor requested on floor 8. Automatic assignment in progress.
+      Guid:
+        Value: 08a9c162-df01-4c1e-8686-f03278a5660d
+    - Text: ...
+      Guid:
+        Value: d89ed551-6ee9-4260-9f86-c6d3cc36a248
+    - Text: 'Assignment failed. Reason: no elevators for non-robotic employees in
+        service.'
+      Guid:
+        Value: 2c1177e2-6bd1-4a3f-b5b2-d09fef984647
+    - Text: Reward protocol initiated. First janitor to reach and clean the top-priority
+        zone will receive a 5% pay rise and 2 additional yearly lunch breaks.
+      Guid:
+        Value: 9745f9ec-4a50-4d5a-a1f4-fbf78d532c0b
+    Speaker: AdminAI
+    Guid:
+      Value: 2d5c40fe-c13f-4604-83ec-cf0f1f9b54cc
+  - Lines:
+    - Text: Floor 8, that's what 4 floors up?
+      Guid:
+        Value: 9bc5f03d-0562-4f96-9a05-e9a8847734c3
+    - Text: Boardy, this is our time to shine.
+      Guid:
+        Value: 44f1aab7-7d4b-408c-905c-a18d784f0682
+    Speaker: The Janitor
+    Guid:
+      Value: be72818d-2781-422a-bfc1-99dc32fa98fc
+  Guid:
+    Value: a7dc6fb4-f208-418f-ada1-2f8eb2e1b6a2

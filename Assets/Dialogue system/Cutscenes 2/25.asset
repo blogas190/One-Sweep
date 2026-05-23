@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d2a9460aae1c4420a415466d1db880f, type: 3}
+  m_Name: 25
+  m_EditorClassIdentifier: Assembly-CSharp::Dossamer.Dialogue.Schema.Cutscene
+  Title: 2-5
+  Exchanges:
+  - Lines:
+    - Text: What is this room? My head hurts just by looking at it...
+      Guid:
+        Value: ed689d4e-4f16-4ef3-a639-8844f2027231
+    - Text: Anyways, gotta meet the quota.
+      Guid:
+        Value: 9d0842ea-4d77-46e4-ab6c-2cb2619245c7
+    - Text: '[PRESS S WHILE ON RAIL TO JUMP OFF IT]'
+      Guid:
+        Value: 52c8342f-cec6-4505-9abf-b9091b46504c
+    Speaker: The Janitor
+    Guid:
+      Value: 079fc8a1-bd87-4507-b93d-7fe2eebd2953
+  Guid:
+    Value: 3cb0b3ae-7d18-4cfe-ad3a-ffdefc36bdd2

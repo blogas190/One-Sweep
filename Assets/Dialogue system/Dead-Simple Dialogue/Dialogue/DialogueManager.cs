@@ -10,6 +10,8 @@ using UnityEngine.Events;
 // https://www.youtube.com/watch?v=mXjRR1nnC5M
 // https://www.youtube.com/watch?v=_nRzoTzeyxU
 
+// modified for One Sweep by Gruodis Games
+
 namespace Dossamer.Dialogue
 {
     public class DialogueManager : MonoBehaviour
@@ -67,6 +69,9 @@ namespace Dossamer.Dialogue
         [SerializeField]
         private CharacterBank _characterBank;
 
+        [SerializeField]
+        private Color bracketTextColor = Color.yellow;
+
         public CharacterBank Characters
         {
             get { return _characterBank; }
@@ -88,6 +93,17 @@ namespace Dossamer.Dialogue
         public bool GetIsDialogueActive()
         {
             return isDialogueActive;
+        }
+
+        private string ProcessBracketColor(string text)
+        {
+            string hex = ColorUtility.ToHtmlStringRGB(bracketTextColor);
+            // Replace [text] with colored rich text, stripping the brackets
+            return System.Text.RegularExpressions.Regex.Replace(
+                text,
+                @"\[(.+?)\]",
+                $"<color=#{hex}>$1</color>"
+            );
         }
 
         private void Start()
@@ -136,7 +152,8 @@ namespace Dossamer.Dialogue
             {
                 Line line = dialogueLines.Dequeue(); // will return and remove oldest (first added) element
 
-                _textPanel.TriggerNewText(line.Text);
+                string processedText = ProcessBracketColor(line.Text);
+                _textPanel.TriggerNewText(processedText);
 
                 OnDialogueLineProgressed?.Invoke(line);
                 UOnDialogueProgressed?.Invoke();

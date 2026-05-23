@@ -1,0 +1,66 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d2a9460aae1c4420a415466d1db880f, type: 3}
+  m_Name: 12
+  m_EditorClassIdentifier: Assembly-CSharp::Dossamer.Dialogue.Schema.Cutscene
+  Title: 1-2
+  Exchanges:
+  - Lines:
+    - Text: "Greetings potential customer and welcome to AllHuman Solutions\u2122
+        where problems come to die!"
+      Guid:
+        Value: 8538d105-7714-4783-93fe-60e9701193a5
+    - Text: If you are here to protest the Corporate Reclamation of the Amazon Rainforest,
+        please kindly wait outside for our security force to address your concerns.
+      Guid:
+        Value: 5803b8a8-4104-4160-aa3e-9ebcddce3df5
+    Speaker: ReceptionBOT
+    Guid:
+      Value: e47fc9ee-e7e6-4b75-9f58-d8e3565f49aa
+  - Lines:
+    - Text: No, it's me ReceptionBOT. Mike, remember? Here to clean?
+      Guid:
+        Value: 86e76a20-f798-4a8a-a7cf-483e1dbd0619
+    Speaker: The Janitor
+    Guid:
+      Value: 0a7fa5fb-fa1d-4151-993d-96ac1a1d83dd
+  - Lines:
+    - Text: Searching company records...
+      Guid:
+        Value: 5fd5604a-cbc0-4ef7-a657-ceb4fcd18380
+    - Text: No human members under the name 'Mike Eartuclen' found.
+      Guid:
+        Value: 86153fec-7bdc-4c3a-b6ca-bafd4dbf5818
+    - Text: Analyzing financial standing...
+      Guid:
+        Value: 55ca748e-d712-437a-b1db-82d270ebfa44
+    - Text: Greetings, subsidiesed human employee Assistant janitor 0537. Please
+        use your company provided cleaning equipment to remove laser residue from
+        this room.
+      Guid:
+        Value: 19e3faf7-a16d-41e8-93a0-3851bac1900b
+    Speaker: ReceptionBOT
+    Guid:
+      Value: a31ac58c-3a99-422d-a9f4-b0e75bcc096c
+  - Lines:
+    - Text: Alright, seems simple enough, just gotta make sure not to slam my body
+        into that table. I don't think I can control my speed on this thing properly.
+      Guid:
+        Value: d39758bd-521c-4f91-ba7b-05b8951c4727
+    - Text: '[RIDE ON TOP OF OR NEXT TO THE DIRT TO CLEAN IT, PRESS SPACE TO JUMP]'
+      Guid:
+        Value: 68dd2217-e869-4d6a-ba4b-b22b04446b13
+    Speaker: The Janitor
+    Guid:
+      Value: ea893e8c-6042-42e8-a932-d40690381ac6
+  Guid:
+    Value: 809a376c-2e67-49fc-96fd-b05690bb4f55

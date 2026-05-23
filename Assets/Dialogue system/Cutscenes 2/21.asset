@@ -1,0 +1,60 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d2a9460aae1c4420a415466d1db880f, type: 3}
+  m_Name: 21
+  m_EditorClassIdentifier: Assembly-CSharp::Dossamer.Dialogue.Schema.Cutscene
+  Title: 2-1
+  Exchanges:
+  - Lines:
+    - Text: Assistant janitor 0537 has been officially promoted to JANITOR! *sounds
+        of confetti*
+      Guid:
+        Value: e0b99193-67c0-4633-9784-8826743be020
+    - Text: The non-robotic unit is now invited to a celebratory gathering alongside
+        all other promotees at the end of the year, where it will be able to claim
+        a company regulated portion of pizza.
+      Guid:
+        Value: 3f673d0a-69c0-47e8-9a07-9e834855285a
+    Speaker: AdminAI
+    Guid:
+      Value: 10beda37-f003-4cf0-a66b-444aedd0a7cf
+  - Lines:
+    - Text: You hear it, Boardy? We are getting places. But I'm not really sure where
+        to go next here...
+      Guid:
+        Value: abf182f3-c0d9-4b00-ad04-3e1f25e05844
+    - Text: It all looks like a leap of faith from here.
+      Guid:
+        Value: b2822159-5763-4ee5-97b1-ccc8932c5a5b
+    Speaker: The Janitor
+    Guid:
+      Value: 0dcc9ac8-b629-4696-99fb-2df6f9e7da85
+  - Lines:
+    - Text: Due to the promotion, the janitor unit 537 has been granted access to
+        the cameras of the floor it is currently cleaning.
+      Guid:
+        Value: a6d2c26e-98a4-4cef-9ace-6b0c496c0f2c
+    - Text: The unit is encouraged to make use of them in times of uncertainty.
+      Guid:
+        Value: 7d421a52-1efa-4231-9810-a2c840529819
+    - Text: As there is nothing more certain than regulated corporate surveillance.
+      Guid:
+        Value: d6a4457f-0114-4bf3-87bb-824ddb577404
+    - Text: '[PRESS CTRL TO SWITCH CAMERA MODES AND MOUSE TO MOVE THE CAMERA. THIS
+        CAMERA MODE IS AVAILABLE ONLY BEFORE YOU START MOVEMENT]'
+      Guid:
+        Value: 0e40ff80-ad10-43f4-8976-7a264b394192
+    Speaker: AdminAI
+    Guid:
+      Value: 53f7ab97-8599-49e4-a06c-c0467c324c9a
+  Guid:
+    Value: 4bc20fa6-f61f-4ba2-a9b6-2b468e92b7c3

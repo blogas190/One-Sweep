@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class UIManager : MonoBehaviour
@@ -10,15 +11,25 @@ public class UIManager : MonoBehaviour
     public LevelCompleteController levelComplete;
     public SettingsController settings;
 
+    public RectTransform deathPanel;
+    public float dropDuration = 0.6f;
+    public float offscreenY;
+
     private void Awake()
     {
         if (instance == null) instance = this;
         else Destroy(gameObject);
+        offscreenY = Screen.height * 0.6f + 800f;
 
         pauseMenu.Hide();
         levelComplete.Hide();
         settings.Hide();
         hud.Show();
+        if (deathPanel == null)
+        {
+            deathPanel = GameObject.FindGameObjectWithTag("DeathPanel").GetComponent<RectTransform>();
+        }
+        deathPanel.anchoredPosition = new Vector2(0, offscreenY);
     }
 
     void Update()
@@ -57,6 +68,32 @@ public class UIManager : MonoBehaviour
     {
         pauseMenu.Show();
         hud.Hide();
+    }
+
+    public void ShowDeathScreen()
+    {
+        StartCoroutine(DropIn());
+    }
+
+    IEnumerator DropIn()
+    {
+        Vector2 startPos = new Vector2(0, offscreenY);
+        Vector2 endPos = Vector2.zero;   // center of screen
+        float elapsed = 0f;
+
+        while (elapsed < dropDuration)
+        {
+            elapsed += Time.deltaTime;
+            float t = elapsed / dropDuration;
+
+            // ease-out: decelerates as it lands
+            t = 1f - Mathf.Pow(1f - t, 3f);
+
+            deathPanel.anchoredPosition = Vector2.Lerp(startPos, endPos, t);
+            yield return null;
+        }
+
+        deathPanel.anchoredPosition = endPos;
     }
 
     public void ResumeGame()

@@ -1,0 +1,72 @@
+BEGIN
+
+TITLE: 2-1
+
+NAME: AdminAI
+
+Assistant janitor 0537 has been officially promoted to JANITOR! *sounds of confetti*
+The non-robotic unit is now invited to a celebratory gathering alongside all other promotees at the end of the year, where it will be able to claim a company regulated portion of pizza.
+/
+
+NAME: The Janitor
+
+You hear it, Boardy? We are getting places. But I'm not really sure where to go next here...
+It all looks like a leap of faith from here.
+/
+
+NAME: AdminAI
+
+Due to the promotion, the janitor unit 537 has been granted access to the cameras of the floor it is currently cleaning.
+The unit is encouraged to make use of them in times of uncertainty.
+As there is nothing more certain than regulated corporate surveillance.
+[PRESS CTRL TO SWITCH CAMERA MODES AND MOUSE TO MOVE THE CAMERA. THIS CAMERA MODE IS AVAILABLE ONLY BEFORE YOU START MOVEMENT]
+/
+/
+
+TITLE: 2-2
+
+NAME: The Janitor
+
+Wait there, Boardy. I think those machines are moving something, I need to make sure not to slam into them.
+[PRESS A TO START MOVING LEFT]
+/
+/
+
+TITLE: 2-3
+
+NAME: The Janitor
+
+Hello? Is anyone else around? This office seems to be empty...
+Kinda creepy, it's not helping that I am one of the only humans working at AHS, now I gotta be reminded of that as well?
+Anyway, I am not paid to answer these questions, I'd need another 5% pay increase for that, I have some dignity after all.
+[SOME OF THE CUBICLES ON THIS LEVEL HAVE RAILS ON TOP OF THEM. JUMP ON TOP OF THEM TO START GRINDING]
+/
+/
+
+TITLE: 2-5
+
+NAME: The Janitor
+
+What is this room? My head hurts just by looking at it...
+Anyways, gotta meet the quota.
+[PRESS S WHILE ON RAIL TO JUMP OFF IT]
+/
+/
+
+TITLE: 2-6
+
+NAME: AdminAI
+
+Janitor 537, AllHuman Solutions™ has identified that you have made unsanctioned modifications to corporate cleaning equipment.
+Please proceed to the Research & Development building once you are done with your duties for the day to avoid termination.
+/
+
+NAME: The Janitor
+
+Well that sounds concerning. But I'm sure they will see the benefits of our friendship, Boardy.
+You have nothing to be scared of.
+Ok, now it's time to finish the cleanup here.
+/
+/
+
+END

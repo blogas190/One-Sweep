@@ -9,8 +9,9 @@ public class GameStates : MonoBehaviour
 
     public CleaningProgressManager cleaningProgressManager;
     private GameManager gameManager;
+
+    [HideInInspector]
     public Animator playerAnimator;
-    [HideInInspector] 
     public bool deathState = false;
     private float prevGravity;
     public MMFeedbacks DeathFeedback;
@@ -30,6 +31,11 @@ public class GameStates : MonoBehaviour
         
         prevGravity = Physics.gravity.y;
         gameManager = GetComponent<GameManager>();
+
+        if (playerAnimator == null)
+        {
+            playerAnimator = GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<Animator>();
+        }
     }
 
     public void StartDeath()
@@ -39,11 +45,12 @@ public class GameStates : MonoBehaviour
         playerAnimator.SetTrigger("Death");
         DeathFeedback.PlayFeedbacks();
         //using a coroutine to have a delay for the fall animation
-        StartCoroutine(Death());
+        //StartCoroutine(Death());
     }
 
     public void RestartScene()
     {
+        deathState = false;
         if (gameManager.currentState == GameState.playing)
         {
             if (CleaningProgressManager.Instance != null)
@@ -60,7 +67,7 @@ public class GameStates : MonoBehaviour
         Physics.gravity = new Vector3(0, Physics.gravity.y * gravityMod, 0);
     }
 
-    private IEnumerator Death()
+    /*private IEnumerator Death()
     {
         //Later we can set proper timers for restart
 
@@ -68,5 +75,5 @@ public class GameStates : MonoBehaviour
         //after animation restart the level
         RestartScene();
         deathState = false;
-    }
+    }*/
 }

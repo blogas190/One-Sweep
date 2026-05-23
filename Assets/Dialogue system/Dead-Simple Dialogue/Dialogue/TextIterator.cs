@@ -29,39 +29,38 @@ namespace Dossamer.Dialogue
         public void TriggerNewText(string text)
         {
             StopAllCoroutines();
-
             if (_shouldIterate)
             {
                 _coroutine = IterateLetters(text);
                 StartCoroutine(_coroutine);
-            } else
+            }
+            else
             {
-                _text.text = text; 
+                _text.text = text;
+                _text.maxVisibleCharacters = int.MaxValue; // show all
             }
         }
 
         IEnumerator IterateLetters(string text)
         {
-            _text.text = "";
+            _text.text = text;           // set full rich text immediately
+            _text.maxVisibleCharacters = 0;
+            _text.ForceMeshUpdate();     // ensure TMP parses the tags
 
-            for (int i = 0; i < text.Length; i++)
+            int totalVisible = _text.textInfo.characterCount; // actual visible chars (tags excluded)
+
+            for (int i = 0; i <= totalVisible; i++)
             {
-                
-                // webgl error workaround
-                float endTime = Time.time + _secondsToWait;
+                _text.maxVisibleCharacters = i;
 
+                float endTime = Time.time + _secondsToWait;
                 while (Time.time < endTime)
                 {
                     yield return null;
                 }
-
-                _text.text += text[i];
-
-
-                // this throws an index out of bounds error in webgl
-                // yield return new WaitForSeconds(_secondsToWait);
             }
 
+            _text.maxVisibleCharacters = totalVisible;
             OnTextDoneIterating?.Invoke();
         }
     }

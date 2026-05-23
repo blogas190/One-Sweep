@@ -10,8 +10,11 @@ public class CameraController : MonoBehaviour
     public float cameraSpeed = 5f;
     public float freeCamSensitivity = 0.1f;
     public Vector3 offset = new Vector3(0, 2, -10);
-    public float maxVerticalOffset = 5f;
-    public float maxHorizontalOffset = 10f;
+    [SerializeField] Vector3 maxSpeedOffset = new Vector3(0,2,-20);
+
+    [Header("Freecam Bounds")]
+    public Vector3 boundsMin;
+    public Vector3 boundsMax;
 
     [Header("State")]
     [SerializeField] private bool isFollowing = true;
@@ -20,11 +23,18 @@ public class CameraController : MonoBehaviour
     private Vector2 mouseInput;
     private Vector3 freeCamPosition;
 
+    private PlayerMovement playerMovement;
+    private float maxPlayerSpeed;
+    private float startPlayerSpeed;
+
     void Start()
     {
         if (player == null)
             player = GameObject.FindGameObjectWithTag("Player");
 
+        playerMovement = player.GetComponent<PlayerMovement>();
+        maxPlayerSpeed = playerMovement._settings.MaxSpeed;
+        startPlayerSpeed = playerMovement._settings.StartSpeed;
         freeCamPosition = transform.position;
     }
 
@@ -51,7 +61,7 @@ public class CameraController : MonoBehaviour
     {
         if (!context.performed) return;
 
-        if (isFollowing)
+        if (isFollowing && playerMovement.GetMagnitude() < 1)
         {
             isFollowing = false;
             freeCam = true;
@@ -68,25 +78,46 @@ public class CameraController : MonoBehaviour
     {
         if (player == null) return;
 
-        Vector3 targetPosition = player.transform.position + offset;
+        float speed = playerMovement.GetCurrentSpeed();
+
+        float t = Mathf.InverseLerp(startPlayerSpeed, maxPlayerSpeed, speed);
+        Vector3 activeOffset = Vector3.Lerp(offset, maxSpeedOffset, t);
+
+        Vector3 targetPosition = player.transform.position + activeOffset;
         transform.position = Vector3.Lerp(transform.position, targetPosition, cameraSpeed * Time.deltaTime);
         transform.LookAt(player.transform.position);
     }
 
     void FreeCamMovement()
     {
-        // Move camera position based on mouse delta
-        Vector3 move = new Vector3(mouseInput.x, mouseInput.y, 0) * freeCamSensitivity;
-        freeCamPosition += move;
-
-        // Clamp within allowed area relative to player (optional)
-        if (player != null)
+        if (playerMovement.GetMagnitude() > 1)
         {
-            freeCamPosition.x = Mathf.Clamp(freeCamPosition.x, player.transform.position.x - maxHorizontalOffset, player.transform.position.x + maxHorizontalOffset);
-            freeCamPosition.y = Mathf.Clamp(freeCamPosition.y, player.transform.position.y - maxVerticalOffset, player.transform.position.y + maxVerticalOffset);
+            freeCam = false;
+            isFollowing = true;
+            return;
         }
+        else
+        {
+            Vector3 move = new Vector3(mouseInput.x, mouseInput.y, 0) * freeCamSensitivity;
+            freeCamPosition += move;
 
-        transform.position = Vector3.Lerp(transform.position, freeCamPosition, cameraSpeed * Time.deltaTime);
+            // Clamp within level borders
+            freeCamPosition = new Vector3(
+                Mathf.Clamp(freeCamPosition.x, boundsMin.x, boundsMax.x),
+                Mathf.Clamp(freeCamPosition.y, boundsMin.y, boundsMax.y),
+                Mathf.Clamp(freeCamPosition.z, boundsMin.z, boundsMax.z)
+            );
+
+            transform.position = Vector3.Lerp(transform.position, freeCamPosition, cameraSpeed * Time.deltaTime);
+        }
+    }
+
+    void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.cyan;
+        Vector3 center = (boundsMin + boundsMax) / 2f;
+        Vector3 size = boundsMax - boundsMin;
+        Gizmos.DrawWireCube(center, size);
     }
 
     public void SetFollow(bool follow)

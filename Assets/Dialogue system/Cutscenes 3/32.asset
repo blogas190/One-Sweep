@@ -1,0 +1,49 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d2a9460aae1c4420a415466d1db880f, type: 3}
+  m_Name: 32
+  m_EditorClassIdentifier: Assembly-CSharp::Dossamer.Dialogue.Schema.Cutscene
+  Title: 3-2
+  Exchanges:
+  - Lines:
+    - Text: Take a closer look at this test chamber, kid. You should spot something
+        new.
+      Guid:
+        Value: abbe8cec-142c-4af6-9a2b-0d05db9c10d7
+    - Text: We put some batteries there, so you'd be able to regain charge while
+        on the move.
+      Guid:
+        Value: 7794f087-977b-4b54-8939-3551a7f8da83
+    - Text: You don't need to do anything to pick them up really, the board should
+        take care of it on its own, just get close enough to them and see how your
+        energy goes up.
+      Guid:
+        Value: 389cc34a-944c-4b1b-b020-3863958c86e7
+    - Text: That is all, engie out.
+      Guid:
+        Value: 30bfcca0-450c-4537-bebb-dd142582c0d8
+    Speaker: The Engineer
+    Guid:
+      Value: 9f455cf9-0f50-4470-a12d-f492f56dc60a
+  - Lines:
+    - Text: Even though I don't think he's that much older than me, I still appreciate
+        working with another non-robotic.
+      Guid:
+        Value: 09cde417-d29b-4779-b317-1fd91431a474
+    - Text: No offense.
+      Guid:
+        Value: abf21034-e810-4bc4-8e7d-6db330c74bf2
+    Speaker: The Janitor
+    Guid:
+      Value: c762750f-85ba-4edf-9f6c-336e9f755141
+  Guid:
+    Value: 1cc8f084-3e3a-4ca5-8b4c-9193f1a0685f

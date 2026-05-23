@@ -95,6 +95,7 @@ public class SceneChanger : MonoBehaviour
                 GameManager.instance.SetState(GameState.mainMenu);
                 break;
             default:
+                GameManager.instance.SetState(GameState.playing);
                 break;
         }
     }

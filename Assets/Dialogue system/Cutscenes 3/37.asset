@@ -1,0 +1,81 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d2a9460aae1c4420a415466d1db880f, type: 3}
+  m_Name: 37
+  m_EditorClassIdentifier: Assembly-CSharp::Dossamer.Dialogue.Schema.Cutscene
+  Title: 3-7
+  Exchanges:
+  - Lines:
+    - Text: Ok, this should be the last chamber, kid. I also just got a message about
+        your transfer, apparently guys at Defence wanna take a look at what you can
+        do.
+      Guid:
+        Value: 6a1b6502-222c-4b64-aab8-36e70e50f19f
+    - Text: They seem to love units who are glad to crash their heads into a wall
+        full speed to recieve a small compensation at the end.
+      Guid:
+        Value: b4f47a92-2421-4fb9-9bef-24b5be4bda43
+    - Text: One thing though, they want to see you there today, and so the only way
+        to get you that far would be a flycar.
+      Guid:
+        Value: 23d4116e-bd7b-4a70-b34e-ddcc8cee9161
+    - Text: But no one will cover that expense.
+      Guid:
+        Value: 229ae169-6916-4a29-a28b-897df112cffd
+    - Text: So I guess this adventure is over for you, we'll hand Boardy off to someone
+        else and you'll go back to being a janitor.
+      Guid:
+        Value: fff59d9e-3899-4c65-8211-1a2000413ae3
+    Speaker: The Engineer
+    Guid:
+      Value: c36db068-10bc-4432-94dc-75fe8ceb08dc
+  - Lines:
+    - Text: Is there nothing I can do?
+      Guid:
+        Value: b1b6d933-dcbb-4e3d-97b1-c4aa763c4730
+    Speaker: The Janitor
+    Guid:
+      Value: ef013826-a89f-43cb-9a9f-fbfa36fc5b50
+  - Lines:
+    - Text: Unless your thing learns to fly on its own, no.
+      Guid:
+        Value: 27c9951e-0e71-4f4f-8fca-e54077adfc21
+    - Text: By the way, be careful, the door on top leads to the rooftops. We don't
+        want you falling off any time soon.
+      Guid:
+        Value: 74ec4c39-0e01-4f6d-9428-f14b54dbdae2
+    Speaker: The Engineer
+    Guid:
+      Value: 27567620-8c38-445e-97c8-f7fdce328cea
+  - Lines:
+    - Text: Hmm...
+      Guid:
+        Value: 8fe27795-3526-45c2-bfe1-e2c5eec32a31
+    Speaker: The Janitor
+    Guid:
+      Value: 0c216b34-162e-44f3-bbb5-a84fa33c6135
+  - Lines:
+    - Text: What was that?
+      Guid:
+        Value: 18994cfd-9ba5-4bd1-9b8b-0050b30ca10b
+    Speaker: The Engineer
+    Guid:
+      Value: ca75ad0b-6f3f-41f3-99f3-279b4ba24753
+  - Lines:
+    - Text: Nothing. I am ready.
+      Guid:
+        Value: dceabe91-0452-4529-a9b8-89fbaf2baf89
+    Speaker: The Janitor
+    Guid:
+      Value: 735f5c41-7b28-4e31-8b8e-39bab64f5f8b
+  Guid:
+    Value: a72be95a-36f6-4c57-ab28-11fda90c4aaf

@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d2a9460aae1c4420a415466d1db880f, type: 3}
+  m_Name: 22
+  m_EditorClassIdentifier: Assembly-CSharp::Dossamer.Dialogue.Schema.Cutscene
+  Title: 2-2
+  Exchanges:
+  - Lines:
+    - Text: Wait there, Boardy. I think those machines are moving something, I need
+        to make sure not to slam into them.
+      Guid:
+        Value: b993005c-a8f6-48a8-966f-99a93bb0b733
+    - Text: '[PRESS A TO START MOVING LEFT]'
+      Guid:
+        Value: 2fdec1e5-e008-4570-81fe-780c50693dcb
+    Speaker: The Janitor
+    Guid:
+      Value: ab87f400-27b1-4679-9177-2a9d3491a7ad
+  Guid:
+    Value: 1331e0b0-0009-4168-b47e-5579d5e10234

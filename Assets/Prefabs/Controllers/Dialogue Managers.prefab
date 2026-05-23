@@ -97,6 +97,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 1
   isWorking: 1
+  ActivateFeedback: {fileID: 0}
 --- !u!1 &7586657986676739950
 GameObject:
   m_ObjectHideFlags: 0
@@ -211,5 +212,6 @@ MonoBehaviour:
   _textPanel: {fileID: 0}
   _namePanel: {fileID: 0}
   _portraitPanel: {fileID: 0}
-  _characterBank: {fileID: 11400000, guid: 4a05a7b723a378646bed983deee573d5, type: 2}
+  _characterBank: {fileID: 11400000, guid: 2afc8e879ea36f94b9317246fe41e4b0, type: 2}
+  bracketTextColor: {r: 0.49999988, g: 1, b: 0.9731889, a: 1}
   IsProgressionFrozen: 0

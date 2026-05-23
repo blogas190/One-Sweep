@@ -1005,17 +1005,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 61245cd9b03f5bb42ba174d8209b5899, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &608219362 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 401941463778557751, guid: dfa13d227127d9d44b7ac7e921abbea6, type: 3}
-  m_PrefabInstance: {fileID: 757650137}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 608219354}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c68dc45f588608741a3f6102173d33b0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &693704021
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1024,10 +1013,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1312691743547383930, guid: 46d03f88e58693c49835f5a71166ec75, type: 3}
-      propertyPath: player
+    - target: {fileID: 2796544249956646104, guid: 46d03f88e58693c49835f5a71166ec75, type: 3}
+      propertyPath: audioSource
       value: 
-      objectReference: {fileID: 608219362}
+      objectReference: {fileID: 746302452}
     - target: {fileID: 4128252808806330791, guid: 46d03f88e58693c49835f5a71166ec75, type: 3}
       propertyPath: hud
       value: 
@@ -1100,22 +1089,6 @@ PrefabInstance:
       propertyPath: inGameUI
       value: 
       objectReference: {fileID: 965898403}
-    - target: {fileID: 8042461705746971523, guid: 46d03f88e58693c49835f5a71166ec75, type: 3}
-      propertyPath: cameraMode
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 8042461705746971523, guid: 46d03f88e58693c49835f5a71166ec75, type: 3}
-      propertyPath: cleanPercent
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 8042461705746971523, guid: 46d03f88e58693c49835f5a71166ec75, type: 3}
-      propertyPath: cameraModeFeedback
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 8042461705746971523, guid: 46d03f88e58693c49835f5a71166ec75, type: 3}
-      propertyPath: cleanPercentFeedbackEnd
-      value: 
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1296,6 +1269,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 014e4a9dd033c054ca1537ab67529815, type: 3}
+--- !u!82 &746302452 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 9102445015056591686, guid: 014e4a9dd033c054ca1537ab67529815, type: 3}
+  m_PrefabInstance: {fileID: 746302451}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &757650137
 PrefabInstance:
   m_ObjectHideFlags: 0

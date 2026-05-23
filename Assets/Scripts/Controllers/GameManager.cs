@@ -19,6 +19,7 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
+
         if (instance != null && instance != this)
         {
             Destroy(gameObject);
@@ -26,11 +27,9 @@ public class GameManager : MonoBehaviour
         }
 
         instance = this;
+
         DontDestroyOnLoad(gameObject);
-
-        AudioManager.Instance.LoadAllVolumes();
     }
-
     void Update()
     {
         Debug.Log("Current Game State: " + currentState);
@@ -71,6 +70,7 @@ public class GameManager : MonoBehaviour
 
     public void LoadMainMenu()
     {
+        PlayerPrefs.Save();
         saveManager.SaveGame();
         SceneChanger.instance.LoadScene("Main Menu");
     }

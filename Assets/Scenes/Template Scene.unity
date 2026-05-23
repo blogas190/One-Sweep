@@ -238,6 +238,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Dialogue Managers
       objectReference: {fileID: 0}
+    - target: {fileID: 7985767159526033000, guid: 93287b54523271345b7bc8cdf29d99a3, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

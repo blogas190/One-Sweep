@@ -1,0 +1,74 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d2a9460aae1c4420a415466d1db880f, type: 3}
+  m_Name: 34
+  m_EditorClassIdentifier: Assembly-CSharp::Dossamer.Dialogue.Schema.Cutscene
+  Title: 3-4
+  Exchanges:
+  - Lines:
+    - Text: You are doing great, kid. I expected to be scraping you off walls at
+        this point, but it would require another janitor.
+      Guid:
+        Value: fb03eceb-1dad-4f12-86ff-98d0350df672
+    - Text: And you can't really place any faith in those guys. Present company excluded,
+        of course.
+      Guid:
+        Value: 089b3e97-46ff-4ae2-bdc3-400030781e6e
+    - Text: What I was saying is that there is the last thing we have to check before
+        I can transfer you to another department.
+      Guid:
+        Value: c3dff794-01f5-443c-9980-f870770ae3aa
+    Speaker: The Engineer
+    Guid:
+      Value: 53f57eea-51a1-4396-8bd6-9a6b4918d385
+  - Lines:
+    - Text: Well, so far it's been fun. You sure I can't stay and work for R&D? It
+        sure beats listening to AdminAI, she can be sooo annoying...
+      Guid:
+        Value: 101c1e79-3874-4753-8bec-48ce2b52a7cd
+    Speaker: The Janitor
+    Guid:
+      Value: 304ad713-e4e9-49d9-8d88-de9a2873ee30
+  - Lines:
+    - Text: She? Kid, you have to get a grip. It's a tool. You are driving a tool.
+        And don't get me wrong, I've got nothing against tools. Just that you don't
+        see them as such.
+      Guid:
+        Value: 10d0fe9d-fb22-4a38-b940-393605612cd0
+    - Text: It's concerning.
+      Guid:
+        Value: 05a52a79-8d05-427d-91cd-221f5b2372f6
+    - Text: Where was I?
+      Guid:
+        Value: deac7043-0c22-4165-a09d-278a29b48cb1
+    - Text: Ah yeah, new stuff.
+      Guid:
+        Value: 1bfe4a6c-d537-4a65-a37c-38a2f417463f
+    - Text: Basically we also made the same thruster be able to blow vertically,
+        be it up or down.
+      Guid:
+        Value: 1dd27942-7001-4006-a7c0-89bc318b99ce
+    - Text: However, it needs some space to rotate properly, so you can only do those
+        burns in air.
+      Guid:
+        Value: 90c94229-bf19-4de3-bdbc-c226fe97edfe
+    - Text: Now please just complete this chamber now...
+      Guid:
+        Value: 6e12c29b-5823-46bc-b981-7ee1aa1add76
+    - Text: '[PRESS W IN AIR TO DASH UP, S TO DASH DOWN]'
+      Guid:
+        Value: f662393d-4fb2-40cd-990c-f5e8d7d97bc7
+    Speaker: The Engineer
+    Guid:
+      Value: f62f70d4-a63a-4b4a-b37a-f72a79d7cdb0
+  Guid:
+    Value: 757fcb79-0b26-4578-827e-738dad50d775

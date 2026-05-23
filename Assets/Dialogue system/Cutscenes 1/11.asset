@@ -1,0 +1,46 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d2a9460aae1c4420a415466d1db880f, type: 3}
+  m_Name: 11
+  m_EditorClassIdentifier: Assembly-CSharp::Dossamer.Dialogue.Schema.Cutscene
+  Title: 1-1
+  Exchanges:
+  - Lines:
+    - Text: 'Janitor requested at the reception. Automatic assignment in progress.
+        [PRESS SPACE TO CONTINUE]'
+      Guid:
+        Value: d83baa73-f48e-44d4-af6f-61a6e5a83a16
+    - Text: ...
+      Guid:
+        Value: 319f4c33-beb3-412c-931a-936f8cf3f7e6
+    - Text: Assistant janitor 0537 has been selected. Please proceed to RECEPTION.
+      Guid:
+        Value: c6d88030-077b-42ea-92ef-c3d897b773c9
+    Speaker: AdminAI
+    Guid:
+      Value: 8c40a903-7d3a-431b-bfee-1474441186e9
+  - Lines:
+    - Text: That's me, right?
+      Guid:
+        Value: ff5f5e3d-dee2-4ef9-acf3-05fb873e93d6
+    - Text: Reception, reception, reception...
+      Guid:
+        Value: 028f1e75-7dcd-41d4-b39b-68a5a4e66612
+    - Text: 'It should be right ahead.It''s time to get going! [PRESS D TO START
+        MOVING RIGHT]'
+      Guid:
+        Value: 7a2a5a9e-5cd4-45dd-a7c6-3d308cf5aed2
+    Speaker: The Janitor
+    Guid:
+      Value: 31409910-36f6-4eb8-aa94-295a7ec18551
+  Guid:
+    Value: cde223df-ef22-459f-97dd-ff82ca6740d8

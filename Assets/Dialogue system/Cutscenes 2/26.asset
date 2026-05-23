@@ -1,0 +1,44 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d2a9460aae1c4420a415466d1db880f, type: 3}
+  m_Name: 26
+  m_EditorClassIdentifier: Assembly-CSharp::Dossamer.Dialogue.Schema.Cutscene
+  Title: 2-6
+  Exchanges:
+  - Lines:
+    - Text: "Janitor 537, AllHuman Solutions\u2122 has identified that you have made
+        unsanctioned modifications to corporate cleaning equipment."
+      Guid:
+        Value: ace9348b-876f-4d41-8930-0513d276f06c
+    - Text: Please proceed to the Research & Development building once you are done
+        with your duties for the day to avoid termination.
+      Guid:
+        Value: 996c6ee7-4f11-4e0b-9786-d1de2f6bf76d
+    Speaker: AdminAI
+    Guid:
+      Value: c74df4e7-3673-4862-bd48-c1ddc9308304
+  - Lines:
+    - Text: Well that sounds concerning. But I'm sure they will see the benefits
+        of our friendship, Boardy.
+      Guid:
+        Value: ce4c37ce-b3b2-4a87-92f9-21fa22fd1ba3
+    - Text: You have nothing to be scared of.
+      Guid:
+        Value: 5a3a511c-fa07-49d0-85e4-fc9950f598c4
+    - Text: Ok, now it's time to finish the cleanup here.
+      Guid:
+        Value: fc4d548f-33cf-45b1-997c-4646ee10b915
+    Speaker: The Janitor
+    Guid:
+      Value: bf4c03b4-0d53-43df-995f-164f3d284118
+  Guid:
+    Value: 78dcec14-6a8a-4a44-9a61-ad80555b0f72

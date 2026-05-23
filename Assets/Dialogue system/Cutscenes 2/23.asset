@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d2a9460aae1c4420a415466d1db880f, type: 3}
+  m_Name: 23
+  m_EditorClassIdentifier: Assembly-CSharp::Dossamer.Dialogue.Schema.Cutscene
+  Title: 2-3
+  Exchanges:
+  - Lines:
+    - Text: Hello? Is anyone else around? This office seems to be empty...
+      Guid:
+        Value: b26b83b9-665e-4c55-b370-7595989a17ad
+    - Text: Kinda creepy, it's not helping that I am one of the only humans working
+        at AHS, now I gotta be reminded of that as well?
+      Guid:
+        Value: 9e67b18c-2f00-4077-8498-73ad7ffe7476
+    - Text: Anyway, I am not paid to answer these questions, I'd need another 5%
+        pay increase for that, I have some dignity after all.
+      Guid:
+        Value: ca56e612-0d10-4ee6-bd7a-aa040bb6b930
+    - Text: '[SOME OF THE CUBICLES ON THIS LEVEL HAVE RAILS ON TOP OF THEM. JUMP
+        ON TOP OF THEM TO START GRINDING]'
+      Guid:
+        Value: e1a0c430-62f6-4d55-a5b8-cf2df0e11db0
+    Speaker: The Janitor
+    Guid:
+      Value: 1ff1ee7b-aa22-4d94-8b1d-d1e1d1413361
+  Guid:
+    Value: e42bfac2-5459-41c4-9796-bc5c33e6d99c

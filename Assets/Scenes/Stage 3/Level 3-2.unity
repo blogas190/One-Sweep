@@ -2036,6 +2036,10 @@ PrefabInstance:
       propertyPath: UOnDialogueStarted.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
+    - target: {fileID: 2054755316131658364, guid: 93287b54523271345b7bc8cdf29d99a3, type: 3}
+      propertyPath: dialogueToTrigger
+      value: 
+      objectReference: {fileID: 11400000, guid: a2ce053d653e49443a4142fab3b6e3c3, type: 2}
     - target: {fileID: 6501912454355322735, guid: 93287b54523271345b7bc8cdf29d99a3, type: 3}
       propertyPath: ActivateFeedback
       value: 

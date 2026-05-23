@@ -24,7 +24,6 @@ public class AirTricks : MonoBehaviour
     private GameStates states;
     private PlayerController controller;
     private EnergyController energy;
-    private float animationDelay;
     private float directionX = 0f;
     private float directionY = 0f;
     private float prevLengthUp;
@@ -49,12 +48,6 @@ public class AirTricks : MonoBehaviour
             states.StartDeath();
             trickInProgress = false;
         }
-    }
-
-    //Coroutine starter. Later this can used for animation timing as well
-    private void SetAnimation(Color color, float delay)
-    {
-        StartCoroutine(RevertAnimationAfterDelay(delay));
     }
 
     private bool InAir()
@@ -122,6 +115,7 @@ public class AirTricks : MonoBehaviour
         if (energy.currentEnergy >= energy.upTrickEnergy)
         {
             player.VerticalDash(true, _settings.UpTrickForce, _settings.UpTrickTime);
+            animator.SetTrigger("TrickUp");
         }
     }
 

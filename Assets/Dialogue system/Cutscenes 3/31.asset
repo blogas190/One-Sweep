@@ -1,0 +1,106 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d2a9460aae1c4420a415466d1db880f, type: 3}
+  m_Name: 31
+  m_EditorClassIdentifier: Assembly-CSharp::Dossamer.Dialogue.Schema.Cutscene
+  Title: 3-1
+  Exchanges:
+  - Lines:
+    - Text: Ah hello? I was told to go here today? Due to modifying company equipment...
+      Guid:
+        Value: a632e758-1e3b-4388-8d7c-3ae3955ee031
+    Speaker: The Janitor
+    Guid:
+      Value: 1f4a7d99-26f4-4f48-bfdc-11b50c997aa4
+  - Lines:
+    - Text: Ah yeah, you're that guy. I've got some news for you.
+      Guid:
+        Value: 7be50b39-29df-4814-8e42-25a7cd17ab69
+    Speaker: The Engineer
+    Guid:
+      Value: 1e226231-6156-4afb-80f8-c0ba64db55e1
+  - Lines:
+    - Text: Good or bad?
+      Guid:
+        Value: eddbc766-4b69-4293-af2e-e004667bbd3e
+    Speaker: The Janitor
+    Guid:
+      Value: 3f9fa6da-c357-4bed-ad3d-6fa6cbf549ed
+  - Lines:
+    - Text: Depends on you, really.
+      Guid:
+        Value: 38d3eb5c-5b0b-4231-9d29-fc82a7ba3e1b
+    - Text: Here's the deal. AllHuman is ready to let you keep your work on one condition.
+      Guid:
+        Value: 92aff8cf-34e4-431b-9cb7-d8d849efd913
+    - Text: You need to give up your intellectual ownership over the device you made.
+      Guid:
+        Value: 2c6442dd-4b17-4ee3-afe9-96a6651337d7
+    - Text: If you ask me, that's a great deal.
+      Guid:
+        Value: dd58d99c-f5a9-4626-ba0d-bcaea7dbf2a3
+    - Text: I'm not even credited for my creations, and AHS even lets you name your
+        creation!
+      Guid:
+        Value: 9b110fbf-7b6d-43cb-b137-275fa802bb4c
+    Speaker: The Engineer
+    Guid:
+      Value: 533dd0bc-2e47-45c8-8d34-b62075d0fabe
+  - Lines:
+    - Text: I... accept.
+      Guid:
+        Value: 4bf15dc5-f2bb-474e-add4-d6aeb2e14e1f
+    Speaker: The Janitor
+    Guid:
+      Value: 1b4e5a27-0437-4846-ae0f-747fa39af64a
+  - Lines:
+    - Text: Great to hear it, kid, cause I already took it apart and modified it
+        while you were gone.
+      Guid:
+        Value: 7cc06e0b-a9b4-4e59-8ba9-901ab09a7394
+    - Text: And since you have more experience with it than anyone, you will be our
+        test subject. Consider it a promotion.
+      Guid:
+        Value: ee035f05-a4c6-40fc-8efc-039c4444edc6
+    Speaker: The Engineer
+    Guid:
+      Value: 726d6df1-36cf-4228-becd-63dcfd24f878
+  - Lines:
+    - Text: I told you, Boardy! We are climbing the career ladder so fast! No one
+        can tell how tall we'll be tomorrow!
+      Guid:
+        Value: aed94696-a533-4596-bad7-4bcd5528e877
+    Speaker: The Janitor
+    Guid:
+      Value: f7fb468a-86f6-4943-9346-8f1ca9193b20
+  - Lines:
+    - Text: Yeah, sure.
+      Guid:
+        Value: 40979e6b-a279-4b12-afad-08e5bd2d5c91
+    - Text: So what we did is we put two AA batteries in there and a thruster of
+        sorts.
+      Guid:
+        Value: 785c9bc3-25b7-4bf5-a5ae-19764c78eb24
+    - Text: What we want you to do is to activate it a couple of times so we could
+        track how fast you can go.
+      Guid:
+        Value: 7ab2dc94-7bd5-4da7-acc3-550109cdc6dd
+    - Text: '[PRESS SHIFT WHILE MOVING TO DASH, KEEP TRACK OF YOUR ENERGY BY THE
+        BAR ON TOP OF YOUR HEAD. THE BAR GOES TRANSPARENT WHEN YOU COMPLETELY RUN
+        OUT OF CHARGE]'
+      Guid:
+        Value: 33420eec-55ba-4c19-ae41-f587ac78afb5
+    Speaker: The Engineer
+    Guid:
+      Value: d91c6c0f-cb34-4c86-a1ae-ca3a00f85bd8
+  Guid:
+    Value: 405d159f-e2cb-4893-ba94-776f83aef054

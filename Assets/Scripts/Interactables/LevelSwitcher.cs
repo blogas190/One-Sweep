@@ -15,6 +15,8 @@ public class LevelSwitcher : MonoBehaviour
     [Tooltip("Reference to the cleaning progress manager")]
     public CleaningProgressManager cleaningManager;
 
+    private SaveManager saveManager;
+
     private void Start()
     {
         // Ensure the CameraTaker collider has a trigger listener
@@ -23,6 +25,11 @@ public class LevelSwitcher : MonoBehaviour
         if (cleaningManager == null)
         {
             cleaningManager = FindAnyObjectByType<CleaningProgressManager>();
+        }
+
+        if (saveManager == null)
+        {
+            saveManager = FindAnyObjectByType<SaveManager>();
         }
 
         if (cameraTaker != null)
@@ -70,6 +77,7 @@ public class LevelSwitcher : MonoBehaviour
         if (other.CompareTag("Player") && HasMetCleaningRequirement())
         {
             GameManager.instance.LevelComplete();
+            saveManager.SaveGame(nextLevel);
             UIManager.instance.levelComplete.SetNextLevel(nextLevel);
         }
     }

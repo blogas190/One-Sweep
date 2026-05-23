@@ -487,6 +487,7 @@ public class PlayerMovement : MonoBehaviour
                     Vector2 input = context.ReadValue<Vector2>();
                     direction = input.x;
                     speed = _settings.StartSpeed;
+                    animator.SetTrigger("Riding");
 
                     if (direction < 0 && lastDirection != direction)
                     {

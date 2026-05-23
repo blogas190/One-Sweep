@@ -154,6 +154,7 @@ public class AudioManager : MonoBehaviour
         SetMusicVolume(PlayerPrefs.GetFloat("musicVolume", 1f));
         SetSFXVolume(PlayerPrefs.GetFloat("sfxVolume", 1f));
         SetUIVolume(PlayerPrefs.GetFloat("uiVolume", 1f));
+        PlayerPrefs.Save();
     }
 
     private float LinearToDecibel(float value)

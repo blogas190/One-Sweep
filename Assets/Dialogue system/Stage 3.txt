@@ -1,0 +1,136 @@
+BEGIN
+
+TITLE: 3-1
+
+NAME: The Janitor
+
+Ah hello? I was told to go here today? Due to modifying company equipment...
+/
+
+NAME: The Engineer
+
+Ah yeah, you're that guy. I've got some news for you.
+/
+
+NAME: The Janitor
+
+Good or bad?
+/
+
+NAME: The Engineer
+
+Depends on you, really.
+Here's the deal. AllHuman is ready to let you keep your work on one condition.
+You need to give up your intellectual ownership over the device you made.
+If you ask me, that's a great deal.
+I'm not even credited for my creations, and AHS even lets you name your creation!
+/
+
+NAME: The Janitor
+
+I... accept.
+/
+
+NAME: The Engineer
+
+Great to hear it, kid, cause I already took it apart and modified it while you were gone.
+And since you have more experience with it than anyone, you will be our test subject. Consider it a promotion.
+/
+
+NAME: The Janitor
+
+I told you, Boardy! We are climbing the career ladder so fast! No one can tell how tall we'll be tomorrow!
+/
+
+NAME: The Engineer
+
+Yeah, sure.
+So what we did is we put two AA batteries in there and a thruster of sorts.
+What we want you to do is to activate it a couple of times so we could track how fast you can go.
+[PRESS SHIFT WHILE MOVING TO DASH, KEEP TRACK OF YOUR ENERGY BY THE BAR ON TOP OF YOUR HEAD. THE BAR GOES TRANSPARENT WHEN YOU COMPLETELY RUN OUT OF CHARGE]
+/
+/
+
+TITLE: 3-2
+
+NAME: The Engineer
+
+Take a closer look at this test chamber, kid. You should spot something new.
+We put some batteries there, so you'd be able to regain charge while on the move.
+You don't need to do anything to pick them up really, the board should take care of it on its own, just get close enough to them and see how your energy goes up.
+That is all, engie out.
+/
+
+NAME: The Janitor
+
+Even though I don't think he's that much older than me, I still appreciate working with another non-robotic.
+No offense.
+/
+/
+
+TITLE: 3-4
+
+NAME: The Engineer
+
+You are doing great, kid. I expected to be scraping you off walls at this point, but it would require another janitor.
+And you can't really place any faith in those guys. Present company excluded, of course.
+What I was saying is that there is the last thing we have to check before I can transfer you to another department.
+/
+
+NAME: The Janitor
+
+Well, so far it's been fun. You sure I can't stay and work for R&D? It sure beats listening to AdminAI, she can be sooo annoying...
+/
+
+NAME: The Engineer
+
+She? Kid, you have to get a grip. It's a tool. You are driving a tool. And don't get me wrong, I've got nothing against tools. Just that you don't see them as such.
+It's concerning.
+Where was I?
+Ah yeah, new stuff.
+Basically we also made the same thruster be able to blow vertically, be it up or down.
+However, it needs some space to rotate properly, so you can only do those burns in air.
+Now please just complete this chamber now...
+[PRESS W IN AIR TO DASH UP, S TO DASH DOWN]
+/
+/
+
+TITLE: 3-7
+
+NAME: The Engineer
+
+Ok, this should be the last chamber, kid. I also just got a message about your transfer, apparently guys at Defence wanna take a look at what you can do.
+They seem to love units who are glad to crash their heads into a wall full speed to recieve a small compensation at the end.
+One thing though, they want to see you there today, and so the only way to get you that far would be a flycar.
+But no one will cover that expense.
+So I guess this adventure is over for you, we'll hand Boardy off to someone else and you'll go back to being a janitor.
+/
+
+NAME: The Janitor
+
+Is there nothing I can do?
+/
+
+NAME: The Engineer
+
+Unless your thing learns to fly on its own, no.
+By the way, be careful, the door on top leads to the rooftops. We don't want you falling off any time soon.
+/
+
+NAME: The Janitor
+
+Hmm...
+/
+
+NAME: The Engineer
+
+What was that?
+/
+
+NAME: The Janitor
+
+Nothing. I am ready.
+/
+/
+
+END

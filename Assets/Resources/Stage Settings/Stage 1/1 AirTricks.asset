@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c5eaf0947ff76f408dc0beed79a2cf1, type: 3}
+  m_Name: 1 AirTricks
+  m_EditorClassIdentifier: Assembly-CSharp::AirTricksSO
+  _canUp: 0
+  _canDown: 0
+  _canRight: 0
+  _canLeft: 0
+  _upTrickForce: 500
+  _upTrickTime: 0.01
+  _upTrickGravityMod: 0.4
+  _downTrickForce: 6000
+  _downTrickTime: 0.01
+  _cleanTime: 1
+  _cleanBuff: 500000
+  _cleanGravityMod: 0.3
+  _leftTrickTime: 0.75
+  _minYDistance: 0.1

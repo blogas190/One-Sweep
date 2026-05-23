@@ -1,0 +1,104 @@
+BEGIN
+
+TITLE: 1-1
+
+NAME: AdminAI
+
+Janitor requested at the reception. Automatic assignment in progress. [PRESS SPACE TO CONTINUE]
+...
+Assistant janitor 0537 has been selected. Please proceed to RECEPTION.
+/
+
+NAME: The Janitor
+
+That's me, right?
+Reception, reception, reception...
+It should be right ahead. I guess it's time to get on the board. [PRESS D TO START MOVING RIGHT]
+/
+/
+
+TITLE: 1-2
+
+NAME: ReceptionBOT
+
+Greetings potential customer and welcome to AllHuman Solutions™ where problems come to die!
+If you are here to protest the Corporate Reclamation of the Amazon Rainforest, please kindly wait outside for our security force to address your concerns.
+/
+
+NAME: The Janitor
+
+No, it's me ReceptionBOT. Mike, remember? Here to clean?
+/
+
+NAME: ReceptionBOT
+
+Searching company records...
+No human members under the name 'Mike Eartuclen' found.
+Analyzing financial standing...
+Greetings, subsidiesed human employee Assistant janitor 0537. Please use your company provided cleaning equipment to remove laser residue from this room.
+/
+
+NAME: The Janitor
+
+Alright, seems simple enough, just gotta make sure not to slam my body into that table. I don't think I can control my speed on this thing properly.
+[RIDE ON TOP OF OR NEXT TO THE DIRT TO CLEAN IT, PRESS SPACE TO JUMP]
+/
+/
+
+TITLE: 1-3
+
+NAME: The Janitor
+
+Protestors got all the way to the security hallway? Yeah, AHS isn't what it used to be...
+/
+
+NAME: AdminAI
+
+Negative thoughts towards AllHuman Solutions™ detected. 3 Days of RATIONPACKAGES subtracted.
+/
+/
+
+TITLE: 1-4
+
+NAME: AdminAI
+
+Due to incompetence of the human mind, the company leadership assigned a quota of 80% surface cleaning for all non-robotic janitor employees.
+Failure to meet such a quota will result in access decline of all floor's exits until it is met or the expiration of the janitor unit.
+[CLEAN AT LEAST 80% OF THE DIRT ON THE LEVEL TO UNLOCK THE EXIT. YOU CAN SEE YOUR PROGRESS ON THE BOTTOM RIGHT OF THE SCREEN]
+/
+
+NAME: The Janitor
+
+Speaking of incompetence, I don't think I can really stop my board once I start moving, but maybe I can turn around with those pipes over there?
+And that Constructor™ liquid on those walls! I used to jump around on it as a kid and it's impossible to clean...
+The elevator may be out of service, but I found my way up.
+[USE PIPES TO TURN AROUND, PRESS SPACE WHILE ON STICKY WALLS TO PERFORM WALL JUMPS THAT ALSO TURN YOU AROUND]
+/
+/
+
+TITLE: 1-6
+
+NAME: AdminAI
+
+Janitor requested on floor 8. Automatic assignment in progress.
+...
+Assignment failed. Reason: no elevators for non-robotic employees in service.
+Reward protocol initiated. First janitor to reach and clean the top-priority zone will receive a 5% pay rise and 2 additional yearly lunch breaks.
+/
+
+NAME: The Janitor
+
+Floor 8, that's what 4 floors up?
+Boardy, this is our time to shine.
+/
+/
+
+TITLE: 1-7
+
+NAME: The Janitor
+
+Well, this is it. Lunch breaks, here we come!
+/
+/
+
+END
