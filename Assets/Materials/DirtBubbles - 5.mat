@@ -61,7 +61,7 @@ Material:
     - _DomeSmoothness: 0.573
     - _DomeSpecular: 0.259
     - _EdgeFadeWidth: 0
-    - _EmissionStrength: 0.32
+    - _EmissionStrength: 0.51
     - _PuddleDensity: 8
     - _PuddleScale: 5
     - _QueueControl: 0

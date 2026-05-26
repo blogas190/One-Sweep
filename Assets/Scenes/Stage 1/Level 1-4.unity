@@ -20986,6 +20986,10 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7384894847417572793, guid: dfa13d227127d9d44b7ac7e921abbea6, type: 3}
+      propertyPath: LightsModule.light
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 7557957178541881319, guid: dfa13d227127d9d44b7ac7e921abbea6, type: 3}
       propertyPath: m_TagString
       value: Untagged
@@ -20995,19 +20999,13 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 8300000, guid: aaf3622b2a8bbad46a1a3764f35225c5, type: 3}
     m_RemovedComponents: []
-    m_RemovedGameObjects:
-    - {fileID: 9020864106062644246, guid: dfa13d227127d9d44b7ac7e921abbea6, type: 3}
+    m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dfa13d227127d9d44b7ac7e921abbea6, type: 3}
 --- !u!1 &654480767 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5730501008601755791, guid: dfa13d227127d9d44b7ac7e921abbea6, type: 3}
-  m_PrefabInstance: {fileID: 654480766}
-  m_PrefabAsset: {fileID: 0}
---- !u!95 &654480769 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 7997784729842743575, guid: dfa13d227127d9d44b7ac7e921abbea6, type: 3}
   m_PrefabInstance: {fileID: 654480766}
   m_PrefabAsset: {fileID: 0}
 --- !u!114 &654480770 stripped
@@ -52148,7 +52146,7 @@ PrefabInstance:
     - target: {fileID: 4394220038859433472, guid: 46d03f88e58693c49835f5a71166ec75, type: 3}
       propertyPath: playerAnimator
       value: 
-      objectReference: {fileID: 654480769}
+      objectReference: {fileID: 0}
     - target: {fileID: 5964096287830327059, guid: 46d03f88e58693c49835f5a71166ec75, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

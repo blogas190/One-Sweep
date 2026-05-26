@@ -68,7 +68,7 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0.3
-  far clip plane: 1000
+  far clip plane: 3000
   field of view: 60
   orthographic: 0
   orthographic size: 5
@@ -112,8 +112,8 @@ MonoBehaviour:
   freeCamSensitivity: 0.1
   offset: {x: 0, y: 3, z: -10}
   maxSpeedOffset: {x: 0, y: 3, z: -30}
-  maxVerticalOffset: 100
-  maxHorizontalOffset: 200
+  boundsMin: {x: 0, y: 0, z: 0}
+  boundsMax: {x: 0, y: 0, z: 0}
   isFollowing: 1
   freeCam: 0
 --- !u!114 &5791732625591355580
