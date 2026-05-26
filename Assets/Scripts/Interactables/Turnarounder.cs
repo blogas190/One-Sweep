@@ -18,7 +18,6 @@ public class Turnarounder : MonoBehaviour
 
                 // Change direction and temporarily disable movement
                 playerMovement.SetMovementEnabled(false);
-                playerMovement.ChangeDirection();
 
                 // Play animation logic
                 StartCoroutine(Animation());
@@ -28,7 +27,10 @@ public class Turnarounder : MonoBehaviour
 
     private IEnumerator Animation()
     {
-        yield return new WaitForSeconds(0.5f);
+        playerMovement.animator.SetTrigger("TurnAroundPole");
+        yield return new WaitForSeconds(0.75f);
+
+        playerMovement.ChangeDirection();
 
         // Restore movement with saved speed
         playerMovement.SetMovementEnabled(true);

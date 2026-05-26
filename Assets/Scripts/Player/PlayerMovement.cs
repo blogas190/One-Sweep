@@ -171,6 +171,8 @@ public class PlayerMovement : MonoBehaviour
         HandleJump();
         UpdateGravityModifiers();
         HandleDash();
+
+        animator.SetBool("Grounded", Grounded());
     }
 
     // Sets gravity to an absolute value, never stacked multiplications.
@@ -271,6 +273,7 @@ public class PlayerMovement : MonoBehaviour
             float actualHorizontalSpeed = Mathf.Abs(p_rb.linearVelocity.x);
             float snappedSpeed = Mathf.Lerp(speed, actualHorizontalSpeed, _settings.LandingSpeedSync);
             speed = Mathf.Clamp(snappedSpeed, _settings.StartSpeed, _settings.MaxSpeed);
+            animator.SetTrigger("Landing");
         }
         wasGrounded = isGrounded;
 
@@ -288,6 +291,7 @@ public class PlayerMovement : MonoBehaviour
         else if (Grounded() && (moveLeft || moveRight) && braking)
         {
             speed = Mathf.MoveTowards(speed, _settings.StartSpeed, accelerationRate * Time.fixedDeltaTime);
+            animator.SetTrigger("Braking");
         }
         else if (!Grounded() && (moveLeft || moveRight))
         {
@@ -356,6 +360,8 @@ public class PlayerMovement : MonoBehaviour
             {
                 // Wall jump: restore normal gravity before applying force.
                 SetGravityState(GravityState.Normal);
+
+                animator.SetTrigger("OfWall");
 
                 if (moveLeft)
                 {
@@ -512,6 +518,7 @@ public class PlayerMovement : MonoBehaviour
                     {
                         Vector2 input = context.ReadValue<Vector2>();
                         float dir = input.x;
+                        animator.SetTrigger("SlowDown");
 
                         if (dir < 0)
                         {

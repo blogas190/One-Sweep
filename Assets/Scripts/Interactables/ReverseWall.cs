@@ -25,6 +25,7 @@ public class ReverseWall : MonoBehaviour
             {
                 playerMovement.ChangeDirection();
                 playerMovement.SetOnWall(true);
+                playerMovement.animator.SetTrigger("OnWall");
                 lastDirectionChangeTime = Time.time; // Start cooldown
                 Debug.Log("Player on wall - direction changed");
             }

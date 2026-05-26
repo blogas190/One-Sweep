@@ -35,6 +35,7 @@ public class RailCheck : MonoBehaviour
 
             // Normal angled rail attachment
             playerMovement.SetOnRail(true, currentRail);
+            playerMovement.animator.SetTrigger("Grinding");
             playerMovement.RailStartMovementAngled(currentRail, closestPoint);
         }
     }
