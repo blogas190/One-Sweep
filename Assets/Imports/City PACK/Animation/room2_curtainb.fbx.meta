@@ -1,0 +1,743 @@
+fileFormatVersion: 2
+guid: cad3baa030e224d46be0239392030cbd
+labels:
+- photo-real
+- low-poly
+- city
+- cityscape
+- skyline
+- urban
+- realistic
+- modern
+- loft
+- contemporary
+- architecture
+- interior
+- exterior
+- miscellaneous
+- mobile
+- detail
+- furniture
+- room
+- modular
+- penthouse
+- household
+- wood
+- design
+- minimal
+- home
+- flat
+- roof
+- apartment
+- animated
+- ambience
+- atmosphere
+- day
+- night
+- luxurious
+- high-end
+- lightmaped
+- laundry
+- cupboards
+- detergent
+- washingmachine
+- towels
+- dressshirts
+- lounge
+- couch
+- sofa
+- living
+- spots
+- kitchen
+- bar
+- table
+- windows
+- doors
+- glass
+- chair
+- lights
+- sink
+- statue
+- curtain
+- blinds
+- books
+- tv
+- chimney
+- terrace
+- sundeck
+- balcony
+- patio
+- bench
+- plant
+- hallway
+- stairs
+- bathroom
+- toilet
+- gel
+- soap
+- shampoo
+- magazine
+- shower
+- lotion
+- shelves
+- bedroom
+- carpet
+- bed
+- cushion
+- tablelamp
+- dressshirt
+- pants
+- hanger
+- walk-in
+- closet
+- drawer
+- lighthouse
+- birds
+- curtains
+- sun
+- jetplane
+- horizon
+- rooftop
+- offices
+- Ambience
+- Animated
+- Apartment
+- Architecture
+- Atmosphere
+- Balcony
+- Bar
+- Bathroom
+- Bed
+- Birds
+- Blinds
+- Books
+- Carpet
+- Chair
+- Chimney
+- City
+- Cityscape
+- Closet
+- Contemporary
+- Couch
+- Cupboards
+- Curtain
+- Curtains
+- Cushion
+- Day
+- Design
+- Detail
+- Detergent
+- Doors
+- Drawer
+- Dressshirt
+- Dressshirts
+- Exterior
+- Flat
+- Furniture
+- Gel
+- Glass
+- Hallway
+- Hanger
+- High-end
+- Home
+- Horizon
+- Household
+- Interior
+- Jetplane
+- Kitchen
+- Laundry
+- Lighthouse
+- Lightmaped
+- Lights
+- Living
+- Loft
+- Lotion
+- Lounge
+- Low-poly
+- Luxurious
+- Magazine
+- Minimal
+- Miscellaneous
+- Mobile
+- Modern
+- Modular
+- Night
+- Offices
+- Pants
+- Patio
+- Penthouse
+- Photo-real
+- Plant
+- Realistic
+- Roof
+- Rooftop
+- Room
+- Shampoo
+- Shelves
+- Shower
+- Sink
+- Skyline
+- Soap
+- Sofa
+- Spots
+- Stairs
+- Statue
+- Sun
+- Sundeck
+- Table
+- Tablelamp
+- Terrace
+- Toilet
+- Towels
+- Tv
+- Urban
+- Walk-in
+- Washingmachine
+- Windows
+- Wood
+ModelImporter:
+  serializedVersion: 29
+  internalIDToNameTable:
+  - first:
+      1: 100000
+    second: //RootNode
+  - first:
+      1: 100002
+    second: room2_curtainA:joint1
+  - first:
+      1: 100004
+    second: room2_curtainA:joint12
+  - first:
+      1: 100006
+    second: room2_curtainA:joint13
+  - first:
+      1: 100008
+    second: room2_curtainA:joint17
+  - first:
+      1: 100010
+    second: room2_curtainA:joint18
+  - first:
+      1: 100012
+    second: room2_curtainA:joint19
+  - first:
+      1: 100014
+    second: room2_curtainA:joint2
+  - first:
+      1: 100016
+    second: room2_curtainA:joint20
+  - first:
+      1: 100018
+    second: room2_curtainA:joint21
+  - first:
+      1: 100020
+    second: room2_curtainA:joint22
+  - first:
+      1: 100022
+    second: room2_curtainA:joint23
+  - first:
+      1: 100024
+    second: room2_curtainA:joint24
+  - first:
+      1: 100026
+    second: room2_curtainA:joint25
+  - first:
+      1: 100028
+    second: room2_curtainA:joint26
+  - first:
+      1: 100030
+    second: room2_curtainA:joint27
+  - first:
+      1: 100032
+    second: room2_curtainA:joint28
+  - first:
+      1: 100034
+    second: room2_curtainA:joint29
+  - first:
+      1: 100036
+    second: room2_curtainA:joint3
+  - first:
+      1: 100038
+    second: room2_curtainA:joint30
+  - first:
+      1: 100040
+    second: room2_curtainA:joint31
+  - first:
+      1: 100042
+    second: room2_curtainA:joint39
+  - first:
+      1: 100044
+    second: room2_curtainA:joint4
+  - first:
+      1: 100046
+    second: room2_curtainA:joint43
+  - first:
+      1: 100048
+    second: room2_curtainA:joint5
+  - first:
+      1: 100050
+    second: room2_curtainA:joint51
+  - first:
+      1: 100052
+    second: room2_curtainA:joint54
+  - first:
+      1: 100054
+    second: room2_curtainA:joint55
+  - first:
+      1: 100056
+    second: room2_curtainA:joint6
+  - first:
+      1: 100058
+    second: room2_curtainA:joint7
+  - first:
+      1: 100060
+    second: room2_curtainA:joint8
+  - first:
+      1: 100062
+    second: room2_curtainA:joint9
+  - first:
+      1: 100064
+    second: room2_curtainA:room2_curtainA
+  - first:
+      1: 100066
+    second: joint57
+  - first:
+      1: 100068
+    second: joint58
+  - first:
+      1: 100070
+    second: joint59
+  - first:
+      1: 100072
+    second: joint60
+  - first:
+      1: 100074
+    second: joint61
+  - first:
+      1: 100076
+    second: joint62
+  - first:
+      1: 100078
+    second: joint63
+  - first:
+      1: 100080
+    second: joint64
+  - first:
+      1: 100082
+    second: joint65
+  - first:
+      1: 100084
+    second: joint66
+  - first:
+      1: 100086
+    second: joint67
+  - first:
+      1: 100088
+    second: joint68
+  - first:
+      1: 100090
+    second: joint69
+  - first:
+      1: 100092
+    second: joint70
+  - first:
+      1: 100094
+    second: joint71
+  - first:
+      1: 100096
+    second: joint72
+  - first:
+      1: 100098
+    second: joint73
+  - first:
+      1: 100100
+    second: joint74
+  - first:
+      1: 100102
+    second: joint75
+  - first:
+      1: 100104
+    second: joint76
+  - first:
+      1: 100106
+    second: joint77
+  - first:
+      1: 100108
+    second: joint78
+  - first:
+      1: 100110
+    second: joint81
+  - first:
+      1: 100112
+    second: joint82
+  - first:
+      1: 100114
+    second: joint83
+  - first:
+      1: 100116
+    second: joint85
+  - first:
+      1: 100118
+    second: joint86
+  - first:
+      1: 100120
+    second: joint87
+  - first:
+      1: 100122
+    second: joint88
+  - first:
+      1: 100124
+    second: joint89
+  - first:
+      1: 100126
+    second: joint90
+  - first:
+      1: 100128
+    second: room3_curtainB
+  - first:
+      4: 400000
+    second: //RootNode
+  - first:
+      4: 400002
+    second: room2_curtainA:joint1
+  - first:
+      4: 400004
+    second: room2_curtainA:joint12
+  - first:
+      4: 400006
+    second: room2_curtainA:joint13
+  - first:
+      4: 400008
+    second: room2_curtainA:joint17
+  - first:
+      4: 400010
+    second: room2_curtainA:joint18
+  - first:
+      4: 400012
+    second: room2_curtainA:joint19
+  - first:
+      4: 400014
+    second: room2_curtainA:joint2
+  - first:
+      4: 400016
+    second: room2_curtainA:joint20
+  - first:
+      4: 400018
+    second: room2_curtainA:joint21
+  - first:
+      4: 400020
+    second: room2_curtainA:joint22
+  - first:
+      4: 400022
+    second: room2_curtainA:joint23
+  - first:
+      4: 400024
+    second: room2_curtainA:joint24
+  - first:
+      4: 400026
+    second: room2_curtainA:joint25
+  - first:
+      4: 400028
+    second: room2_curtainA:joint26
+  - first:
+      4: 400030
+    second: room2_curtainA:joint27
+  - first:
+      4: 400032
+    second: room2_curtainA:joint28
+  - first:
+      4: 400034
+    second: room2_curtainA:joint29
+  - first:
+      4: 400036
+    second: room2_curtainA:joint3
+  - first:
+      4: 400038
+    second: room2_curtainA:joint30
+  - first:
+      4: 400040
+    second: room2_curtainA:joint31
+  - first:
+      4: 400042
+    second: room2_curtainA:joint39
+  - first:
+      4: 400044
+    second: room2_curtainA:joint4
+  - first:
+      4: 400046
+    second: room2_curtainA:joint43
+  - first:
+      4: 400048
+    second: room2_curtainA:joint5
+  - first:
+      4: 400050
+    second: room2_curtainA:joint51
+  - first:
+      4: 400052
+    second: room2_curtainA:joint54
+  - first:
+      4: 400054
+    second: room2_curtainA:joint55
+  - first:
+      4: 400056
+    second: room2_curtainA:joint6
+  - first:
+      4: 400058
+    second: room2_curtainA:joint7
+  - first:
+      4: 400060
+    second: room2_curtainA:joint8
+  - first:
+      4: 400062
+    second: room2_curtainA:joint9
+  - first:
+      4: 400064
+    second: room2_curtainA:room2_curtainA
+  - first:
+      4: 400066
+    second: joint57
+  - first:
+      4: 400068
+    second: joint58
+  - first:
+      4: 400070
+    second: joint59
+  - first:
+      4: 400072
+    second: joint60
+  - first:
+      4: 400074
+    second: joint61
+  - first:
+      4: 400076
+    second: joint62
+  - first:
+      4: 400078
+    second: joint63
+  - first:
+      4: 400080
+    second: joint64
+  - first:
+      4: 400082
+    second: joint65
+  - first:
+      4: 400084
+    second: joint66
+  - first:
+      4: 400086
+    second: joint67
+  - first:
+      4: 400088
+    second: joint68
+  - first:
+      4: 400090
+    second: joint69
+  - first:
+      4: 400092
+    second: joint70
+  - first:
+      4: 400094
+    second: joint71
+  - first:
+      4: 400096
+    second: joint72
+  - first:
+      4: 400098
+    second: joint73
+  - first:
+      4: 400100
+    second: joint74
+  - first:
+      4: 400102
+    second: joint75
+  - first:
+      4: 400104
+    second: joint76
+  - first:
+      4: 400106
+    second: joint77
+  - first:
+      4: 400108
+    second: joint78
+  - first:
+      4: 400110
+    second: joint81
+  - first:
+      4: 400112
+    second: joint82
+  - first:
+      4: 400114
+    second: joint83
+  - first:
+      4: 400116
+    second: joint85
+  - first:
+      4: 400118
+    second: joint86
+  - first:
+      4: 400120
+    second: joint87
+  - first:
+      4: 400122
+    second: joint88
+  - first:
+      4: 400124
+    second: joint89
+  - first:
+      4: 400126
+    second: joint90
+  - first:
+      4: 400128
+    second: room3_curtainB
+  - first:
+      43: 4300000
+    second: room2_curtainA:room2_curtainA
+  - first:
+      43: 4300002
+    second: room3_curtainB
+  - first:
+      74: 7400000
+    second: idle
+  - first:
+      95: 9500000
+    second: //RootNode
+  - first:
+      111: 11100000
+    second: //RootNode
+  - first:
+      137: 13700000
+    second: room2_curtainA:room2_curtainA
+  - first:
+      137: 13700002
+    second: room3_curtainB
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: curtain_opaque
+    second: {fileID: 2100000, guid: db23417168456bf4b9234aae8f5f46e6, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: room3_curatin_fabric56
+    second: {fileID: 2100000, guid: 78d3ab301f187c94ea17a435dfd672bb, type: 2}
+  materials:
+    materialImportMode: 1
+    materialName: 1
+    materialSearch: 2
+    materialLocation: 0
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 0
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 2
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: idle
+      takeName: Take 001
+      internalID: 0
+      firstFrame: 1
+      lastFrame: 238
+      wrapMode: 2
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 0.01
+    meshCompression: 0
+    addColliders: 0
+    useSRGBMaterialColor: 1
+    sortHierarchyByName: 1
+    importVisibility: 0
+    importBlendShapes: 1
+    importCameras: 0
+    importLights: 0
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    skinWeightsMode: 0
+    maxBonesPerVertex: 4
+    minBoneWeight: 0.001
+    meshOptimizationFlags: -1
+    indexFormat: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVMarginMethod: 0
+    secondaryUVMinLightmapResolution: 40
+    secondaryUVMinObjectScale: 1
+    secondaryUVPackMargin: 4
+    useFileScale: 0
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 4
+    normalCalculationMode: 0
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 1
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  referencedClips: []
+  importAnimation: 1
+  humanDescription:
+    serializedVersion: 3
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    globalScale: 0.01
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 1
+  humanoidOversampling: 1
+  avatarSetup: 0
+  additionalBone: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
