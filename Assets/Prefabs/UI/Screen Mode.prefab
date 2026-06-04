@@ -2089,7 +2089,7 @@ MonoBehaviour:
   saveKey: My Horizontal Selector
   enableIndicator: 1
   enableIcon: 0
-  invokeOnAwake: 1
+  invokeOnAwake: 0
   invertAnimation: 0
   loopSelection: 1
   useLocalization: 1

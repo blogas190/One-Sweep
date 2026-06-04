@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 8062170564610232142}
   m_Layer: 0
   m_Name: JumpWall
-  m_TagString: Untagged
+  m_TagString: ReverseWall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -126,7 +126,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24a22b2393b295a4595354f62269d5d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  directionChangeCooldown: 0.2
+  directionChangeCooldown: 0.15
 --- !u!1 &5747880696806958074
 GameObject:
   m_ObjectHideFlags: 0
@@ -141,7 +141,7 @@ GameObject:
   - component: {fileID: 1033285106234173422}
   m_Layer: 0
   m_Name: PhysicalWall
-  m_TagString: Untagged
+  m_TagString: ReverseWall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

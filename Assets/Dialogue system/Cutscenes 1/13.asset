@@ -15,8 +15,7 @@ MonoBehaviour:
   Title: 1-3
   Exchanges:
   - Lines:
-    - Text: Protestors got all the way to the security hallway? Yeah, AHS isn't what
-        it used to be...
+    - Text: No people in the display hallway? Yeah, AHS isn't what it used to be...
       Guid:
         Value: fa45b85f-c62d-40d6-9605-719ff9a0aa59
     Speaker: The Janitor

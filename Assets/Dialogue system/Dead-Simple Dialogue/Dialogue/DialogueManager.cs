@@ -135,6 +135,7 @@ namespace Dossamer.Dialogue
             // cutscene.Pre?.Invoke();
 
             DialogueCanvas.SetActive(true);
+            GameManager.instance.StartDialogue();
 
             OnDialogueStarted?.Invoke(cutscene);
             UOnDialogueStarted?.Invoke();
@@ -178,6 +179,7 @@ namespace Dossamer.Dialogue
                 // close the dialogue
                 DialogueCanvas.SetActive(false);
                 isDialogueActive = false;
+                GameManager.instance.ResumeGame();
 
                 // _activeCutscene.Post?.Invoke();
                 OnDialogueEnded?.Invoke(_activeCutscene);

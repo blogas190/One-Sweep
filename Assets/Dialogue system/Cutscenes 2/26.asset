@@ -37,6 +37,9 @@ MonoBehaviour:
     - Text: Ok, now it's time to finish the cleanup here.
       Guid:
         Value: fc4d548f-33cf-45b1-997c-4646ee10b915
+    - Text: '[PRESS S WHILE ON RAIL TO JUMP OFF IT]'
+      Guid:
+        Value: fc4d548f-33cf-45b1-997c-4646ee10b915
     Speaker: The Janitor
     Guid:
       Value: bf4c03b4-0d53-43df-995f-164f3d284118

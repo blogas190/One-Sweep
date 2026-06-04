@@ -670,7 +670,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   menuUI: {fileID: 741406862075861706}
-  saveManager: {fileID: 0}
   masterSlider: {fileID: 1882777554188800493}
   musicSlider: {fileID: 1301623093904070754}
   sfxSlider: {fileID: 1348128636435516040}
@@ -2638,10 +2637,10 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 2123576430423473005}
+  - {fileID: 4486712032585021607}
   - {fileID: 3487044095892959500}
   - {fileID: 5819709086670419543}
-  - {fileID: 4486712032585021607}
-  - {fileID: 2123576430423473005}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -6229,7 +6228,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   menuUI: {fileID: 5927401539094818470}
-  saveManager: {fileID: 0}
 --- !u!1 &6019760749512171020
 GameObject:
   m_ObjectHideFlags: 0

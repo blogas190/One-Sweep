@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d2a9460aae1c4420a415466d1db880f, type: 3}
+  m_Name: 41
+  m_EditorClassIdentifier: Assembly-CSharp::Dossamer.Dialogue.Schema.Cutscene
+  Title: 4-1
+  Exchanges:
+  - Lines:
+    - Text: Hello player! This is the start of the unfinished stage 4.
+      Guid:
+        Value: 
+    - Text: 'This stage unlocks you the ability to hold [A OR D TO GO FASTER OR SLOWER]'
+      Guid:
+        Value: 
+    - Text: The idea for this stage was to let the player jump between rooftops and
+        traverse the city to reach Defence Industries in time!
+      Guid:
+        Value: 
+    - Text: Good luck!
+      Guid:
+        Value: 
+    Speaker: ReceptionBOT
+    Guid:
+      Value: 
+  Guid:
+    Value: a72be95a-36f6-4c57-ab28-11fda90c4aaf
