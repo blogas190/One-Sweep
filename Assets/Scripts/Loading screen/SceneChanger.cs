@@ -53,16 +53,23 @@ public class SceneChanger : MonoBehaviour
             yield return fade.Fade(0f, 1f, 0.4f);
         }
 
+        Debug.Log($"Starting to load scene: {sceneName}");
         AsyncOperation op = SceneManager.LoadSceneAsync(sceneName);
         op.allowSceneActivation = false;
 
+        Debug.Log($"Async operation started for scene: {sceneName}");
+
         while(op.progress < 0.9f)
         {
+            Debug.Log($"Scene loading progress: {op.progress}");
             yield return null;
         }
 
+        Debug.Log($"Scene loading reached 90% for scene: {sceneName}");
         yield return new WaitForSeconds(0.3f);
 
+
+        Debug.Log($"Allowing scene activation for scene: {sceneName}");
         op.allowSceneActivation = true;
 
         // Wait for scene activation to fully complete
@@ -70,6 +77,7 @@ public class SceneChanger : MonoBehaviour
         {
             yield return null;
         }
+        Debug.Log($"Scene loading completed for scene: {sceneName}");
         yield return null;
 
         OnSceneLoaded(sceneName);
@@ -94,9 +102,8 @@ public class SceneChanger : MonoBehaviour
             case "Main Menu":
                 GameManager.instance.SetState(GameState.mainMenu);
                 break;
-            default:
-                GameManager.instance.SetState(GameState.playing);
-                break;
         }
+
+        AudioManager.Instance.StopAllSFX();
     }
 }

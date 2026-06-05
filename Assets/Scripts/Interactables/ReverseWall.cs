@@ -11,37 +11,33 @@ public class ReverseWall : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
-        {
-            // Check if enough time has passed since last direction change
-            if (Time.time - lastDirectionChangeTime < directionChangeCooldown)
-            {
-                Debug.Log("Direction change on cooldown, ignoring");
-                return;
-            }
+        if (!other.CompareTag("Player")) return;
 
-            PlayerMovement playerMovement = other.GetComponent<PlayerMovement>();
-            if (playerMovement != null)
-            {
-                playerMovement.ChangeDirection();
-                playerMovement.SetOnWall(true);
-                playerMovement.animator.SetTrigger("OnWall");
-                lastDirectionChangeTime = Time.time; // Start cooldown
-                Debug.Log("Player on wall - direction changed");
-            }
+        if (Time.time - lastDirectionChangeTime < directionChangeCooldown)
+        {
+            Debug.Log("Direction change on cooldown, ignoring");
+            return;
+        }
+
+        PlayerMovement playerMovement = other.GetComponent<PlayerMovement>();
+        if (playerMovement != null)
+        {
+            playerMovement.ChangeDirection();
+            playerMovement.SetOnWall(true);
+            lastDirectionChangeTime = Time.time;
+            Debug.Log("Player on wall - direction changed");
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (!other.CompareTag("Player")) return;
+
+        PlayerMovement playerMovement = other.GetComponent<PlayerMovement>();
+        if (playerMovement != null)
         {
-            PlayerMovement playerMovement = other.GetComponent<PlayerMovement>();
-            if (playerMovement != null)
-            {
-                playerMovement.SetOnWall(false);
-                Debug.Log("No longer on wall");
-            }
+            playerMovement.SetOnWall(false);
+            Debug.Log("No longer on wall");
         }
     }
 }

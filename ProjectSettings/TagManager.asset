@@ -9,6 +9,8 @@ TagManager:
   - AngledRail
   - VerticalDirt
   - DeathPanel
+  - Door
+  - ReverseWall
   layers:
   - Default
   - TransparentFX

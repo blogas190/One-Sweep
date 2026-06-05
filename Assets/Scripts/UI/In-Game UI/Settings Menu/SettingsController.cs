@@ -4,7 +4,6 @@ using UnityEngine.UI;
 
 public class SettingsController : BaseMenu
 {
-    public SaveManager saveManager;
 
     [Header("Audio Sliders")]
     [SerializeField] private Slider masterSlider;
@@ -14,6 +13,7 @@ public class SettingsController : BaseMenu
     [SerializeField] private HorizontalSelector screenMode;
 
     public bool isSettingsOpen = false;
+    private bool isInitializing = false;
 
     public void SyncSliders()
     {
@@ -63,8 +63,10 @@ public class SettingsController : BaseMenu
         AudioManager.Instance.SetUIVolume(uiSlider.value);
     }
 
-    public void SetScreenMode(int screenMode) // 0 - fullscreen, 1 - borderless, 2 - windowed
+    public void SetScreenMode(int screenMode)
     {
+        if (isInitializing) return; // ignore calls during init
+
         FullScreenMode mode = screenMode switch
         {
             0 => FullScreenMode.ExclusiveFullScreen,
@@ -72,7 +74,6 @@ public class SettingsController : BaseMenu
             2 => FullScreenMode.Windowed,
             _ => FullScreenMode.FullScreenWindow
         };
-
         Screen.fullScreenMode = mode;
         PlayerPrefs.SetInt("ScreenMode", screenMode);
     }
@@ -86,14 +87,18 @@ public class SettingsController : BaseMenu
 
     private void OnEnable()
     {
+        isInitializing = true; // block saves during init
+
         masterSlider.onValueChanged.AddListener(delegate { OnMasterVolumeChanged(); });
         musicSlider.onValueChanged.AddListener(delegate { OnMusicVolumeChanged(); });
         sfxSlider.onValueChanged.AddListener(delegate { OnSFXVolumeChanged(); });
         uiSlider.onValueChanged.AddListener(delegate { OnUIVolumeChanged(); });
-        int savedMode = PlayerPrefs.GetInt("ScreenMode", 1); // default: borderless
-        SetScreenMode(savedMode);
-        SyncSliders();
+
+        int savedMode = PlayerPrefs.GetInt("ScreenMode", 1);
         screenMode.defaultIndex = savedMode;
+        SyncSliders();
+
+        isInitializing = false; // allow saves again
     }
 
     private void OnDisable()

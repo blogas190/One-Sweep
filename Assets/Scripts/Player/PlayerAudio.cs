@@ -16,10 +16,11 @@ public class PlayerAudio : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (playerMovement != null || AudioManager.Instance == null)
+        if (playerMovement != null && AudioManager.Instance != null)
         {
-            if (playerMovement.Grounded() && playerMovement.GetMagnitude() > 0 && playerMovement.IsOnRail() == false)
+            if (playerMovement.Grounded() && playerMovement.GetMagnitude() > 0.1 && playerMovement.IsOnRail() == false)
             {
+                Debug.Log($"Playing footsteps. Grounded={playerMovement.Grounded()} Mag={playerMovement.GetMagnitude()} Rail={playerMovement.IsOnRail()}");
                 AudioManager.Instance.PlaySFXLoop(clip);
                 isPlaying = true;
             }

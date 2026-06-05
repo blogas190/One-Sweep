@@ -36,11 +36,17 @@ public class DirtSpot : MonoBehaviour
 
     protected float lastCheckTime;
     private bool isChecking = false;
+    private float cleaningUntil;
 
     void Start()
     {
         dirtMask = new RenderTexture(256, 256, 0, RenderTextureFormat.ARGB32);
         dirtMask.Create();
+        
+        RenderTexture previous = RenderTexture.active;
+        RenderTexture.active = dirtMask;
+        GL.Clear(true, true, Color.black);
+        RenderTexture.active = previous;
 
         Material matInstance = new Material(dirtMaterial);
         GetComponent<Renderer>().material = matInstance;
@@ -100,6 +106,7 @@ public class DirtSpot : MonoBehaviour
     {
         if (Time.time - lastBrushTime < brushInterval) return;
         lastBrushTime = Time.time;
+        cleaningUntil = Time.time + 0.2f;
 
         Vector4 brushUV = new Vector4(uv.x, uv.y, brushWidth / dirtMask.width, brushHeight / dirtMask.height);
         brushBlendMaterial.SetTexture("_MainTex", dirtMask);
@@ -177,5 +184,10 @@ public class DirtSpot : MonoBehaviour
         if (persistentTexture != null) Destroy(persistentTexture);
         if (tempRT != null) { tempRT.Release(); Destroy(tempRT); }
         if (dirtMask != null) { dirtMask.Release(); Destroy(dirtMask); }
+    }
+
+    public bool IsBeingCleaned()
+    {
+        return Time.time < cleaningUntil;
     }
 }

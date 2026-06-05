@@ -28,7 +28,9 @@ public class Turnarounder : MonoBehaviour
     private IEnumerator Animation()
     {
         playerMovement.animator.SetTrigger("TurnAroundPole");
-        yield return new WaitForSeconds(0.75f);
+        playerMovement.TurnAroundPoleFeedback.PlayFeedbacks();
+
+        yield return new WaitForSeconds(0.6f);
 
         playerMovement.ChangeDirection();
 

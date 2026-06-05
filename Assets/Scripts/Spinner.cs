@@ -7,6 +7,6 @@ public class Spinner : MonoBehaviour
 
     void Update()
     {
-        transform.Rotate(rotationAxis * rotationSpeed * Time.deltaTime);
+        transform.Rotate(rotationAxis * rotationSpeed * Time.deltaTime, Space.World);
     }
 }

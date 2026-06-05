@@ -57,11 +57,26 @@ public class PlayerMovement : MonoBehaviour
     [Tooltip("Feedback played when vertical dash ends")]
     public MMFeedbacks VerticalDashFeedbackEnd;
 
+    [Tooltip("Feedback played when down trick starts")]
+    public MMFeedbacks DownTrickFeedbackStart;
+
+    [Tooltip("Feedback played when down trick ends")]
+    public MMFeedbacks DownTrickFeedbackEnd;
+
     [Tooltip("Feedback played when jumping")]
     public MMFeedbacks JumpFeedback;
 
     [Tooltip("Feedback played when jump is reset/ready")]
     public MMFeedbacks JumpResetFeedback;
+
+        [Tooltip("Feedback played when walljumping")]
+    public MMFeedbacks WallJumpFeedback;
+
+    [Tooltip("Feedback played when walljump is reset/ready")]
+    public MMFeedbacks WallJumpResetFeedback;
+
+    [Tooltip("Feedback played when the turnaround pole is triggered")]
+    public MMFeedbacks TurnAroundPoleFeedback;
 
     [Tooltip("Feedback played when entering a rail")]
     public MMFeedbacks RailFeedbackStart;
@@ -94,6 +109,24 @@ public class PlayerMovement : MonoBehaviour
     public float groundCheckRadius = 0.2f;
 
     // ============================================================
+    // WALL DETECTION SETTINGS
+    // ============================================================
+    [Header("Wall Detection Raycast")]
+    [Tooltip("How far the side rays extend on the X axis to detect a wall")]
+    public float wallRayLength = 0.6f;
+
+    [Tooltip("Layer mask for wall detection (should include your wall layer)")]
+    public LayerMask wallLayerMask = ~0;
+
+    [Tooltip("Tag used on ReverseWall objects")]
+    public string wallTag = "Wall";
+
+    [Header("Wall Detection Debug")]
+    public bool showWallRayGizmos = true;
+    public Color wallGizmoRayColor = Color.cyan;
+    public Color wallGizmoHitColor = Color.red;
+
+    // ============================================================
     // PRIVATE STATE VARIABLES
     // ============================================================
     // Movement State
@@ -114,6 +147,7 @@ public class PlayerMovement : MonoBehaviour
     // Surface State
     private bool onRail = false;
     private bool onWall = false;
+    private bool wallAnimationTriggered = false; // guard so OnWall fires once per contact
     private bool onStickySurface = false;
     private Vector3 stickySurfaceNormal;
 
@@ -125,7 +159,7 @@ public class PlayerMovement : MonoBehaviour
 
     // Physics & Effects
     private Vector3 dashVector;
-    private float startGravity = -25f;
+    private const float startGravity = -25f;
 
     // Gravity state machine replaces the fragile hasReducedGravity bool.
     // Normal    : full gravity, no modifier active.
@@ -154,7 +188,7 @@ public class PlayerMovement : MonoBehaviour
         accelerationRate = _settings.AccelerationRate;
         accelerationMax = _settings.AccelerationMax;
         prevAccelerationRate = accelerationRate;
-        startGravity = Physics.gravity.y;
+        Physics.gravity = new Vector3(Physics.gravity.x, startGravity, Physics.gravity.z);
     }
 
     // Update is called once per frame
@@ -173,6 +207,7 @@ public class PlayerMovement : MonoBehaviour
         HandleDash();
 
         animator.SetBool("Grounded", Grounded());
+        CheckWallRaycast();
     }
 
     // Sets gravity to an absolute value, never stacked multiplications.
@@ -246,6 +281,9 @@ public class PlayerMovement : MonoBehaviour
 
     private void UpdateRotation()
     {
+        // Don't flip the visual while on a wall � the OnWall animation handles the look.
+        if (onWall) return;
+
         if (moveLeft)
         {
             transform.localScale = new Vector3(-1, transform.localScale.y, transform.localScale.z);
@@ -360,7 +398,8 @@ public class PlayerMovement : MonoBehaviour
             {
                 // Wall jump: restore normal gravity before applying force.
                 SetGravityState(GravityState.Normal);
-
+                WallJumpResetFeedback.PlayFeedbacks();
+                WallJumpFeedback.PlayFeedbacks();
                 animator.SetTrigger("OfWall");
 
                 if (moveLeft)
@@ -448,6 +487,7 @@ public class PlayerMovement : MonoBehaviour
                 SetGravityState(GravityState.Normal);
                 Debug.Log("Vertical Dash ended");
                 VerticalDashFeedbackEnd.PlayFeedbacks();
+                DownTrickFeedbackEnd.PlayFeedbacks();
             }
         }
 
@@ -632,7 +672,14 @@ public class PlayerMovement : MonoBehaviour
             Debug.Log("Vertical Dash started");
             if (callFeedback)
             {
-                VerticalDashFeedbackStart.PlayFeedbacks();
+                if(isUp)
+                {
+                    VerticalDashFeedbackStart.PlayFeedbacks();
+                }
+                else
+                {
+                    DownTrickFeedbackStart.PlayFeedbacks();
+                }
             }
         }
     }
@@ -772,6 +819,15 @@ public class PlayerMovement : MonoBehaviour
     public void SetOnWall(bool wallStatus)
     {
         onWall = wallStatus;
+        if (wallStatus)
+        {
+            wallAnimationTriggered = false; // ensure animation can fire for this new wall contact
+        }
+        else
+        {
+            wallAnimationTriggered = false;
+            animator.ResetTrigger("OnWall"); // clear any stale queued trigger
+        }
     }
 
     //----------------------------------------------------
@@ -849,4 +905,60 @@ public class PlayerMovement : MonoBehaviour
         if (collision.rigidbody == currentPlatformRb)
             currentPlatformRb = null;
     }
+
+    //----------------------------------------------------
+    // Wall detection via raycast
+    //----------------------------------------------------
+
+    private void CheckWallRaycast()
+    {
+        bool hitLeft = WallRaycast(Vector3.left);
+        bool hitRight = WallRaycast(Vector3.right);
+        bool wallDetected = hitLeft || hitRight;
+
+        if (wallDetected && !wallAnimationTriggered && !Grounded())
+        {
+            animator.SetTrigger("OnWall");
+            wallAnimationTriggered = true;
+            Debug.Log($"OnWall animation triggered by raycast (left:{hitLeft} right:{hitRight})");
+        }
+    }
+
+    private bool WallRaycast(Vector3 direction)
+    {
+        Ray ray = new Ray(transform.position, direction);
+        if (Physics.Raycast(ray, out RaycastHit hit, wallRayLength))
+        {
+            if (hit.collider.CompareTag(wallTag))
+                return true;
+        }
+        return false;
+    }
+
+    //----------------------------------------------------
+    // Gizmos
+    //----------------------------------------------------
+
+#if UNITY_EDITOR
+    private void OnDrawGizmos()
+    {
+        if (!showWallRayGizmos) return;
+
+        DrawWallRayGizmo(Vector3.left);
+        DrawWallRayGizmo(Vector3.right);
+    }
+
+    private void DrawWallRayGizmo(Vector3 direction)
+    {
+        Ray ray = new Ray(transform.position, direction);
+        bool hit = Physics.Raycast(ray, out RaycastHit hitInfo, wallRayLength, wallLayerMask)
+                   && hitInfo.collider.CompareTag(wallTag);
+
+        Gizmos.color = hit ? wallGizmoHitColor : wallGizmoRayColor;
+        Gizmos.DrawRay(transform.position, direction * wallRayLength);
+
+        if (hit)
+            Gizmos.DrawSphere(hitInfo.point, 0.05f);
+    }
+#endif
 }

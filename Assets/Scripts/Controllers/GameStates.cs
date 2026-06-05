@@ -6,18 +6,16 @@ using MoreMountains.Feedbacks;
 public class GameStates : MonoBehaviour
 {
     public static GameStates instance { get; private set; }
-
     public CleaningProgressManager cleaningProgressManager;
     private GameManager gameManager;
-
     [HideInInspector]
     public Animator playerAnimator;
     public bool deathState = false;
     private float prevGravity;
     public MMFeedbacks DeathFeedback;
-
     private float deathRestartTimer = 2f;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    private AudioManager audioManager;
+
     void Awake()
     {
         if (instance != null && instance != this)
@@ -25,17 +23,31 @@ public class GameStates : MonoBehaviour
             Destroy(gameObject);
             return;
         }
-
         instance = this;
         DontDestroyOnLoad(gameObject);
-        
+
         prevGravity = Physics.gravity.y;
         gameManager = GetComponent<GameManager>();
+        CachePlayerAnimator();
+    }
 
-        if (playerAnimator == null)
-        {
-            playerAnimator = GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<Animator>();
-        }
+    private void OnDestroy()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        CachePlayerAnimator();
+    }
+
+    private void CachePlayerAnimator()
+    {
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        if (player != null)
+            playerAnimator = player.GetComponentInChildren<Animator>();
+        else
+            Debug.LogWarning("GameStates: Could not find Player in scene.");
     }
 
     public void StartDeath()
@@ -44,13 +56,12 @@ public class GameStates : MonoBehaviour
         deathState = true;
         playerAnimator.SetTrigger("Death");
         DeathFeedback.PlayFeedbacks();
-        //using a coroutine to have a delay for the fall animation
-        //StartCoroutine(Death());
     }
 
     public void RestartScene()
     {
         deathState = false;
+        AudioManager.Instance?.StopAllSFX();
         if (gameManager.currentState == GameState.playing)
         {
             if (CleaningProgressManager.Instance != null)
@@ -58,7 +69,7 @@ public class GameStates : MonoBehaviour
                 CleaningProgressManager.Instance.Reset();
             }
             Physics.gravity = new Vector3(0, prevGravity, 0);
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            SceneChanger.instance.LoadScene(SceneManager.GetActiveScene().name);
         }
     }
 
@@ -66,14 +77,4 @@ public class GameStates : MonoBehaviour
     {
         Physics.gravity = new Vector3(0, Physics.gravity.y * gravityMod, 0);
     }
-
-    /*private IEnumerator Death()
-    {
-        //Later we can set proper timers for restart
-
-        yield return new WaitForSeconds(deathRestartTimer);
-        //after animation restart the level
-        RestartScene();
-        deathState = false;
-    }*/
 }

@@ -17,6 +17,8 @@ public class LevelSwitcher : MonoBehaviour
 
     private SaveManager saveManager;
 
+    private bool playerInTrigger = false;
+
     private void Start()
     {
         // Ensure the CameraTaker collider has a trigger listener
@@ -74,8 +76,11 @@ public class LevelSwitcher : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        if (playerInTrigger) return;
+        
         if (other.CompareTag("Player") && HasMetCleaningRequirement())
         {
+            playerInTrigger = true;
             GameManager.instance.LevelComplete();
             saveManager.SaveGame(nextLevel);
             UIManager.instance.levelComplete.SetNextLevel(nextLevel);

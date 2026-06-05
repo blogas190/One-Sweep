@@ -44,9 +44,6 @@ public class AudioManager : MonoBehaviour
         sfx = new SFXSystem(sfxPool);
         music = new MusicSystem(musicSource, this);
         ui = new UISystem(uiSource, uiHover, uiClick);
-
-        Debug.Log("Loading saved volumes...");
-        LoadAllVolumes();
     }
 
     //--------------------------------------------
@@ -87,19 +84,14 @@ public class AudioManager : MonoBehaviour
         music.Stop();
     }
 
-    public void ChangeMusic(AudioClip newClip)
+    public void PlayMusicIfDifferent(AudioClip clip)
     {
-        music.Change(newClip);
+        music.PlayIfDifferent(clip);
     }
 
-    public void FadeInMusic(AudioClip clip, float duration = 1f)
+    public void FadeToMusicIfDifferent(AudioClip clip, float duration = 1f)
     {
-        music.FadeIn(clip, duration);
-    }
-
-    public void FadeOutMusic(float duration = 1f)
-    {
-        music.FadeOut(duration);
+        music.FadeToIfDifferent(clip, duration);
     }
 
     //--------------------------------------------

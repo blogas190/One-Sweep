@@ -20,8 +20,11 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
 
+        Debug.Log($"GameManager Awake {GetInstanceID()}");
+
         if (instance != null && instance != this)
         {
+            Debug.Log($"Destroying duplicate {GetInstanceID()}");
             Destroy(gameObject);
             return;
         }
@@ -29,10 +32,12 @@ public class GameManager : MonoBehaviour
         instance = this;
 
         DontDestroyOnLoad(gameObject);
-    }
+
+        }
     void Update()
     {
-        Debug.Log("Current Game State: " + currentState);
+        Debug.Log($"GM {GetInstanceID()} State: {currentState}");
+        Debug.Log($"TimeScale = {Time.timeScale}");
     }
 
     public void ToggleDialogue()
@@ -54,11 +59,15 @@ public class GameManager : MonoBehaviour
 
     public void ResumeGame()
     {
+        Debug.Log("ResumeGame called");
+        Debug.Log(System.Environment.StackTrace);
         SetState(GameState.playing);
     }
 
     public void StartDialogue()
     {
+        Debug.Log("StartDialogue called");
+        Debug.Log(System.Environment.StackTrace);
         SetState(GameState.dialogue);
     }
 
@@ -77,6 +86,7 @@ public class GameManager : MonoBehaviour
 
     public void SetState(GameState newState)
     {
+        Debug.Log($"SET STATE: {currentState} -> {newState}");
         currentState = newState;
 
         switch (currentState)

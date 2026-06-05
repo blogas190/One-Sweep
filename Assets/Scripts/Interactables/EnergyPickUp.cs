@@ -1,19 +1,18 @@
 using UnityEngine;
-using MoreMountains.Feedbacks;
 
 public class EnergyPickUp : MonoBehaviour
 {
-    public MMFeedbacks energyPickUpFeedback;
     public float pickUpEnergy = 50f;
     public void OnTriggerEnter(Collider other)
     {
         if(other.CompareTag("Player"))
         {
+            AirTricks player = other.GetComponent<AirTricks>();
             EnergyController energy = other.GetComponent<EnergyController>();
-            if(energy != null)
+            if(player != null)
             {
                 energy.AddEnergy(pickUpEnergy);
-                energyPickUpFeedback.PlayFeedbacks();
+                player.LeftTrickFeedback.PlayFeedbacks();
                 Destroy(gameObject);
             }
         }

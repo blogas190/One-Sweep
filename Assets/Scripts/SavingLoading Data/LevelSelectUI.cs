@@ -1,3 +1,4 @@
+using Michsky.UI.Reach;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -20,11 +21,14 @@ public class LevelSelectUI : MonoBehaviour
 
     [Header("Stage Tabs")]
     public LevelStageTab[] stageTabs;
+    public PanelManager panelManager;
 
     void Start()
     {
         RefreshLevelSelect();
+        panelManager.InitializePanels();
     }
+
 
     public void RefreshLevelSelect()
     {

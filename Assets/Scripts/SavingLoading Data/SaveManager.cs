@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -15,33 +16,44 @@ public class SaveManager : MonoBehaviour
         else
         {
             Destroy(gameObject);
+            return;
         }
 
+        if (SaveSystem.LoadData() == null)
+        {
+            PlayerData defaultData = new PlayerData();
+            defaultData.furthestStage = 1;
+            defaultData.furthestLevel = 1;
+            defaultData.sceneName = "Level 1-1";
+            SaveSystem.SaveData(JsonUtility.ToJson(defaultData));
+        }
+
+        SceneManager.sceneLoaded += OnSceneLoaded;
         ApplySavedSettings();
     }
 
-    /// <summary>
-    /// Call this when the player lands on a level scene.
-    /// Pass in the active scene name, e.g. SceneManager.GetActiveScene().name
-    /// </summary>
+    private void OnDestroy()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        ApplySavedSettings();
+    }
+
     public void SaveGame(string scene = null)
     {
-        // Load existing data so we don't overwrite a further save
         PlayerData data = GetPlayerData() ?? new PlayerData();
-
         if (scene == null)
         {
             scene = SceneManager.GetActiveScene().name;
         }
         data.UpdateFurthest(scene);
-
         string json = JsonUtility.ToJson(data);
         SaveSystem.SaveData(json);
     }
 
-    /// <summary>
-    /// Returns the saved PlayerData, or null if no save file exists.
-    /// </summary>
     public PlayerData GetPlayerData()
     {
         string json = SaveSystem.LoadData();
@@ -62,21 +74,30 @@ public class SaveManager : MonoBehaviour
 
     public void ApplySavedSettings()
     {
-        // screen mode
         int savedMode = PlayerPrefs.GetInt("ScreenMode", 1);
-        FullScreenMode mode = savedMode switch
+        FullScreenMode fsMode = savedMode switch
         {
             0 => FullScreenMode.ExclusiveFullScreen,
             1 => FullScreenMode.FullScreenWindow,
             2 => FullScreenMode.Windowed,
             _ => FullScreenMode.FullScreenWindow
         };
-        Screen.fullScreenMode = mode;
+        Screen.fullScreenMode = fsMode;
 
-        // audio
-        AudioManager.Instance.SetMasterVolume(PlayerPrefs.GetFloat("MasterVolume", 1f));
-        AudioManager.Instance.SetMusicVolume(PlayerPrefs.GetFloat("MusicVolume", 1f));
-        AudioManager.Instance.SetSFXVolume(PlayerPrefs.GetFloat("SFXVolume", 1f));
-        AudioManager.Instance.SetUIVolume(PlayerPrefs.GetFloat("UIVolume", 1f));
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.SetMasterVolume(PlayerPrefs.GetFloat("masterVolume", 1f));
+            AudioManager.Instance.SetMusicVolume(PlayerPrefs.GetFloat("musicVolume", 1f));
+            AudioManager.Instance.SetSFXVolume(PlayerPrefs.GetFloat("sfxVolume", 1f));
+            AudioManager.Instance.SetUIVolume(PlayerPrefs.GetFloat("uiVolume", 1f));
+        }
+
+        StartCoroutine(LogScreenModeNextFrame());
+    }
+
+    private IEnumerator LogScreenModeNextFrame()
+    {
+        yield return null; // wait one frame
+        Debug.Log($"Screen mode after apply: {Screen.fullScreenMode}");
     }
 }

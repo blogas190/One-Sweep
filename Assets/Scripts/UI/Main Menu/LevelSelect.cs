@@ -8,4 +8,5 @@ public class LevelSelect : MonoBehaviour
 
         SceneChanger.instance.LoadScene(levelName);
     }
+
 }

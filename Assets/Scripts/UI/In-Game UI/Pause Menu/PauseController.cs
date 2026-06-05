@@ -2,7 +2,13 @@ using UnityEngine;
 
 public class PauseController : BaseMenu
 {
-    public SaveManager saveManager;
+    private SaveManager saveManager;
+
+    private void OnEnable()
+    {
+        saveManager = FindAnyObjectByType<SaveManager>();
+    }
+
     public void OnResume()
     {
         UIManager.instance.ResumeGame();

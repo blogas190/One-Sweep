@@ -34,38 +34,6 @@ public class MusicSystem
         musicSource.loop = false;
     }
 
-    public void FadeIn(AudioClip clip, float duration = 1f)
-    {
-        if(clip == null) return;
-
-        StopFade();
-        musicSource.clip = clip;
-        musicSource.volume = 0f;
-        musicSource.loop = true;
-        musicSource.Play();
-
-        currentFade = coroutineHost.StartCoroutine(FadeVolume(1f, duration));
-    }
-
-    public void FadeOut(float duration = 1f)
-    {
-        if(!musicSource.isPlaying) return;
-
-        StopFade();
-        currentFade = coroutineHost.StartCoroutine(FadeVolume(0f, duration, stopAfter: true));
-    }
-
-    public void Change(AudioClip newClip)
-    {
-        if (newClip == null || musicSource.clip == newClip)
-        {
-            return;
-        }
-
-        musicSource.clip = newClip;
-        musicSource.Play();
-    }
-
     private void StopFade()
     {
         if(currentFade != null)
@@ -94,5 +62,57 @@ public class MusicSystem
             musicSource.Stop();
             musicSource.clip = null;
         }
+    }
+
+    public void PlayIfDifferent(AudioClip clip)
+    {
+        if (clip == null) return;
+
+        if (musicSource.clip == clip && musicSource.isPlaying) return;
+
+        StopFade();
+
+        musicSource.clip = clip;
+        musicSource.loop = true;
+        musicSource.Play();
+    }
+
+    public void FadeToIfDifferent(AudioClip clip, float duration = 1f)
+    {
+        if (clip == null) return;
+
+        if (musicSource.clip == clip && musicSource.isPlaying) return;
+
+        StopFade();
+        currentFade = coroutineHost.StartCoroutine(FadeToClip(clip, duration));
+    }
+
+    private IEnumerator FadeToClip(AudioClip newClip, float duration)
+    {
+        float startVolume = musicSource.volume;
+
+        // Fade out
+        float t = 0f;
+        while (t < duration)
+        {
+            t += Time.unscaledDeltaTime;
+            musicSource.volume = Mathf.Lerp(startVolume, 0f, t / duration);
+            yield return null;
+        }
+
+        musicSource.clip = newClip;
+        musicSource.loop = true;
+        musicSource.Play();
+
+        // Fade in
+        t = 0f;
+        while (t < duration)
+        {
+            t += Time.unscaledDeltaTime;
+            musicSource.volume = Mathf.Lerp(0f, startVolume, t / duration);
+            yield return null;
+        }
+
+        musicSource.volume = startVolume;
     }
 }
