@@ -40609,7 +40609,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b6df88866929ce419895786bd4e6b14, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FeelSFXTrigger
-  sfxClip: {fileID: 8300000, guid: 6af5821f719bc7145bdac69b97c661ec, type: 3}
+  sfxClip: {fileID: 8300000, guid: 0878a2ad718250e4988f1a5e2b339830, type: 3}
 --- !u!1 &5730501008601755791
 GameObject:
   m_ObjectHideFlags: 0
@@ -42029,7 +42029,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b6df88866929ce419895786bd4e6b14, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sfxClip: {fileID: 8300000, guid: 3b48ad4cbd680f348aec37877db2fe89, type: 3}
+  sfxClip: {fileID: 8300000, guid: 5cec650b74efe304eb1fc514df0172df, type: 3}
 --- !u!1 &7419613770209634761
 GameObject:
   m_ObjectHideFlags: 0
@@ -42940,7 +42940,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b6df88866929ce419895786bd4e6b14, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sfxClip: {fileID: 8300000, guid: 8bedf8942c92fb64c97515163474445a, type: 3}
+  sfxClip: {fileID: 8300000, guid: 10a063b499f2ab5408cfb2c9e0d9b375, type: 3}
 --- !u!1 &7557957178541881319
 GameObject:
   m_ObjectHideFlags: 0
